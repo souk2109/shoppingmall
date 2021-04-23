@@ -46,4 +46,8 @@ public class CommonController {
 	public void mainPage() {
 		
 	}
+	@GetMapping("/myPage")
+	public void myPage() {
+		
+	}
 }

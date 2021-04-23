@@ -14,7 +14,7 @@
 						<div class="form-group" align="left">
 							
 							<div class="col-sm-12">
-								<input name="id" type="text" class="form-control" placeholder="아이디"
+								<input name="id" type="text" class="form-control" placeholder="아이디" autocomplete="new-password"
 									autofocus>
 							</div>
 						</div>

@@ -129,12 +129,12 @@
 <script type="text/javascript">
 	let submitCheck = 0;
 
-	let pwdCheck = 0; // ok
+	let pwdCheck = 0;
 	let idCheck = 0; 
-	let nameCheck = 0; // ok
-	let nicknameCheck = 0; // ok
-	let birthdayCheck = 0; // ok
-	let emailCheck = 0; // ok
+	let nameCheck = 0;
+	let nicknameCheck = 0;
+	let birthdayCheck = 0;
+	let emailCheck = 0;
 	
 	// 유효한 생년월일인지 체크
 	function birthdayValidate() {
@@ -229,7 +229,6 @@
 	// 성공시 idCheck를 1로 변경
 	$("#reduplicationCheck").on("click", function(e) {
 		e.preventDefault();
-		// 이부분 if else 지우고 ajax success, fail로 판단
 		let idVal = $("#id").val().trim();
 		commonService.getIdValidate(idVal, function(result) {
 			if(result === "success"){
