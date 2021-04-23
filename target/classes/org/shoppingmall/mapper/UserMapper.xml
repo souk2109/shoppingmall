@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shoppingmall.mapper.UserMapper">
+	<select id="getUsersList" resultType="org.shoppingmall.domain.UserVO">
+		select * from tbl_user;
+	</select>
+	<insert id="insertUser">
+		insert into tbl_user(id, pwd, name, gender, nickname, birthday, postalCode, email)
+		values(#{id},#{pwd},#{name},#{gender},#{nickname},#{birthday},#{postalCode},#{email});
+	</insert>
+	
+	<select id="getValidateById" resultType="int">
+		select count(*) from tbl_user where id = #{id}
+	</select>
+</mapper>

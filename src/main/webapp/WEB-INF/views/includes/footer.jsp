@@ -34,12 +34,7 @@
     </div>
     <!-- Search End -->
 
-    <!-- Js Plugins -->
-    <script src="/shoppingmall/resources/js/jquery-3.3.1.min.js"></script>
-    <script src="/shoppingmall/resources/js/bootstrap.min.js"></script>
-    <script src="/shoppingmall/resources/js/jquery.slicknav.js"></script>
-    <script src="/shoppingmall/resources/js/owl.carousel.min.js"></script>
-    <script src="/shoppingmall/resources/js/main.js"></script>
+     
 </body>
-
+<script src="/shoppingmall/resources/js/main.js"></script>
 </html>

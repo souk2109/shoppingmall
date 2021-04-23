@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="/shoppingmall/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/shoppingmall/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/shoppingmall/resources/css/bootstrap-theme.min.css">
+    
+    <!-- Js Plugins -->
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/shoppingmall/resources/js/bootstrap.min.js"></script>
+    <script src="/shoppingmall/resources/js/jquery.slicknav.js"></script>
+    <script src="/shoppingmall/resources/js/owl.carousel.min.js"></script>
     <style>
         .top-bar{
             height: 32px;
