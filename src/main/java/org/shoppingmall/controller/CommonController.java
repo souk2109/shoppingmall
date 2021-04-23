@@ -41,4 +41,9 @@ public class CommonController {
 		}
 		return "redirect:/common/loginPage";
 	}
+	
+	@GetMapping("/main")
+	public void mainPage() {
+		
+	}
 }

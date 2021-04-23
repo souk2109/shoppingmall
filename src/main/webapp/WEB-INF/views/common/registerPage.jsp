@@ -151,7 +151,6 @@
 		let dateVal = $("#date").val().trim();
 		
 		let birthdayInput = new Date(yearVal, monthVal, dateVal);
-		console.log("birthdayInput : "+ birthdayInput);
 
 		if(birthdayInput > minBirthdayDate && birthdayInput < maxBirthdayDate && dateVal < 32 && dateVal > 0){
 			$("#birthday").val(yearVal + "-" + monthVal +"-" + dateVal);

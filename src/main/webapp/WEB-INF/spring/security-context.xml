@@ -4,20 +4,21 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	<bean id="userService" class="org.shoppingmall.security.CustomUserDetailsService"></bean>
+	<bean id="loginSuccessHandler" class="org.shoppingmall.security.LoginSuccessHandler"></bean>
 	 
 	<security:http>
 		<!-- <security:access-denied-handler ref=""/> -->
 		<security:intercept-url pattern="/" access="permitAll"/>
 		<!-- <security:intercept-url pattern="/chat/*" access="isAuthenticated()"/>  -->
-		<security:form-login login-page="/common/loginPage" login-processing-url="/common/doLogin" 
-		username-parameter="id" password-parameter="pwd"/>
+		<security:form-login login-page="/common/loginPage" authentication-success-handler-ref="loginSuccessHandler" login-processing-url="/common/doLogin" 
+			username-parameter="id" password-parameter="pwd"/>
 		<security:logout logout-success-url="/common/loginPage" logout-url="/common/doLogout" invalidate-session="true"/>	
 		<security:csrf disabled="true"/>
 	</security:http>
 	
-	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-	<!-- TODO 아래 클래스 만들어줘야함 -->
-	<bean id="userService" class="org.shoppingmall.security.CustomUserDetailsService"></bean>
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="userService">
 			<security:password-encoder ref="encoder"/>

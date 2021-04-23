@@ -13,4 +13,34 @@
 	<select id="getValidateById" resultType="int">
 		select count(*) from tbl_user where id = #{id}
 	</select>
+	
+	<resultMap type="org.shoppingmall.domain.UserVO" id="userVO">
+		<result column="id" property="id"/>
+		<result column="pwd" property="pwd"/>
+		<result column="name" property="name"/>
+		<result column="gender" property="gender"/>
+		<result column="nickname" property="nickname"/>
+		<result column="birthday" property="birthday"/>
+		<result column="postalCode" property="postalCode"/>
+		<result column="email" property="email"/>
+		<result column="enabled" property="enabled"/>
+		<result column="regDate" property="regDate"/>
+		<result column="updateDate" property="updateDate"/>
+		<collection property="authList" resultMap="authVO"></collection>
+	</resultMap>
+	
+	<resultMap type="org.shoppingmall.domain.AuthVO" id="authVO">
+		<result column="id" property="id"/>
+		<result column="auth" property="auth"/>
+	</resultMap>
+	
+	<select id="getUser" resultMap="userVO">
+		SELECT t1.*, t2.auth
+		FROM tbl_user t1
+		LEFT JOIN tbl_user_auth t2
+		ON t1.id = t2.id
+		WHERE t1.id = #{id}
+	</select>
+	
+	 
 </mapper>

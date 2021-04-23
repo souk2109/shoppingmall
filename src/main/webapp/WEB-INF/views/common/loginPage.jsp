@@ -10,11 +10,11 @@
 					<font class="panel-title" size="20px" face="Prompt">LOGIN</font>
 				</div>
 				<div class="panel-body" style="margin-top: 20px;">
-					<form role="form">
+					<form method="post" action="/shoppingmall/common/doLogin">
 						<div class="form-group" align="left">
 							
 							<div class="col-sm-12">
-								<input type="email" class="form-control" placeholder="아이디"
+								<input name="id" type="text" class="form-control" placeholder="아이디"
 									autofocus>
 							</div>
 						</div>
@@ -22,7 +22,7 @@
 						<div class="form-group" align="left">
 							
 							<div class="col-sm-12">
-								<input type="password" class="form-control" placeholder="비밀번호">
+								<input name="pwd" type="password" class="form-control" placeholder="비밀번호">
 							</div>
 						</div>
 

@@ -1,15 +1,41 @@
 package org.shoppingmall.security;
 
-import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
 
-import org.springframework.security.core.GrantedAuthority;
+import org.shoppingmall.domain.UserVO;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-@SuppressWarnings("serial")
-public class CustomUserDetails extends User{
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-		super(username, password, authorities);
+@SuppressWarnings("serial")
+@Getter
+@Setter
+@ToString
+public class CustomUserDetails extends User{
+	private String name;
+	private String gender;
+	private String nickname;
+	private String postalCode;
+	private String email;
+	private String birthday;
+	private Date regDate;
+	private Date updateDate;
+	
+	public CustomUserDetails(UserVO user) {
+		super(user.getId(), user.getPwd(), 
+				user.getAuthList().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));
+		this.name = user.getName();
+		this.gender = user.getGender();
+		this.nickname = user.getNickname();
+		this.postalCode = user.getPostalCode();
+		this.email = user.getEmail();
+		this.birthday = user.getBirthday();
+		this.regDate = user.getRegDate();
+		this.updateDate = user.getUpdateDate();
 	}
 
 	 
