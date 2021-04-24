@@ -101,8 +101,8 @@ A:hover {
 			</sec:authorize>
 			
 			<sec:authorize access="isAuthenticated()">
-				<span class="top-bar-menu-item"><a href="/shoppingmall/common/doLogout">로그아웃</a></span>
-				<span class="top-bar-menu-item"><a href="/shoppingmall/common/myPage">내정보</a></span>
+				<span class="top-bar-menu-item"><a href="/shoppingmall/member/doLogout">로그아웃</a></span>
+				<span class="top-bar-menu-item"><a href="/shoppingmall/member/myPage">내정보</a></span>
 			</sec:authorize>
 			<span class="top-bar-menu-item"><a href="#">문의하기</a></span>
 		</div>
@@ -113,12 +113,12 @@ A:hover {
 			<ul>
 				<li class="dropdown"><a href="#">카테고리</a>
 					<ul class="dropdown__menu">
-						<li><a href="./categories-grid.html">식료품</a></li>
-						<li><a href="./categories-list.html">가구</a></li>
-						<li><a href="./single-post.html">의류</a></li>
-						<li><a href="./signin.html">신발</a></li>
-						<li><a href="./404.html">등등</a></li>
-						<li><a href="./typography.html">뭐하지</a></li>
+						<li><a href="./categories-grid.html" style="font-size: 12px">식료품</a></li>
+						<li><a href="./categories-list.html" style="font-size: 12px">가구</a></li>
+						<li><a href="./single-post.html" style="font-size: 12px">의류</a></li>
+						<li><a href="./signin.html" style="font-size: 12px">신발</a></li>
+						<li><a href="./404.html" style="font-size: 12px">등등</a></li>
+						<li><a href="./typography.html" style="font-size: 12px">뭐하지</a></li>
 					</ul></li>
 				<li><a href="#">할인상품</a></li>
 				<li><a href="#">내 정보</a></li>

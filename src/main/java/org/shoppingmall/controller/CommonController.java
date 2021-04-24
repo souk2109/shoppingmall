@@ -3,7 +3,9 @@ package org.shoppingmall.controller;
 import org.shoppingmall.domain.UserVO;
 import org.shoppingmall.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +22,11 @@ public class CommonController {
 	public void home() {
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/loginPage")
-	public void loginPage() {
+	public void loginPage(String error, Model model) {
+		if(error != null)
+			model.addAttribute("msg",error);
 	}
 	
 	@PostMapping(value = "/doLogin")
@@ -35,7 +40,7 @@ public class CommonController {
 	}
 	@PostMapping(value = "/doRegister")
 	public String doRegister(UserVO userVO) {
-		int result = commonService.registerUser(userVO, "ROLE_USER");
+		int result = commonService.registerUser(userVO, "ROLE_MEMBER");
 		if(result == 1) {
 			log.info("[회원가입 성공] id: "+userVO.getId());
 		}
@@ -44,10 +49,8 @@ public class CommonController {
 	
 	@GetMapping("/main")
 	public void mainPage() {
-		
 	}
-	@GetMapping("/myPage")
-	public void myPage() {
-		
+	@GetMapping("/products")
+	public void products() {
 	}
 }

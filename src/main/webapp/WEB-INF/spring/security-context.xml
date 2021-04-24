@@ -11,11 +11,13 @@
 	 
 	<security:http>
 		<!-- <security:access-denied-handler ref=""/> -->
-		<security:intercept-url pattern="/" access="permitAll"/>
-		<!-- <security:intercept-url pattern="/chat/*" access="isAuthenticated()"/>  -->
+		<security:intercept-url pattern="/common/*" access="permitAll"/>
+		<security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/member/*" access="isAuthenticated()"/>
+		
 		<security:form-login login-page="/common/loginPage" authentication-success-handler-ref="loginSuccessHandler" login-processing-url="/common/doLogin" 
 			username-parameter="id" password-parameter="pwd"/>
-		<security:logout logout-success-url="/common/loginPage" logout-url="/common/doLogout" invalidate-session="true"/>	
+		<security:logout logout-success-url="/common/loginPage" logout-url="/member/doLogout" invalidate-session="true"/>	
 		<security:csrf disabled="true"/>
 	</security:http>
 	

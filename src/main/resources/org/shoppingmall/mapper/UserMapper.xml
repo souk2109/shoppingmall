@@ -42,5 +42,8 @@
 		WHERE t1.id = #{id}
 	</select>
 	
+	<update id="updatePwd">
+		update tbl_user set pwd=#{pwd} where id = #{id};
+	</update>
 	 
 </mapper>

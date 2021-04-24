@@ -1,7 +1,12 @@
 <%@include file="../includes/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
+
+<sec:authorize access="isAuthenticated()">
+	<% response.sendRedirect("/shoppingmall/common/main"); %>
+</sec:authorize>
 <div class="container" align="center">
 	<div class="row">
 		<div class="col-md-6" style="margin: 0 auto;">
@@ -25,6 +30,15 @@
 								<input name="pwd" type="password" class="form-control" placeholder="비밀번호">
 							</div>
 						</div>
+						<c:if test="${ msg ne null}">
+							<div class="form-group">
+								<div class="col-sm-12" style="color: red">
+									<div>로그인에 실패하였습니다.</div>
+								</div>
+							</div>
+						</c:if>
+						 
+						
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-12">
