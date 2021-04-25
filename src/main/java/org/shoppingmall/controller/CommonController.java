@@ -1,7 +1,7 @@
 package org.shoppingmall.controller;
 
 import org.shoppingmall.domain.UserVO;
-import org.shoppingmall.service.CommonService;
+import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/common/*")
 public class CommonController {
 	@Autowired
-	private CommonService commonService;
+	private UserService userService;
 	@GetMapping("/home")
 	public void home() {
 	}
@@ -40,7 +40,7 @@ public class CommonController {
 	}
 	@PostMapping(value = "/doRegister")
 	public String doRegister(UserVO userVO) {
-		int result = commonService.registerUser(userVO, "ROLE_MEMBER");
+		int result = userService.registerUser(userVO, "ROLE_MEMBER");
 		if(result == 1) {
 			log.info("[회원가입 성공] id: "+userVO.getId());
 		}

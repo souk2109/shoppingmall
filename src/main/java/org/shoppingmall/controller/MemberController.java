@@ -1,13 +1,14 @@
 package org.shoppingmall.controller;
 
 import org.shoppingmall.domain.SellerRequestVO;
-import org.shoppingmall.service.MemberService;
 import org.shoppingmall.service.SellerRequestService;
+import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 
@@ -19,10 +20,10 @@ public class MemberController {
 	private SellerRequestService sellerRequestService;
 	
 	@Autowired
-	private MemberService memberService;
+	private UserService userService;
 	
 	@GetMapping("/myPage")
-	public void myPage() {
+	public void myPage(String result) {
 	}
 	@GetMapping("/pwdModify")
 	public void modify() {
@@ -39,10 +40,12 @@ public class MemberController {
 		log.info("판매자 신청 성공");
 		return "redirect:/member/myPage";
 	}
-	
+	// 비밀번호 변경 요청
 	@PostMapping("/doModifyPwd")
-	public String doModifyPwd(String id, String oldPwd,String pwd) {
-		String result = memberService.changePwd(id, oldPwd, pwd);
+	public String doModifyPwd(String id, String oldPwd,String pwd, RedirectAttributes redirectAttributes) {
+		String result = userService.changePwd(id, oldPwd, pwd);
+		log.info("비밀번호 변경 결과 : "+result);
+		redirectAttributes.addFlashAttribute("pwdResult", result);
 		return "redirect:/member/myPage";
 	}
 }

@@ -45,5 +45,13 @@
 	<update id="updatePwd">
 		update tbl_user set pwd=#{pwd} where id = #{id};
 	</update>
+	
+	<select id="getUserById" resultMap="userVO">
+		SELECT *
+		FROM tbl_user
+		WHERE id = #{id}
+	</select>
+	
+	 
 	 
 </mapper>

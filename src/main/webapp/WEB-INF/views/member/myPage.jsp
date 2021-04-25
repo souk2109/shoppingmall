@@ -35,7 +35,7 @@
 			<td>성별</td>
 			<td>
 				<c:choose>
-					<c:when test="${loginUser.postalCode eq 'man'}">남성
+					<c:when test="${loginUser.gender eq 'man'}">남성
 					</c:when>
 					<c:otherwise>
 						여성
@@ -98,31 +98,55 @@
 	<span class="top-bar-menu-item"><a href="/shoppingmall/member/sellerApply">판매자 신청</a></span>
 	<span class="top-bar-menu-item"><a href="#">계좌 등록하기</a></span>
 	<span class="top-bar-menu-item"><a href="#">탈퇴하기</a></span>
-	
 </div>
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
 <script>
 	const id = '<c:out value='${loginUser.username}'/>';
-	memberService.getSellerRequest(id, function(sellerRequestVO) {
-		if(sellerRequestVO){
-			let str = "<tr>";
-			str += "<td>"+sellerRequestVO.name+"</td>";
-			if(sellerRequestVO.status === 0){
-				str += "<td style='color:red'>" + "처리중" + "</td>";
-			}else if(sellerRequestVO.status === 1){
-				str += "<td style='color:blue'>" + "승인" + "</td>";
+	memberService.getSellerRequests(id, function(list) {
+		console.log(list);
+		if(list){
+			let str = '';
+			for(var i=0; i<list.length; i++){
+				str += "<tr>";
+				str += "<td>"+list[i].name+"</td>";
+				if(list[i].status === '승인'){
+					str += "<td style='color:blue'>" + list[i].status + "</td>";
+				}else{
+					str += "<td style='color:red'>" + list[i].status + "</td>";
+				}
+				str += "<td>"+memberService.displayTime(list[i].regdate)+"</td>";
+				if(list[i].status === '승인'){
+					str += "<td>"+memberService.displayTime(list[i].updatedate)+"</td>";
+				}else if(list[i].status === '거절'){
+					str += "<td>X</td>";
+				}
+				else{
+					str += "<td></td>";
+				}
+				str += "</tr>";
 			}
-			str += "<td>"+memberService.displayTime(sellerRequestVO.regdate)+"</td>";
-			if(sellerRequestVO.status === 1){
-				str += "<td>"+memberService.displayTime(sellerRequestVO.successdate)+"</td>";
-			}else{
-				str += "<td></td>";
-			}
-			str += "</tr>";
+			 
 			$("#tbody").append(str);
-			console.log(sellerRequestVO);
 		}
 	});
+</script>
+<script>
+let pwdResult = "<c:out value='${pwdResult}'/>";
+let sellerApplyResult = "<c:out value='${sellerApplyResult}'/>";
+
+if(pwdResult){
+	if(pwdResult === 'success'){
+		alert('비밀번호를 성공적으로 변경하였습니다.');
+	}else{
+		alert('비밀번호를 변경하는데 실패하였습니다.\n(현재 비밀번호가 틀림)');
+	}
+}
+
+if(sellerApplyResult){
+	if(sellerApplyResult === 'success'){
+		alert('판매자 신청을 정상적으로 완료하였습니다.');
+	}
+}
 </script>
 <!-- 탈퇴하기, 수정하기, 판매자 신청하기 -->
 <%@include file="../includes/footer.jsp" %>

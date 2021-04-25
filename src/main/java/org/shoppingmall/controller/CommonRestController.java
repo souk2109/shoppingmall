@@ -1,6 +1,6 @@
 package org.shoppingmall.controller;
 
-import org.shoppingmall.service.CommonService;
+import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping(value = "/common/*")
 public class CommonRestController {
 	@Autowired
-	private CommonService commonService;
+	private UserService userService;
 	
 	@PostMapping(value = "/getIdValidate")
 	public ResponseEntity<String> getIdValidate(String id){
-		String result = commonService.getIdValidate(id);
+		String result = userService.getIdValidate(id);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 }

@@ -66,18 +66,43 @@
 <script>
 	$("#registerBtn").on("click", function(e) {
 		e.preventDefault();
-		let id = $("#id").val();
-		let result;
-		memberService.getSellerRequestValidate(id, function(validateResult) {
-			result = validateResult;
-			if(result === "success"){
-				alert('정상적으로 요청 되었습니다.');
-				registerForm.submit();
-			}else{
-				window.location.href = '/shoppingmall/member/myPage';
-				alert('이미 요청한 사용자 입니다.\n(판매자 등록 요청은 한 번만 가능합니다.)');
-			}
-		});
+		let id = $("#id").val().trim();
+		let accountNum = $("#accountNum").val().trim();
+		if(!accountNum){
+			alert('계좌번호를 입력해주세요.');
+		}
+		else{
+			memberService.getRecentSellerRequest(id, function(SellerRequest) {
+				console.log(SellerRequest);
+				if(!SellerRequest){ //  마지막으로 요청한 정보가 없는 경우 (신규 신청)
+					alert('정상적으로 요청 되었습니다.');
+					registerForm.submit();
+					return;
+				}else{ // 이미 처리중, 거절, 승인 중  한 가지의 상태를 가진 경우
+					let status = SellerRequest.status;
+					if(status === '처리중'){
+						alert('처리 중인 상태입니다.');
+						return;
+					}
+					else if(status === '거절'){
+						alert('정상적으로 요청 되었습니다.');
+						registerForm.submit();
+						return;
+					}else if(status === '승인'){
+						alert('이미 승인된 상태입니다.');
+						return;
+					}
+				}
+				/* let result = validateResult;
+				if(result === "success"){
+					alert('정상적으로 요청 되었습니다.');
+					registerForm.submit();
+				}else{
+					window.location.href = '/shoppingmall/member/myPage';
+					alert('이미 요청한 사용자 입니다.\n(판매자 등록 요청은 한 번만 가능합니다.)');
+				} */
+			});
+		}
 	});
 </script>
 <%@include file="../includes/footer.jsp" %>

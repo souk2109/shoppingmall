@@ -6,11 +6,12 @@ import lombok.Data;
 
 @Data
 public class SellerRequestVO {
+	private int num;
 	private String name;
 	private String id;
 	private int accountNum;
 	private String email;
-	private int status; // default로 0
+	private String status; // default로 '처리중'
 	private Date regdate;
-	private Date successdate;
+	private Date updatedate;
 }

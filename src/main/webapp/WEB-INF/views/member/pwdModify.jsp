@@ -18,7 +18,7 @@
 						<div class="form-group" align="left">
 							<div class="col-sm-12">현재 비밀번호</div>
 							<div class="col-sm-12">
-								<input id="oldPwd" name="oldPwd" type="text" class="form-control" placeholder="현재 사용중인 비밀번호">
+								<input id="oldPwd" name="oldPwd" type="password" class="form-control" placeholder="현재 사용중인 비밀번호" autocomplete="off">
 							</div>
 						</div>
 						<div class="form-group" align="left">
@@ -95,7 +95,7 @@ $("#modifyBtn").on("click", function(e) {
 	if(pwdCheck === 1){
 		$("#modifyForm").submit();
 	}else{
-		alert('비밀번호를 정확히 입력해주세요');
+		alert('새 비밀번호를 정확히 입력해주세요');
 	}
 })
 </script>

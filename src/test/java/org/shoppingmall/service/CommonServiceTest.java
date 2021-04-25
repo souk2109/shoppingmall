@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class CommonServiceTest {
 	@Autowired
-	private CommonService commonService;
+	private UserService commonService;
 	
 	/*
 	 * @Test public void registerTest() { UserVO userVO = new UserVO();

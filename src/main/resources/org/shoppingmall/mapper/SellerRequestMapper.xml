@@ -9,10 +9,22 @@
 		select * from tbl_seller_request
 	</select>
 	
-	<select id="getValidateById" resultType="int">
-		select count(*) from tbl_seller_request where id =#{id}
-	</select>
-	<select id="getSellerRequestVO" resultType="org.shoppingmall.domain.SellerRequestVO">
+	<select id="getSellerRequests" resultType="org.shoppingmall.domain.SellerRequestVO">
 		select * from tbl_seller_request where id = #{id}
 	</select>
+	<select id="getAllSellerRequests" resultType="org.shoppingmall.domain.SellerRequestVO">
+		select * from tbl_seller_request
+	</select>
+	<update id="updateStatusAndUpdatedate">
+		update tbl_seller_request set status = #{status}, updatedate = current_timestamp() where id = #{id} order by regdate desc limit 1
+	</update>
+	
+	<select id="getRecentSellerRequest" resultType="org.shoppingmall.domain.SellerRequestVO">
+		select * from tbl_seller_request where id = #{id} order by regdate desc limit 1;
+	</select>
+	<!-- 
+		<delete id="deleteSellerRequest">
+		delete from tbl_seller_request where id=#{id}
+	</delete>
+	 -->
 </mapper>

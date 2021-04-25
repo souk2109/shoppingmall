@@ -7,6 +7,9 @@ import org.shoppingmall.domain.SellerRequestVO;
 public interface SellerRequestService {
 	public String insertSellerRequest(SellerRequestVO sellerRequestVO);
 	public List<SellerRequestVO> getSellerRequestList();
-	public String getSellerRequestValidate(String id);
-	public SellerRequestVO getSellerRequestVO(String id);
+	public List<SellerRequestVO> getAllSellerRequests();
+	public String agreeSellerRequest(String id);
+	public String rejectSellerRequest(String id);
+	public SellerRequestVO getRecentSellerRequest(String id);
+	public List<SellerRequestVO> getSellerRequests(String id);
 }

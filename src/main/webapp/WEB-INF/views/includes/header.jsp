@@ -124,6 +124,11 @@ A:hover {
 				<li><a href="#">내 정보</a></li>
 				<li><a href="#">주문정보</a></li>
 				<li><a href="#">찜 목록</a></li>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<div align="center" class="col-sm-12" style="margin-top: 10px; margin-bottom: 10px">------------- 관리자 카테고리 -------------</div>
+					<li><a href="/shoppingmall/admin/showSellerRequests">판매자 신청 보기</a></li>
+					<li><a href="#">볼수있음</a></li>
+				</sec:authorize>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>

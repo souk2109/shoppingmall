@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CommonServiceImpl implements CommonService{
+public class UserServiceImpl implements UserService{
 	@Autowired
 	private AuthMapper authMapper;
 	@Autowired
@@ -40,5 +40,24 @@ public class CommonServiceImpl implements CommonService{
 		int _result = userMapper.getValidateById(id);
 		String result = _result == 0 ? "success" : "fail";
 		return result;
+	}
+	
+	@Transactional
+	@Override
+	public String changePwd(String id, String oldPwd, String pwd) {
+		String encodedPassword = userMapper.getUser(id).getPwd();
+		boolean result = encoder.matches(oldPwd, encodedPassword);
+		if(result) {
+			userMapper.updatePwd(id, encoder.encode(pwd));
+			return "success";
+		}else {
+			return "fail";
+		}
+		 
+	}
+
+	@Override
+	public UserVO getUserById(String id) {
+		return userMapper.getUserById(id);
 	}
 }
