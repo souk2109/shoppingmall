@@ -7,7 +7,7 @@
 <sec:authentication property="principal" var="loginUser"/>
 <div class="container" align="center">
 	<div align="center" class="panel-title" >
-		<font size="6px" face="Prompt">내정보</font>
+		<font size="6px" face="Prompt">마이 페이지</font>
 	</div>
 	
 	<table class="table" style="width: 60%; text-align: center; margin-top: 20px" >
@@ -51,7 +51,7 @@
 			<td>우편번호</td>
 			<td>
 				<c:choose>
-					<c:when test="${empty loginUser.postalCode}">비어있음
+					<c:when test="${empty loginUser.postalCode}">-
 					</c:when>
 					<c:otherwise>
 						${loginUser.postalCode}
@@ -68,7 +68,7 @@
 		<tr>
 			<td>자주 사용하는 계좌</td>
 			<td> 
-				만들자
+				-
 			</td>
 		</tr>
 	</table>
@@ -83,6 +83,7 @@
 			<thead>
 				<tr>
 					<th>이름</th>
+					<th>상호명</th>
 					<th>상태</th>
 					<th>신청일</th>
 					<th>승인일</th>
@@ -97,7 +98,7 @@
 <div align="center" style="font-size: 14px; margin-top: 30px; margin-bottom: 30px" class="col-sm-12">
 	<span class="top-bar-menu-item"><a href="/shoppingmall/member/sellerApply">판매자 신청</a></span>
 	<span class="top-bar-menu-item"><a href="#">계좌 등록하기</a></span>
-	<span class="top-bar-menu-item"><a href="#">탈퇴하기</a></span>
+	<span class="top-bar-menu-item"><a href="/shoppingmall/member/deactivatePage">탈퇴하기</a></span>
 </div>
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
 <script>
@@ -109,6 +110,7 @@
 			for(var i=0; i<list.length; i++){
 				str += "<tr>";
 				str += "<td>"+list[i].name+"</td>";
+				str += "<td>"+list[i].busiName+"</td>";
 				if(list[i].status === '승인'){
 					str += "<td style='color:blue'>" + list[i].status + "</td>";
 				}else{

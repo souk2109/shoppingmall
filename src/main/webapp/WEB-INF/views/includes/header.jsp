@@ -49,7 +49,6 @@
 	top: 0;
 	right: 0;
 	left: 0;
-	background: #F5F5F5;
 }
 
 .top-bar-menu {
@@ -155,7 +154,21 @@ A:hover {
 
 	<!-- Header Section Begin -->
 	<header class="header">
-		<div class="header__top">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-3">
+					<div class="header__btn"></div>
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<div class="header__logo">
+						<a href="/shoppingmall/common/main"><img
+							src="/shoppingmall/resources/img/logo.png" alt=""></a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3"></div>
+			</div>
+		</div>
+		<div class="header__top" style="margin-bottom: 30px">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-2 col-md-1 col-6 order-md-1 order-1">
@@ -201,20 +214,6 @@ A:hover {
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-3">
-					<div class="header__btn"></div>
-				</div>
-				<div class="col-lg-6 col-md-6">
-					<div class="header__logo">
-						<a href="/shoppingmall/common/home"><img
-							src="/shoppingmall/resources/img/logo.png" alt=""></a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-3"></div>
 			</div>
 		</div>
 	</header>

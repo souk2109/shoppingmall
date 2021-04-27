@@ -9,6 +9,7 @@ public class SellerRequestVO {
 	private int num;
 	private String name;
 	private String id;
+	private String busiName;
 	private int accountNum;
 	private String email;
 	private String status; // default로 '처리중'

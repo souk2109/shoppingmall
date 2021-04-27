@@ -45,8 +45,7 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	@Override
 	public String changePwd(String id, String oldPwd, String pwd) {
-		String encodedPassword = userMapper.getUser(id).getPwd();
-		boolean result = encoder.matches(oldPwd, encodedPassword);
+		boolean result =  checkPwdIsEqual(id, oldPwd);
 		if(result) {
 			userMapper.updatePwd(id, encoder.encode(pwd));
 			return "success";
@@ -59,5 +58,24 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserVO getUserById(String id) {
 		return userMapper.getUserById(id);
+	}
+
+	// TODO : 나중에 첨부파일까지 삭제하기 위해서 추가해줘야함.
+	@Override
+	public String deactivateUser(String id, String pwd) {
+		if(checkPwdIsEqual(id, pwd)) {
+			userMapper.deleteUser(id);
+			return "success";
+		}
+		else {
+			return "fail";
+		}
+	}
+	
+	// 입력한 비밀번호와 db이 비밀번호와 비교하는 메소드
+	private boolean checkPwdIsEqual(String id, String inputPwd) {
+		String encodedPassword = userMapper.getUser(id).getPwd();
+		boolean result = encoder.matches(inputPwd, encodedPassword);
+		return result;
 	}
 }

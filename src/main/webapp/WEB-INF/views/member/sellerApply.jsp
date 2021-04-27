@@ -27,7 +27,12 @@
 								<input id="id" name="id" type="text" class="form-control" readonly="readonly" value="${loginUser.username }">
 							</div>
 						</div>
-					
+						<div class="form-group" align="left">
+							<div class="col-sm-12">＊상호명</div>
+							<div class="col-sm-12">
+								<input id="busiName" name="busiName" type="text" class="form-control">
+							</div>
+						</div>
 						<!--  이부분 사진으로  -->
 						<div class="form-group" align="left">
 							<div class="col-sm-12">＊사업자 등록증 첨부</div>
@@ -68,12 +73,14 @@
 		e.preventDefault();
 		let id = $("#id").val().trim();
 		let accountNum = $("#accountNum").val().trim();
-		if(!accountNum){
+		let busiName = $("#busiName").val().trim();
+		if(!busiName){
+			alert('상호명을 입력해주세요.');
+		}else if(!accountNum){
 			alert('계좌번호를 입력해주세요.');
 		}
 		else{
 			memberService.getRecentSellerRequest(id, function(SellerRequest) {
-				console.log(SellerRequest);
 				if(!SellerRequest){ //  마지막으로 요청한 정보가 없는 경우 (신규 신청)
 					alert('정상적으로 요청 되었습니다.');
 					registerForm.submit();
@@ -93,14 +100,6 @@
 						return;
 					}
 				}
-				/* let result = validateResult;
-				if(result === "success"){
-					alert('정상적으로 요청 되었습니다.');
-					registerForm.submit();
-				}else{
-					window.location.href = '/shoppingmall/member/myPage';
-					alert('이미 요청한 사용자 입니다.\n(판매자 등록 요청은 한 번만 가능합니다.)');
-				} */
 			});
 		}
 	});

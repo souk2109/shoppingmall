@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shoppingmall.mapper.SellerRequestMapper">
 	<insert id="insertSellerRequest">
-		insert into tbl_seller_request(name, id, accountNum,email) values(#{name}, #{id}, #{accountNum},#{email})
+		insert into tbl_seller_request(name, id, busiName, accountNum,email) values(#{name}, #{id}, #{busiName}, #{accountNum},#{email})
 	</insert>
 	<select id="getSellerRequestList" resultType="org.shoppingmall.domain.SellerRequestVO">
 		select * from tbl_seller_request

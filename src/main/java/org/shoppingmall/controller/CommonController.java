@@ -18,9 +18,6 @@ import lombok.extern.log4j.Log4j;
 public class CommonController {
 	@Autowired
 	private UserService userService;
-	@GetMapping("/home")
-	public void home() {
-	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/loginPage")

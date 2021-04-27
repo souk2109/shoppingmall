@@ -11,4 +11,6 @@ public interface UserService {
 	public String changePwd(String id, String oldPwd, String pwd);
 
 	public UserVO getUserById(String id);
+
+	public String deactivateUser(String id, String pwd);
 }
