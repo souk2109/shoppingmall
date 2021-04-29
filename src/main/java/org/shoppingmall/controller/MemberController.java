@@ -1,7 +1,9 @@
 package org.shoppingmall.controller;
 
 import org.shoppingmall.domain.SellerRequestVO;
+import org.shoppingmall.domain.SimpleCardVO;
 import org.shoppingmall.service.SellerRequestService;
+import org.shoppingmall.service.SimpleCardService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,9 @@ public class MemberController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private SimpleCardService simpleCardService;
+	
 	@GetMapping("/myPage")
 	public void myPage(String result) {
 	}
@@ -37,6 +42,9 @@ public class MemberController {
 	
 	@GetMapping("/deactivatePage")
 	public void deactivatePage() {
+	}
+	@GetMapping("/regSimpleCard")
+	public void regSimpleCard() {
 	}
 	
 	// 판매자 신청 요청
@@ -69,6 +77,18 @@ public class MemberController {
 			url = "redirect:/member/deactivatePage";
 		}
 		return url;
-		 
+	}
+	// 간편 계좌 등록
+	@PostMapping("/doRegSimpleCard")
+	public String regSimpleCard(SimpleCardVO simpleCardVO, RedirectAttributes redirectAttributes) {
+		String result = simpleCardService.regSimpleCard(simpleCardVO);
+		String url;
+		redirectAttributes.addFlashAttribute("regSimpleCardResult",result);
+		if(result == "success") {
+			url = "redirect:/member/myPage";
+		}else {
+			url = "redirect:/member/regSimpleCard";
+		}
+		return url;
 	}
 }

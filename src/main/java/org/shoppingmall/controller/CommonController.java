@@ -20,7 +20,7 @@ public class CommonController {
 	private UserService userService;
 	
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/loginPage")
+	@GetMapping("/login")
 	public void loginPage(String error, Model model) {
 		if(error != null)
 			model.addAttribute("msg",error);
@@ -31,7 +31,7 @@ public class CommonController {
 		
 	}
 	
-	@GetMapping("/registerPage")
+	@GetMapping("/register")
 	public void registerPage() {
 		
 	}

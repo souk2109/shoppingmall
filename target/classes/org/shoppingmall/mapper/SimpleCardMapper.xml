@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shoppingmall.mapper.SimpleCardMapper">
+	<select id="getSimpleCardVO" resultType="org.shoppingmall.domain.SimpleCardVO">
+		select * from tbl_simple_card where id = #{id}
+	</select>
+	<insert id="insertSimpleCardVO">
+		insert into tbl_simple_card(id, name, cardNum, pwd, bankName,validateYear, validateMonth,cvc)
+		values(#{id}, #{name}, #{cardNum}, #{pwd}, #{bankName},#{validateYear},#{validateMonth}, #{cvc});
+	</insert>
+	<select id="isSimpleCardVO" resultType="int">
+		select count(*) from tbl_simple_card where id = #{id} and cardNum = #{cardNum}
+	</select>
+</mapper>

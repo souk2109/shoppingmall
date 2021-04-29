@@ -42,7 +42,7 @@
 						</div>
 						
 						<div class="form-group" align="left">
-							<div class="col-sm-12">＊계좌 번호</div>
+							<div class="col-sm-12">＊카드 번호</div>
 							<div class="col-sm-12">
 								<input id="accountNum" name="accountNum" type="text" class="form-control" placeholder="-없이 번호만 입력해주세요" autocomplete="off">
 							</div>

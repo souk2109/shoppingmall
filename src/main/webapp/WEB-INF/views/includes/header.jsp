@@ -92,22 +92,7 @@ A:hover {
 	</div>
 
 	<div class="humberger__menu__overlay"></div>
-	<article class="top-bar">
-		<div class="top-bar-menu">
-			<sec:authorize access="isAnonymous()">
-				<span class="top-bar-menu-item"><a href="/shoppingmall/common/loginPage">로그인</a></span>
-				<span class="top-bar-menu-item"><a href="/shoppingmall/common/registerPage">회원가입</a></span>
-			</sec:authorize>
-			
-			<sec:authorize access="isAuthenticated()">
-				<span class="top-bar-menu-item"><a href="/shoppingmall/member/doLogout">로그아웃</a></span>
-				<span class="top-bar-menu-item"><a href="/shoppingmall/member/myPage">내정보</a></span>
-			</sec:authorize>
-			<span class="top-bar-menu-item"><a href="#">문의하기</a></span>
-		</div>
-	</article>
 	<div class="humberger__menu__wrapper">
-
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
 				<li class="dropdown"><a href="#">카테고리</a>
@@ -154,6 +139,20 @@ A:hover {
 
 	<!-- Header Section Begin -->
 	<header class="header">
+		<article class="top-bar">
+			<div class="top-bar-menu">
+				<sec:authorize access="isAnonymous()">
+					<span class="top-bar-menu-item"><a href="/shoppingmall/common/login">로그인</a></span>
+					<span class="top-bar-menu-item"><a href="/shoppingmall/common/register">회원가입</a></span>
+				</sec:authorize>
+						
+				<sec:authorize access="isAuthenticated()">
+					<span class="top-bar-menu-item"><a href="/shoppingmall/member/doLogout">로그아웃</a></span>
+					<span class="top-bar-menu-item"><a href="/shoppingmall/member/myPage">내정보</a></span>
+				</sec:authorize>
+				<span class="top-bar-menu-item"><a href="#">문의하기</a></span>
+			</div>
+		</article>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-3">

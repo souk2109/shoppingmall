@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shoppingmall.mapper.CardMapper">
+	<select id="isCardVO" resultType="int">
+		select count(*) from tbl_card 
+		where name=#{name} and cardNum=#{cardNum} 
+		and pwd = #{pwd} and bankName = #{bankName} and validateMonth =#{validateMonth} and validateYear=#{validateYear}
+	</select>
+	<update id="deposit">
+		update tbl_card 
+		set balance = balance + #{money}
+		where name=#{cardVO.name} and cardNum=#{cardVO.cardNum} 
+		and pwd = #{cardVO.pwd} and bankName = #{cardVO.bankName} and validateMonth =#{cardVO.validateMonth} and validateYear=#{cardVO.validateYear}
+	</update>
+	<update id="withdraw">
+		update tbl_card 
+		set balance = balance - #{money}
+		where name=#{cardVO.name} and cardNum=#{cardVO.cardNum} 
+		and pwd = #{cardVO.pwd} and bankName = #{cardVO.bankName} and validateMonth =#{cardVO.validateMonth} and validateYear=#{cardVO.validateYear}
+	</update>
+</mapper>

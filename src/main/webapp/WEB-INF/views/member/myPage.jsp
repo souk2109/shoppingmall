@@ -66,7 +66,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>자주 사용하는 계좌</td>
+			<td>간편 카드</td>
 			<td> 
 				-
 			</td>
@@ -97,7 +97,7 @@
 </div>
 <div align="center" style="font-size: 14px; margin-top: 30px; margin-bottom: 30px" class="col-sm-12">
 	<span class="top-bar-menu-item"><a href="/shoppingmall/member/sellerApply">판매자 신청</a></span>
-	<span class="top-bar-menu-item"><a href="#">계좌 등록하기</a></span>
+	<span class="top-bar-menu-item"><a href="/shoppingmall/member/regSimpleCard">간편 카드 등록하기</a></span>
 	<span class="top-bar-menu-item"><a href="/shoppingmall/member/deactivatePage">탈퇴하기</a></span>
 </div>
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
@@ -135,7 +135,7 @@
 <script>
 let pwdResult = "<c:out value='${pwdResult}'/>";
 let sellerApplyResult = "<c:out value='${sellerApplyResult}'/>";
-
+let regSimpleCardResult = "<c:out value='${regSimpleCardResult}'/>";
 if(pwdResult){
 	if(pwdResult === 'success'){
 		alert('비밀번호를 성공적으로 변경하였습니다.');
@@ -147,6 +147,12 @@ if(pwdResult){
 if(sellerApplyResult){
 	if(sellerApplyResult === 'success'){
 		alert('판매자 신청을 정상적으로 완료하였습니다.');
+	}
+}
+
+if(regSimpleCardResult){
+	if(regSimpleCardResult === 'success'){
+		alert('간편 카드를 정상적으로 등록하였습니다.');
 	}
 }
 </script>
