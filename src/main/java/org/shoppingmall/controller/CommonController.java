@@ -41,7 +41,7 @@ public class CommonController {
 		if(result == 1) {
 			log.info("[회원가입 성공] id: "+userVO.getId());
 		}
-		return "redirect:/common/loginPage";
+		return "redirect:/common/login";
 	}
 	
 	@GetMapping("/main")

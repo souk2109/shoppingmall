@@ -50,7 +50,7 @@
 						<div align="center" style="font-size: 14px; margin-top: 30px; margin-bottom: 30px" class="col-sm-12">
 							<span class="top-bar-menu-item"><a href="#">아이디 찾기</a></span>
             				<span class="top-bar-menu-item"><a href="#">비밀번호 찾기</a></span>
-            				<span class="top-bar-menu-item"><a href="/shoppingmall/common/registerPage">회원가입</a></span>
+            				<span class="top-bar-menu-item"><a href="/shoppingmall/common/register">회원가입</a></span>
 						</div>
 					</form>
 				</div>

@@ -13,7 +13,7 @@
 		<div class="col-md-6" style="margin: 0 auto;">
 			<div class="panel-default">
 				<div align="center">
-					<font class="panel-title" size="20px" face="Prompt">간편 계좌 등록</font>
+					<font class="panel-title" size="20px" face="Prompt">간편 카드 등록</font>
 				</div>
 				
 				<div class="panel-body" style="margin-top: 20px;">
@@ -62,9 +62,9 @@
 						</div>
 						
 						<div class="form-group" align="left">
-							<div class="col-sm-12">＊비밀 번호</div>
+							<div class="col-sm-12">＊카드 비밀번호</div>
 							<div class="col-sm-12">
-								<input id="pwd" maxlength="4" name="pwd" type="password" class="form-control" placeholder="숫자 네개" autocomplete="off" onkeypress="inNumber();">
+								<input id="pwd" maxlength="4" name="pwd" type="password" class="form-control" placeholder="숫자 4자리" autocomplete="off" onkeypress="inNumber();">
 							</div>
 						</div>
 						<div class="form-group">

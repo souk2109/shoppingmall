@@ -1,5 +1,7 @@
 package org.shoppingmall.service;
 
+import java.util.List;
+
 import org.shoppingmall.domain.SimpleCardVO;
 import org.shoppingmall.mapper.CardMapper;
 import org.shoppingmall.mapper.SimpleCardMapper;
@@ -33,6 +35,11 @@ public class SimpleCardServiceImpl implements SimpleCardService {
 			return "notFoundCard";
 		}
 		 
+	}
+
+	@Override
+	public List<SimpleCardVO> getSimpleCardVO(String id) {
+		return simpleCardMapper.getSimpleCardVO(id);
 	}
 
 }

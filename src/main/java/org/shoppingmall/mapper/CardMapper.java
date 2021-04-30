@@ -18,4 +18,5 @@ public interface CardMapper {
 	public int isCardVO(SimpleCardVO simpleCardVO); // SimpleCardVO로 유효한 카드가 있는지 확인 (1이면 존재)
 	public int deposit(@Param("cardVO")CardVO cardVO, @Param("money") int money); // 입금
 	public int withdraw(CardVO cardVO, @Param("money") int money); // 출금
+	public int insertCardVO(CardVO cardVO);
 }

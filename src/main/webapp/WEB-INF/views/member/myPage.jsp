@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
 <sec:authentication property="principal" var="loginUser"/>
 <div class="container" align="center">
@@ -65,12 +66,25 @@
 				<fmt:formatDate value="${loginUser.regDate}" pattern="yyyy년 MM월 dd일"/>
 			</td>
 		</tr>
-		<tr>
-			<td>간편 카드</td>
-			<td> 
-				-
-			</td>
-		</tr>
+		
+		<c:choose>
+			<c:when test="${empty myCard}">
+				<tr>
+					<td>간편 카드</td>
+					<td>-</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<c:forEach items="${myCard}" var="card">
+				<tr>
+					<td>간편 카드</td>
+					<td>${card.bankName} 
+					${fn:substring(card.cardNum,0,4)} **** ${fn:substring(card.cardNum,8,12)} 
+					${fn:substring(card.name,0,1)}*${fn:substring(card.name,2,3)}
+				</tr>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</table>
 	
 	<a href="/shoppingmall/member/pwdModify">
@@ -133,28 +147,33 @@
 	});
 </script>
 <script>
-let pwdResult = "<c:out value='${pwdResult}'/>";
-let sellerApplyResult = "<c:out value='${sellerApplyResult}'/>";
-let regSimpleCardResult = "<c:out value='${regSimpleCardResult}'/>";
-if(pwdResult){
-	if(pwdResult === 'success'){
-		alert('비밀번호를 성공적으로 변경하였습니다.');
-	}else{
-		alert('비밀번호를 변경하는데 실패하였습니다.\n(현재 비밀번호가 틀림)');
+	let pwdResult = "<c:out value='${pwdResult}'/>";
+	let sellerApplyResult = "<c:out value='${sellerApplyResult}'/>";
+	let regSimpleCardResult = "<c:out value='${regSimpleCardResult}'/>";
+	if(pwdResult){
+		if(pwdResult === 'success'){
+			alert('비밀번호를 성공적으로 변경하였습니다.');
+		}else{
+			alert('비밀번호를 변경하는데 실패하였습니다.\n(현재 비밀번호가 틀림)');
+		}
 	}
-}
+	
+	if(sellerApplyResult){
+		if(sellerApplyResult === 'success'){
+			alert('판매자 신청을 정상적으로 완료하였습니다.');
+		}
+	}
+	
+	if(regSimpleCardResult){
+		if(regSimpleCardResult === 'success'){
+			alert('간편 카드를 정상적으로 등록하였습니다.');
+		}
+	}
+</script>
 
-if(sellerApplyResult){
-	if(sellerApplyResult === 'success'){
-		alert('판매자 신청을 정상적으로 완료하였습니다.');
-	}
-}
-
-if(regSimpleCardResult){
-	if(regSimpleCardResult === 'success'){
-		alert('간편 카드를 정상적으로 등록하였습니다.');
-	}
-}
+<script>
+	/* let myCard = "<c:out value='${myCard}'/>";
+	console.log(myCard); */
 </script>
 <!-- 탈퇴하기, 수정하기, 판매자 신청하기 -->
 <%@include file="../includes/footer.jsp" %>

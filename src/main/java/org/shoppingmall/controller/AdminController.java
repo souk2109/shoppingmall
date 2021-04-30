@@ -1,5 +1,6 @@
 package org.shoppingmall.controller;
 
+import org.shoppingmall.domain.CardVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.UserVO;
 import org.shoppingmall.service.SellerRequestService;
@@ -39,8 +40,8 @@ public class AdminController {
 	}
 	
 	@PostMapping("/agreeSellerRequest")
-	public String agreeSellerRequest(@RequestParam("id") String id) {
-		sellerRequestService.agreeSellerRequest(id);
+	public String agreeSellerRequest(@RequestParam("id") String id,@RequestParam("busiName") String busiName, CardVO cardVO) {
+		sellerRequestService.agreeSellerRequest(id, busiName, cardVO);
 		return "redirect:/admin/showSellerRequests";
 	}
 	

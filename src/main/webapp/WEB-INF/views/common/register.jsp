@@ -50,41 +50,33 @@
 								<div id="nicknameComment"></div>
 							</div>
 						</div>
-						
 						<div class="form-group" align="left">
 							<div class="col-sm-12">＊생년월일</div>
 							<input id="birthday" type="hidden" name="birthday">
-							<div class="col-sm-12">
-								<div class="col-sm-3">
-									<input id="year" type="text" placeholder="년" maxlength="4" autocomplete="off">
-								</div>
-								
-								<div class="col-sm-4">
-									<span>
-										<select aria-label="월" id="month">
-											<option value="">월</option>
-											<option value="01">1</option>
-											<option value="02">2</option>
-											<option value="03">3</option>
-											<option value="04">4</option>
-											<option value="05">5</option>
-											<option value="06">6</option>
-											<option value="07">7</option>
-											<option value="08">8</option>
-											<option value="09">9</option>
-											<option value="10">10</option>
-											<option value="11">11</option>
-											<option value="12">12</option>
-										</select>
-									</span> 
-								</div>
-								
-								<div class="col-sm-3 box">
-									<input id="date" type="text" placeholder="일" aria-label="일" maxlength="2" autocomplete="off">
+							<div class="col-sm-12" style="padding-left: 15px; padding-right: 15px;margin: 0 auto;">
+								<div align="center" style="height: 45px; font-family: 'Nunito Sans', sans-serif">
+									<input id="year" name="year" maxlength="4" type="text"  placeholder="년" autocomplete="off" style="width: 32%">
+									<select aria-label="월" id="month" style="width: 32%">
+										<option value="">월</option>
+										<option value="01">1월</option>
+										<option value="02">2월</option>
+										<option value="03">3월</option>
+										<option value="04">4월</option>
+										<option value="05">5월</option>
+										<option value="06">6월</option>
+										<option value="07">7월</option>
+										<option value="08">8월</option>
+										<option value="09">9월</option>
+										<option value="10">10월</option>
+										<option value="11">11월</option>
+										<option value="12">12월</option>
+									</select>
+									<input id="date" name="date" maxlength="2" type="text"  placeholder="일" autocomplete="off" style="width: 32%">
 								</div>
 								<div id="birthdayComment" class="col-sm-12"></div>
 							</div>
 						</div>
+						
 						
 						<div class="form-group" align="left">
 							<div class="col-sm-12">＊성별</div>
@@ -230,6 +222,11 @@
 	$("#reduplicationCheck").on("click", function(e) {
 		e.preventDefault();
 		let idVal = $("#id").val().trim();
+		if(!idVal){
+			$("#idComment").attr("style","color : red; font-size:13px;");
+			$("#idComment").html("id를 입력하세요");
+			return;
+		}
 		commonService.getIdValidate(idVal, function(result) {
 			if(result === "success"){
 				$("#idComment").attr("style","color : blue; font-size:13px;");

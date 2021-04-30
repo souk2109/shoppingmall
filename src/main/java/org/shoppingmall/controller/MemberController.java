@@ -1,13 +1,18 @@
 package org.shoppingmall.controller;
 
+import org.shoppingmall.domain.CardVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SimpleCardVO;
+import org.shoppingmall.security.CustomUserDetails;
 import org.shoppingmall.service.SellerRequestService;
 import org.shoppingmall.service.SimpleCardService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +34,10 @@ public class MemberController {
 	private SimpleCardService simpleCardService;
 	
 	@GetMapping("/myPage")
-	public void myPage(String result) {
+	public void myPage(Model model, SecurityContextHolder contextHolder) {
+		Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails)authentication.getPrincipal();
+		model.addAttribute("myCard", simpleCardService.getSimpleCardVO(user.getUsername()));
 	}
 	@GetMapping("/pwdModify")
 	public void modify() {
@@ -48,8 +56,10 @@ public class MemberController {
 	}
 	
 	// 판매자 신청 요청
+	@Transactional
 	@PostMapping("/doSellerApply")
 	public String doSellerApply(SellerRequestVO sellerRequestVO) {
+		log.info("sellerRequestVO:" + sellerRequestVO); 
 		sellerRequestService.insertSellerRequest(sellerRequestVO);
 		log.info("판매자 신청 성공");
 		return "redirect:/member/myPage";

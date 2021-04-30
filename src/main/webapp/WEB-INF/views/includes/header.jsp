@@ -108,10 +108,15 @@ A:hover {
 				<li><a href="#">내 정보</a></li>
 				<li><a href="#">주문정보</a></li>
 				<li><a href="#">찜 목록</a></li>
+				<sec:authorize access="hasRole('ROLE_SELLER')">
+					<div align="center" class="col-sm-12" style="margin-top: 10px; margin-bottom: 10px">------------ 판매자 카테고리 ------------</div>
+					<li><a href="/shoppingmall/seller/regProduct">상품등록</a></li>
+					<li><a href="/shoppingmall/seller/myProducts">판매 중 상품</a></li>
+					<li><a href="/shoppingmall/seller/#">거래내역</a></li>
+				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<div align="center" class="col-sm-12" style="margin-top: 10px; margin-bottom: 10px">------------- 관리자 카테고리 -------------</div>
+					<div align="center" class="col-sm-12" style="margin-top: 10px; margin-bottom: 10px">------------ 관리자 카테고리 ------------</div>
 					<li><a href="/shoppingmall/admin/showSellerRequests">판매자 신청 보기</a></li>
-					<li><a href="#">볼수있음</a></li>
 				</sec:authorize>
 			</ul>
 		</nav>

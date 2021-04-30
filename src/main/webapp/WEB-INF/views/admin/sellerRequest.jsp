@@ -48,9 +48,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td>계좌 번호</td>
+			<td>은행</td>
 			<td> 
-				${sellerRequest.accountNum}
+				${sellerRequest.bankName}
+			</td>
+		</tr>
+		<tr>
+			<td>카드 번호</td>
+			<td> 
+				${sellerRequest.cardNum}
 			</td>
 		</tr>
 		<tr>
@@ -66,12 +72,23 @@
 			</td>
 		</tr>
 	</table>
+	
 	<div id="agreeBtn" class="col-sm-6 btn" style="border-color:black; color: black; margin-top: 20px; font-size: 18px; background-color: white">수락하기</div>
 	<div id="rejectBtn" class="col-sm-6 btn" style="border-color:black; color: black; margin-top: 20px; font-size: 18px; background-color: white">거절하기</div>
 </div>
 
+<!--  승인 시 카드 생성..(미리 만들어진 카드를 사용할 수 없기 떄문에 임시방편)  -->
 <form id="submotForm" method="post">
 	<input type="hidden" name="id" value="${user.id }">
+	<input type="hidden" name="name" value="${sellerRequest.name}">
+	<input type="hidden" name="cardNum" value="${sellerRequest.cardNum}">
+	<input type="hidden" name="validateYear" value="${sellerRequest.validateYear}">
+	<input type="hidden" name="validateMonth" value="${sellerRequest.validateMonth}">
+	<input type="hidden" name="cvc" value="${sellerRequest.cvc}">
+	<input type="hidden" name="pwd" value="${sellerRequest.pwd}">
+	<input type="hidden" name="busiName" value="${sellerRequest.busiName}">
+	<input type="hidden" name="bankName" value="${sellerRequest.bankName}">
+	 
 </form>
 
 
