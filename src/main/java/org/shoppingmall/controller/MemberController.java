@@ -1,6 +1,5 @@
 package org.shoppingmall.controller;
 
-import org.shoppingmall.domain.CardVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SimpleCardVO;
 import org.shoppingmall.security.CustomUserDetails;

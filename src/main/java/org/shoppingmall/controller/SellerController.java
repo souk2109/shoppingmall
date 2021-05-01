@@ -45,6 +45,7 @@ public class SellerController {
 	@PostMapping("/doRegisteProduct")
 	public String regProduct(ProductInfoVO productInfoVO) {
 		productInfoService.insertProductInfoVO(productInfoVO);
+		log.info(productInfoVO);
 		return "redirect:/seller/myProducts";
 	}
 	@PostMapping("/modifyProductInfoVO")

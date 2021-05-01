@@ -5,7 +5,7 @@ import java.util.List;
 import org.shoppingmall.domain.ProductInfoVO;
 
 public interface ProductInfoService {
-	public int insertProductInfoVO(ProductInfoVO productInfoVO);
+	public void insertProductInfoVO(ProductInfoVO productInfoVO);
 	public ProductInfoVO getProductInfo(int pno);
 	public List<ProductInfoVO>getProductInfoList(String loginedId);
 	public int modifyProductInfoVO(ProductInfoVO productInfoVO);

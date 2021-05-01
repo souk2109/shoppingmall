@@ -5,6 +5,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
 <sec:authentication property="principal" var="loginUser"/>
+<style>
+	.uploadResult ul{
+		display: flex;
+		flex-flow: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.uploadResult ul li{
+		list-style: none;
+		padding: 10px;
+	}
+	.uploadResult ul li image{
+		width: 20px;
+	}
+</style>
 <div class="container" align="center">
 	<div class="row">
 		<div class="col-md-6" style="margin: 0 auto;">
@@ -14,7 +29,7 @@
 				</div>
 				
 				<div class="panel-body" style="margin-top: 20px;">
-					<form id="registerForm" action="/shoppingmall/seller/doRegisteProduct" method="post">
+					<form id="registerForm" action="/shoppingmall/seller/doRegisteProduct" method="post" enctype="multipart/form-data">
 						<div class="form-group" align="left">
 							<div class="col-sm-12">＊이름</div>
 							<div class="col-sm-12">
@@ -67,19 +82,139 @@
 								<input id="discount" name="discount" type="text" class="form-control" placeholder="ex, 3.2"  autocomplete="off">
 							</div>
 						</div>
+						<div class="form-group" align="left">
+							<div class="col-sm-12">파일첨부</div>
+							<div class="col-sm-12">
+								<input id="attachFile" name="attachFile" type="file" multiple="multiple" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12">
+								<div id="uploadResult" class="uploadResult">
+									<ul></ul>
+								</div>
+							</div>
+						</div>
+						
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-12">
 								<input id="registerBtn" type="submit"  value="등록하기" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: green; color: white;">
 							</div>
 						</div>
-						
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+
+<script>
+	let registerForm = $("#registerForm");
+	$("#registerBtn").on("click", function(e) {
+		e.preventDefault();
+		let str = '';
+		$(".uploadResult ul li").each(function(i, obj) {
+			let jobj= $(obj);
+			str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+			str +=	"<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+			str +=	"<input type='hidden' name='attachList["+i+"].path' value='"+jobj.data("path")+"'>";
+			str +=	"<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
+		});
+		console.log(str);
+		registerForm.append(str).submit();	
+	});
+	
+	const regex = new RegExp("(.*?)\.(jpg|gif|png|jpeg|bmp)$");
+	const maxSize = 5242880; // 5MB
+	
+	function checkExtension(fileName, fileSize) {
+		if(fileSize >= maxSize){
+			alert('파일 사이즈가 5MB를 초과합니다.');
+			return false;
+		}
+		if(!regex.test(fileName)){
+			alert('해당 종류의 파일은 업로드가 불가능합니다.');
+			return false;
+		}
+		return true;
+	}
+	// 사진 파일 등록하기
+	$("input[type='file']").change(function(e) {
+		var formData = new FormData();
+		var inputFile = $("input[name='attachFile']");
+		var files = inputFile[0].files;
+		console.log(files);
+		for(var i=0; i< files.length; i++){
+			if(!checkExtension(files[i].name, files[i].size)){
+				if ($.browser.msie) {
+					// 브라우저가 ie인 경우 초기화
+					$("#attachFile").replaceWith($("#attachFile").clone(true) );
+				} else {
+					// 다른 브라우저인 경우 input[type=file] init.
+					$("#attachFile").val("");
+				}
+				return false;
+			}
+			formData.append("attachFile", files[i]);
+		}
+		$.ajax({
+			url: '/shoppingmall/uploadImageAction',
+			processData: false,
+			contentType: false,
+			data: formData,
+			type: 'POST',
+			dataType : 'json',
+			success: function(result) {
+				console.log(result);
+				showUploadedFile(result);
+			}
+		});
+	});
+	// 썸네일 보여주기
+	var uploadResult =  $(".uploadResult");
+	function showUploadedFile(fileList) {
+		if(!fileList || fileList.length == 0){
+			return;
+		}
+		let uploadUL = $(".uploadResult ul");
+		uploadUL.html('');
+		var str = '';
+		$(fileList).each(function(i, obj) {
+			var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid +"_" +obj.fileName);
+			str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>";
+			str += "<div>";
+			str += "<span>"+obj.fileName+"<span>";
+			str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-circle'>";
+			str += "<i class='fa fa-times'></i>";
+			str += "</button><br>";
+			str += "<img src='/shoppingmall/display?fileName="+fileCallPath+"'>";
+			str += "</div>";
+			str += "</li>";
+		});
+		uploadUL.append(str);
+	};
+	
+	// 썸네일 사진 삭제하기
+	$(".uploadResult").on("click", "button", function() {
+			var targetFile = $(this).data("file");
+			var type = $(this).data("type");
+			var targetLi = $(this).closest("li");
+			$.ajax({
+				url: '/shoppingmall/deleteFile',
+				data: {fileName: targetFile, type:type},
+				dataType: 'text',
+				type: 'POST',
+				success: function(result) {
+					console.log("삭제 완료");
+					targetLi.remove();
+				}
+			});
+		});
+</script>
+
 <script>
 	function inNumber(){
 	    if(event.keyCode<48 || event.keyCode>57){

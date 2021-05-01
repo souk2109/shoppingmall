@@ -9,7 +9,9 @@
      	<select id="getProductInfoList" resultType="org.shoppingmall.domain.ProductInfoVO">
      		select * from tbl_product_info where sellerId=#{sellerId}
      	</select>
-     	
+     	<select id="getLastPnoByUserid" resultType="int">
+     		select pno from tbl_product_info where sellerId=#{sellerId} order by regDate desc limit 1
+     	</select>
      	<select id="getProductInfo" resultType="org.shoppingmall.domain.ProductInfoVO">
      		select * from tbl_product_info where pno=#{pno}
      	</select>

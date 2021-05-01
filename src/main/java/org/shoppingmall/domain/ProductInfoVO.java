@@ -1,5 +1,8 @@
 package org.shoppingmall.domain;
 
+import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -13,4 +16,6 @@ public class ProductInfoVO {
 	private int stock;
 	private int price;
 	private float discount;
+	private Date regDate;
+	private List<ProductAttachVO> attachList;
 }
