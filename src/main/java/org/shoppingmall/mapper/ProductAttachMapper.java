@@ -8,4 +8,5 @@ public interface ProductAttachMapper {
 	public void insertProductAttachVO(ProductAttachVO attachVO);
 	public void deleteProductAttachVO(String uuid);
 	public List<ProductAttachVO> getAttachsByPno(int pno);
+	public void deleteProductAttachsByPno(int pno);
 }

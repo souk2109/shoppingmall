@@ -8,5 +8,5 @@ public interface ProductInfoService {
 	public void insertProductInfoVO(ProductInfoVO productInfoVO);
 	public ProductInfoVO getProductInfo(int pno);
 	public List<ProductInfoVO>getProductInfoList(String loginedId);
-	public int modifyProductInfoVO(ProductInfoVO productInfoVO);
+	public void modifyProductInfoVO(ProductInfoVO productInfoVO);
 }

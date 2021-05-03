@@ -8,4 +8,5 @@ public class ProductAttachVO {
 	private String fileName;
 	private boolean fileType;
 	private int pno;
+	private boolean main; // 대표이미지 여부
 }

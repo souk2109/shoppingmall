@@ -8,9 +8,8 @@
 	<table class="table" style="width: 60%; text-align: center; margin-top: 20px; font-size: 12px">
 		<thead>
 			<tr>
-				<th>이미지</th>
-				<th>카테고리</th>
 				<th>상품명</th>
+				<th>카테고리</th>
 				<th>재고(개)</th>
 				<th>가격(원)</th>
 				<th>할인(%)</th>
@@ -20,7 +19,8 @@
 		<tbody id="tbody">
 			<c:forEach items="${products }" var="product">
 			<tr>
-				<td>이미지 첨부 예정</td>
+				<td><a href="/shoppingmall/" style="color: blue">${product.prdName}</a></td>
+				
 				<c:choose>
 					<c:when test="${'food' eq product.category}">
 						<td>음식</td>
@@ -30,7 +30,6 @@
 					</c:when>
 				</c:choose>
 								 
-				<td>${product.prdName}</td>
 				<td>${product.stock}</td>
 				<td>${product.price}</td>
 				<td>${product.discount}</td>
@@ -44,7 +43,7 @@
 <script>
 	$(".mdfBtn").on("click", function() {
 		let pno = $(this).data("pno");
-		window.location.href = "/shoppingmall/seller/product?pno="+pno;
+		window.location.href = "/shoppingmall/seller/modProduct?pno="+pno;
 	});
 </script>
 

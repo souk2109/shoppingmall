@@ -36,11 +36,11 @@ public class SellerController {
 	public void myProducts(Model model) {
 		model.addAttribute("products", productInfoService.getProductInfoList(getLoginedId()));
 	}
-	@GetMapping("/product")
-	public void myProducts(int pno, Model model) {
+	
+	@GetMapping("/modProduct")
+	public void modifyProduct(int pno, Model model) {
 		model.addAttribute("product", productInfoService.getProductInfo(pno));
 	}
-	
 	
 	@PostMapping("/doRegisteProduct")
 	public String regProduct(ProductInfoVO productInfoVO) {
@@ -48,13 +48,13 @@ public class SellerController {
 		log.info(productInfoVO);
 		return "redirect:/seller/myProducts";
 	}
+	
 	@PostMapping("/modifyProductInfoVO")
 	public String modifyProductInfoVO(ProductInfoVO productInfoVO) {
 		productInfoService.modifyProductInfoVO(productInfoVO);
+		log.info(productInfoVO);
 		return "redirect:/seller/myProducts";
 	}
-	
-	
 	
 	private String getLoginedId() {
 		Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();

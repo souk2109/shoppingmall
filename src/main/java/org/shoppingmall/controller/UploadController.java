@@ -3,10 +3,8 @@ package org.shoppingmall.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,8 +13,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.shoppingmall.domain.AttachFileDTO;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
+import org.shoppingmall.domain.ProductAttachVO;
+import org.shoppingmall.service.ProductAttachService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,8 +23,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +34,9 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Controller
 @Log4j
 public class UploadController {
+	@Autowired
+	private ProductAttachService productAttachService;
+	
 	@PostMapping(value = "/uploadImageAction", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxAction(MultipartFile [] attachFile) {
@@ -117,37 +119,6 @@ public class UploadController {
 		return result;
 	}
 	
-	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	@ResponseBody
-	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName){
-		log.info("download file : " + fileName);
-		Resource resource = new FileSystemResource("C:\\upload\\" + fileName);
-		if(!resource.exists()) {
-			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
-		}
-		log.info("resource 이름 : " + resource);
-		String resourceName = resource.getFilename();
-		String resourceOriginalName = resourceName.substring(resourceName.lastIndexOf("_")+1);
-		HttpHeaders headers = new HttpHeaders();
-		try {
-			String downloadName = null;
-			if(userAgent.contains("Trident")) {
-				log.info("인터넷 익스플로어에서 접속");
-				downloadName = URLEncoder.encode(resourceOriginalName,"UTF-8").replaceAll("\\+", " ");
-			}else if(userAgent.contains("Edge")){
-				log.info("Edge에서 접속");
-				downloadName = URLEncoder.encode(resourceOriginalName,"UTF-8");	
-			}else {
-				log.info("크롬에서 접속");
-				downloadName = new String(resourceOriginalName.getBytes("UTF-8"),"ISO-8859-1");		
-			}
-			headers.add("Content-Disposition", "attachment; filename="  + downloadName);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Resource>(resource, headers,HttpStatus.OK);
-	}
-	
 	@PostMapping("/deleteFile")
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName, String type){
@@ -168,7 +139,38 @@ public class UploadController {
 		}
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}
+	
+	@ResponseBody
+	@GetMapping(value = "/getProductImages/{pno}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<List<ProductAttachVO>> getProductImages(@PathVariable("pno") int pno) {
+		List<ProductAttachVO> list = productAttachService.getProductImages(pno);
+		return new ResponseEntity<List<ProductAttachVO>>(list, HttpStatus.OK);
+	}
 }
 
 
+
+/*
+ * @GetMapping(value = "/download", produces =
+ * MediaType.APPLICATION_OCTET_STREAM_VALUE)
+ * 
+ * @ResponseBody public ResponseEntity<Resource>
+ * downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName){
+ * log.info("download file : " + fileName); Resource resource = new
+ * FileSystemResource("C:\\upload\\" + fileName); if(!resource.exists()) {
+ * return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND); }
+ * log.info("resource 이름 : " + resource); String resourceName =
+ * resource.getFilename(); String resourceOriginalName =
+ * resourceName.substring(resourceName.lastIndexOf("_")+1); HttpHeaders headers
+ * = new HttpHeaders(); try { String downloadName = null;
+ * if(userAgent.contains("Trident")) { log.info("인터넷 익스플로어에서 접속"); downloadName
+ * = URLEncoder.encode(resourceOriginalName,"UTF-8").replaceAll("\\+", " ");
+ * }else if(userAgent.contains("Edge")){ log.info("Edge에서 접속"); downloadName =
+ * URLEncoder.encode(resourceOriginalName,"UTF-8"); }else { log.info("크롬에서 접속");
+ * downloadName = new
+ * String(resourceOriginalName.getBytes("UTF-8"),"ISO-8859-1"); }
+ * headers.add("Content-Disposition", "attachment; filename=" + downloadName); }
+ * catch (UnsupportedEncodingException e) { e.printStackTrace(); } return new
+ * ResponseEntity<Resource>(resource, headers,HttpStatus.OK); }
+ */
 
