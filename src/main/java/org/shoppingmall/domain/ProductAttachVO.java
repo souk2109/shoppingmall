@@ -3,6 +3,7 @@ import lombok.Data;
 
 @Data
 public class ProductAttachVO {
+	private String id;
 	private String uuid;
 	private String path;
 	private String fileName;

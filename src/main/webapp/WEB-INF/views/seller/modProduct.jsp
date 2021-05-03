@@ -124,6 +124,7 @@
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
 <script type="text/javascript" src="/shoppingmall/resources/js/fileupload.js"></script>
 <script>
+	const id = '<c:out value='${loginUser.username}'/>';
 	let registerForm = $("#registerForm");
 	// 수정하기를 눌렀을 때 
 	$("#registerBtn").on("click", function(e) {
@@ -131,6 +132,7 @@
 		let str = '';
 		$(".uploadResult ul li").each(function(i, obj) {
 			let jobj= $(obj);
+			str += "<input type='hidden' name='attachList["+i+"].id' value='"+ id +"'>";
 			str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
 			str +=	"<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
 			str +=	"<input type='hidden' name='attachList["+i+"].path' value='"+jobj.data("path")+"'>";
@@ -143,10 +145,16 @@
 	// 대표 사진 등록
 	function mainPictureSelection() {
 		$(".imgLi").on("click", function() {
-			$(".uploadResult ul li").attr("data-main",0);
-			$(".uploadResult ul li").removeAttr("style");
-			$(this).closest("li").attr("data-main", 1);
-			$(this).closest("li").attr("style", "border : 3px solid green");
+			console.log("dwdw: "+$(this).closest("li").attr("data-main"));
+			if($(this).closest("li").attr("data-main") === "1"){
+				$(this).closest("li").attr("data-main", 0);
+				$(this).closest("li").removeAttr("style");
+			}else{
+				$(".uploadResult ul li").attr("data-main",0);
+				$(".uploadResult ul li").removeAttr("style");
+				$(this).closest("li").attr("data-main", 1);
+				$(this).closest("li").attr("style", "border : 3px solid green");
+			}
 		});
 	}
 	
@@ -170,7 +178,6 @@
 		var formData = new FormData();
 		var inputFile = $("input[name='attachFile']");
 		var files = inputFile[0].files;
-		console.log(files);
 		for(var i=0; i< files.length; i++){
 			if(!checkExtension(files[i].name, files[i].size)){
 				if ($.browser.msie) {
@@ -208,8 +215,13 @@
 			if(obj.main){
 				main = "1";
 			}
-			 
+			
+			console.log("obj.uploadPath : " + obj.uploadPath);
+			console.log("uuid:" +  obj.uuid);
+			console.log("fileName : "+ obj.fileName);
+			
 			var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid +"_" +obj.fileName);
+			console.log(fileCallPath);
 			if(main === "1"){
 				str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' data-main='"+main+"' style='border : 3px solid green'>";
 			}else{

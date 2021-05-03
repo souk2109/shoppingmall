@@ -1,5 +1,6 @@
 package org.shoppingmall.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.shoppingmall.domain.ProductAttachVO;
@@ -35,7 +36,15 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 
 	@Override
 	public List<ProductInfoVO> getProductInfoList(String loginedId) {
-		return productInfoMapper.getProductInfoList(loginedId);
+		List<ProductInfoVO> list = productInfoMapper.getProductInfoList(loginedId);
+		list.forEach(product -> {
+			int pno = product.getPno();
+			ProductAttachVO mainPicture = productAttachMapper.getMainAttachVO(pno);
+			List<ProductAttachVO> ProductAttachList = new ArrayList<ProductAttachVO>();
+			ProductAttachList.add(mainPicture);
+			product.setAttachList(ProductAttachList);
+		});
+		return list;
 	}
 
 	@Override

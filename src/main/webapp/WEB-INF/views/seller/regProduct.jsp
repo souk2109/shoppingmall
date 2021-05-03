@@ -115,12 +115,14 @@
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 <script type="text/javascript" src="/shoppingmall/resources/js/fileupload.js"></script>
 <script>
+	const id = '<c:out value='${loginUser.username}'/>';
 	let registerForm = $("#registerForm");
 	$("#registerBtn").on("click", function(e) {
 		e.preventDefault();
 		let str = '';
 		$(".uploadResult ul li").each(function(i, obj) {
 			let jobj= $(obj);
+			str += "<input type='hidden' name='attachList["+i+"].id' value='"+ id +"'>";
 			str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
 			str +=	"<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
 			str +=	"<input type='hidden' name='attachList["+i+"].path' value='"+jobj.data("path")+"'>";
