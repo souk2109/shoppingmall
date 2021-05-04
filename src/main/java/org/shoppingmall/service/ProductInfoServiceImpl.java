@@ -75,4 +75,17 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 		});
 	}
 
+	@Override
+	public List<ProductInfoVO> getAllProductInfoList() {
+		List<ProductInfoVO> list = productInfoMapper.getAllProductInfoList();
+		list.forEach(product -> {
+			int pno = product.getPno();
+			ProductAttachVO mainPicture = productAttachMapper.getMainAttachVO(pno);
+			List<ProductAttachVO> ProductAttachList = new ArrayList<ProductAttachVO>();
+			ProductAttachList.add(mainPicture);
+			product.setAttachList(ProductAttachList);
+		});
+		return list;
+	}
+
 }

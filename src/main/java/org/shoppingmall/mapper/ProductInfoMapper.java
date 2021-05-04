@@ -10,4 +10,5 @@ public interface ProductInfoMapper {
 	public List<ProductInfoVO> getProductInfoList(String sellerId);
 	public int updateProductInfo(ProductInfoVO productInfoVO);
 	public int getLastPnoByUserid(String sellerId);
+	public List<ProductInfoVO> getAllProductInfoList();
 }

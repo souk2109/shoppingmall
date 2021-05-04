@@ -19,7 +19,7 @@
 		</thead>
 	
 		<tbody id="tbody">
-			<c:forEach items="${products }" var="product" varStatus="status">
+			<c:forEach items="${products }" var="product">
 			<tr>
 				<td height="0" class="mainImage" data-pno="${product.pno}" data-path="${product.attachList[0].path}" 
 				data-uuid="${product.attachList[0].uuid}" data-fileName="${product.attachList[0].fileName}"  

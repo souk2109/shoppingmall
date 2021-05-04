@@ -9,4 +9,5 @@ public interface ProductInfoService {
 	public ProductInfoVO getProductInfo(int pno);
 	public List<ProductInfoVO>getProductInfoList(String loginedId);
 	public void modifyProductInfoVO(ProductInfoVO productInfoVO);
+	public List<ProductInfoVO> getAllProductInfoList();
 }

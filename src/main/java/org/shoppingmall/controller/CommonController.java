@@ -1,6 +1,7 @@
 package org.shoppingmall.controller;
 
 import org.shoppingmall.domain.UserVO;
+import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +19,8 @@ import lombok.extern.log4j.Log4j;
 public class CommonController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ProductInfoService productInfoService;
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/login")
@@ -35,6 +38,7 @@ public class CommonController {
 	public void registerPage() {
 		
 	}
+	
 	@PostMapping(value = "/doRegister")
 	public String doRegister(UserVO userVO) {
 		int result = userService.registerUser(userVO, "ROLE_MEMBER");
@@ -45,9 +49,16 @@ public class CommonController {
 	}
 	
 	@GetMapping("/main")
-	public void mainPage() {
+	public void mainPage(Model model) {
+		model.addAttribute("products", productInfoService.getAllProductInfoList());
 	}
+	
 	@GetMapping("/products")
 	public void products() {
+	}
+	
+	@GetMapping("/getProduct")
+	public void getProduct(int pno, Model model) {
+		model.addAttribute("product", productInfoService.getProductInfo(pno));
 	}
 }

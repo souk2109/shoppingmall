@@ -145,7 +145,6 @@
 	// 대표 사진 등록
 	function mainPictureSelection() {
 		$(".imgLi").on("click", function() {
-			console.log("dwdw: "+$(this).closest("li").attr("data-main"));
 			if($(this).closest("li").attr("data-main") === "1"){
 				$(this).closest("li").attr("data-main", 0);
 				$(this).closest("li").removeAttr("style");
@@ -255,7 +254,6 @@
 	// 화면에 들어오자마자 등록된 썸네일을 보여준다.
 	function startDisplay() {
 		let pno = $("#pno").val();
-		console.log(pno);
 		fileuploadService.getProductImages(pno, function(list) {
 			console.log(list);
 			showUploadedFile(list);
