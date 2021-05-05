@@ -207,8 +207,8 @@ A:hover {
 										<li><a href="./categories-grid.html">Categories Grid</a></li>
 										<li><a href="./categories-list.html">Categories List</a></li>
 									</ul></li>
-								<li><a href="./about.html">About</a></li>
-								<li><a href="./contact.html">Contact</a></li>
+								<li><a href="/shoppingmall/common/basket">장바구니</a></li>
+								
 							</ul>
 						</nav>
 					</div>

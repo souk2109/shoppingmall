@@ -16,7 +16,7 @@
 		<security:intercept-url pattern="/seller/*" access="hasRole('ROLE_SELLER')"/>
 		<security:intercept-url pattern="/member/*" access="isAuthenticated()"/>
 		
-		<security:form-login login-page="/common/login" authentication-success-handler-ref="loginSuccessHandler" login-processing-url="/common/doLogin" 
+		<security:form-login login-page="/common/login" login-processing-url="/common/doLogin" 
 			username-parameter="id" password-parameter="pwd"/>
 		<security:logout logout-success-url="/common/login" logout-url="/member/doLogout" invalidate-session="true"/>	
 		<security:csrf disabled="true"/>

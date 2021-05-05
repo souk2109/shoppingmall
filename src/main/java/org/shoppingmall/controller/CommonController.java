@@ -1,5 +1,15 @@
 package org.shoppingmall.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+import org.shoppingmall.domain.BasketVO;
+import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.UserVO;
 import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.UserService;
@@ -60,5 +70,23 @@ public class CommonController {
 	@GetMapping("/getProduct")
 	public void getProduct(int pno, Model model) {
 		model.addAttribute("product", productInfoService.getProductInfo(pno));
+	}
+	
+	// 장바구니 페이지
+	@GetMapping("/basket")
+	public void basket(HttpServletRequest request, Model model) {
+		Cookie[] cookieList = request.getCookies();
+		List<BasketVO> basketList = new ArrayList<BasketVO>(); 
+		for(Cookie cookie : cookieList) {
+			String cName = cookie.getName();
+			if(cName.startsWith("p")) {
+				int pno = Integer.parseInt(cName.substring(1));
+				ProductInfoVO productInfoVO = productInfoService.getProductInfo(pno);
+				BasketVO basketVO = new BasketVO(productInfoVO.getPno(), productInfoVO.getSellerId(), productInfoVO.getSellerName(), productInfoVO.getBusiName(),
+						productInfoVO.getCategory(), productInfoVO.getPrdName(), Integer.parseInt(cookie.getValue()), productInfoVO.getPrice(), productInfoVO.getDiscount());
+				basketList.add(basketVO);
+			}
+		}
+		model.addAttribute("basketList", basketList);
 	}
 }

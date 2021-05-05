@@ -1,8 +1,4 @@
 var commonService = (function() {
-	$.ajaxSetup({
-		
-	});
-	
 	function getIdValidate(id, callback, error) {
 		$.ajax({
 			type : 'post',
@@ -20,10 +16,25 @@ var commonService = (function() {
 			}
 		});
 	}
- 
+	
+	function addBasket(basketInfo, callback) {
+		$.ajax({
+			url: '/shoppingmall/common/addBasket',
+			data: JSON.stringify(basketInfo),
+			dataType: 'text',
+			type: 'POST',
+			contentType: "application/json; charset=utf-8",
+			success: function(result) {
+				if(callback){
+					callback(result);
+				}
+			}
+		});
+	}
 	
 	return {
-		getIdValidate : getIdValidate
+		getIdValidate : getIdValidate,
+		addBasket : addBasket
 	};
 })();
  

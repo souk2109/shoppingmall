@@ -88,7 +88,7 @@
 					</div>
 				</div>
 				<div class="prd-info">
-					<div class="prd-info-container">
+					<div class="prd-info-container" style="border-top:1px solid #ccc;margin-top: 20px">
 						<c:choose>
 							<c:when test="${product.category eq 'clothes'}">
 								<div class="prd-info-category">패션 의류/잡화</div>
@@ -103,49 +103,111 @@
 					
 					<div class="prd-info-container">
 						<div class="prd-info-category">${product.discount }%</div>
-						<del style="color: #888;">${product.price }원</del>
-						<div>할인가 추가하기</div>
+						<del style="color: #888;" id="originPrice"></del><span>원</span>
+						<div>
+							<div id="discountedPrice" style="font-size: 20px;display: inline;"></div>
+							<span>원</span>
+						</div>
 					</div>
 					<div style="display: inline-block;">
-						<span>수량</span>
+						<span>수량 (잔여: ${product.stock }개)</span>
 						<div style="display: table;margin-top: 10px;width: 80px">
-							<input id="numInput" type="text" value="1" class="prd-quantity-input" maxlength="6" autocomplete="off">
+							<input id="numInput" type="text" value="1" class="prd-quantity-input" maxlength="4" autocomplete="off" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 							<div style="display: table-cell; vertical-align: top;">
 								<button id="plusBtn" style="position: relative;height:20px;width:20px ;display: block;">+</button>
 								<button id="minusBtn" style="position: relative;height:20px;width:20px ;display: block;">-</button>
 							</div>
 						</div>
 					</div>
-					<div style="border-top: 1px solid #ccc; margin-top: 10px;width: 100%">
+					<div style="border-top: 1px solid #ccc; margin-top: 20px;width: 100%">
 						<span>가격</span>
 						<div style="width: 100%">
-							<div style="height: 41.6px; font-size: 20px">3232<span>원</span></div>
+							<div id="totalPrice" style="height: 41.6px; font-size: 25px; display: inline;"></div>
+							<span>원</span>
 						</div>
 					</div>
-					<button class="prd-buy-info" style="width:100%;color: #346AFF;margin-top: 10px;">장바구니</button>
-					<button class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px">구매하기</button>
+					<div style="margin-top: 20px">
+						<button id="basketBtn" class="prd-buy-info" style="width:100%;color: #346AFF;margin-top: 10px;">장바구니 담기</button>
+						<a href="/shoppingmall/member/payment"><button class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px"> 구매하기 </button></a>
+					</div>
 				</div>
-				 
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="/shoppingmall/resources/js/common.js"></script>
 <script type="text/javascript" src="/shoppingmall/resources/js/fileupload.js"></script>
 <script>
+	const pno = "<c:out value='${product.pno }'/>";
+	const sellerId = "<c:out value='${product.sellerId }'/>";
+	const sellerName = "<c:out value='${product.sellerName }'/>";
+	const busiName = "<c:out value='${product.busiName }'/>";
+	const category = "<c:out value='${product.category }'/>";
+	const prdName = "<c:out value='${product.prdName }'/>";
+	const discount = "<c:out value='${product.discount }'/>"; // 할인율
+	const price = "<c:out value='${product.price }'/>"; // 원가
+	const stock = "<c:out value='${product.stock }'/>"; // 재고 수
+	const discountedPrice = makeCeilPrice( parseInt(price) * (1 - parseInt(discount)/100));
+	// 수량 증가
 	$("#plusBtn").on("click", function() {
 		let num = $("#numInput").val();
-		$("#numInput").val(parseInt(num)+1);
+		if(num ===  stock){
+			return;
+		}
+		let increasedNum = parseInt(num)+1;
+		$("#numInput").val(increasedNum);
+		totalMoney = discountedPrice * increasedNum;
+		totalMoney = makeComma(totalMoney);
+		$("#totalPrice").html(totalMoney);
 	});
+	// 수량 감소
 	$("#minusBtn").on("click", function() {
 		let num = $("#numInput").val();
 		if(num > 1){
-			$("#numInput").val(parseInt(num)-1);
+			let decreasedNum = parseInt(num)-1;
+			$("#numInput").val(decreasedNum);
+			totalMoney = discountedPrice * decreasedNum;
+			totalMoney = makeComma(totalMoney);
+			$("#totalPrice").html(totalMoney);
 		}
 	});
+	
+	// 시작하자마자 화면에 상품 가격(원가, 할인가 등)채움
+	function fillProductPrice() {
+		$("#totalPrice").html(makeComma(discountedPrice));
+		$("#discountedPrice").html(makeComma(discountedPrice));
+		$("#originPrice").html(makeComma(price));
+	}
+	fillProductPrice();
+	
+	// 직접 수량을 입력한 경우
+	$("#numInput").on("keyup change paste", function() {
+		if(parseInt($(this).val()) > parseInt(stock)){
+			$(this).val(stock);
+		}
+		if($(this).val() === "0"){
+			$(this).val("1");
+		}
+		let totalMoney = $(this).val() * discountedPrice;
+		totalMoney = makeComma(totalMoney);
+		$("#totalPrice").html(totalMoney);
+	});
+	
+	// 숫자에 콤마 표시 함수(정규식 이용)
+	function makeComma(num) {
+		num = num.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+		return num;
+	}
+	// 1의 자리에서 올림
+	function makeCeilPrice(num) {
+		num = Number(num);
+		let result = Math.ceil(num/10)*10;
+		return result;
+	}
 </script>
+
 <!--  사진 보여주기  -->
 <script>
-	const pno = "<c:out value='${product.pno }'/>";
 	function startDisplay() {
 		fileuploadService.getProductImages(pno, function(list) {
 			showUploadedFile(list);
@@ -176,5 +238,47 @@
 			}
 		});
 	};
+</script>
+<!-- 장바구니 담기 버튼을 눌렀을 때  ajax통신으로 쿠키 생성 및 등록-->
+<script>
+ 
+	$("#basketBtn").on("click", function() {
+		let basketInfo = {
+			pno : pno,
+			sellerId : sellerId,
+			sellerName : sellerName,
+			busiName : busiName,
+			category : category,
+			prdName : prdName,
+			count : $("#numInput").val(),
+			price : price,
+			discount : discount
+		};
+		console.log(basketInfo);
+		commonService.addBasket(basketInfo, function() {
+			alert("장바구니에 추가하였습니다");	
+		});  
+	});
+	/* 
+	$("#basketBtn").on("click", function() {
+		pno : pno,
+		sellerId:sellerId,
+		sellerName:sellerName,
+		busiName:busiName,
+		category:category,
+		prdName:prdName,
+		count:$("#numInput").val(),
+		price : price,
+		discount : discount
+		
+	 */	
+	 	/* pno : pno
+		price : price
+		discount : discount 
+		let basketInfo = {};
+		commonService.addBasket(basketInfo, function() {
+			
+		});  
+	});*/
 </script>
 <%@include file="../includes/footer.jsp" %>

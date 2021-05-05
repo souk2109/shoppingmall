@@ -45,24 +45,18 @@ public class UploadController {
 		String uploadFolderPath = getFolder();
 		// 저장할 폴더 생성하기
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
-		log.info("폴더 경로 : " + uploadPath);
 		if(!uploadPath.exists()) {
-			log.info("해당 폴더가 없어서 새로 생성");
 			uploadPath.mkdirs();
 		}
 		
 		for(MultipartFile multipartFile : attachFile) {
 			AttachFileDTO attachFileDTO = new AttachFileDTO();
 			String uploadFileName = multipartFile.getOriginalFilename();
-			log.info("-----------------------------------");
-			log.info( "파일 이름 : " + uploadFileName);
-			log.info("파일 크기 : " + multipartFile.getSize());
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			attachFileDTO.setFileName(uploadFileName);
 			
 			uploadFileName = uuid.toString() + "_" + uploadFileName; 
-			log.info( "수정된 파일 이름 : " + uploadFileName);
 				
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
@@ -74,7 +68,6 @@ public class UploadController {
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
 					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 200, 200);
 					thumbnail.close();
-					log.info("썸네일 생성 !!");
 				}
 				list.add(attachFileDTO);
 			} catch (IllegalStateException | IOException e) {
@@ -104,7 +97,6 @@ public class UploadController {
 	@GetMapping("/display")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName){
-		log.info("이미지 호출!! 이미지 이름 : " + fileName);
 		File file = new File("C:\\shoppingmall\\products\\" + fileName);
 		
 		ResponseEntity<byte[]> result = null;

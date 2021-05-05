@@ -54,6 +54,10 @@ public class MemberController {
 	public void regSimpleCard() {
 	}
 	
+	// 결제 페이지 (회원가입을 해야 결제가 가능)
+	@GetMapping("/payment")
+	public void payment() {
+	}
 	// 판매자 신청 요청
 	@Transactional
 	@PostMapping("/doSellerApply")
