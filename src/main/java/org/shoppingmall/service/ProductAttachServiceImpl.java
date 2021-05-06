@@ -14,5 +14,9 @@ private ProductAttachMapper productAttachMapper;
 	public List<ProductAttachVO> getProductImages(int pno) {
 		return productAttachMapper.getAttachsByPno(pno);
 	}
+	@Override
+	public ProductAttachVO getProductMainImage(int pno) {
+		return productAttachMapper.getMainAttachVO(pno);
+	}
 
 }

@@ -259,26 +259,6 @@
 			alert("장바구니에 추가하였습니다");	
 		});  
 	});
-	/* 
-	$("#basketBtn").on("click", function() {
-		pno : pno,
-		sellerId:sellerId,
-		sellerName:sellerName,
-		busiName:busiName,
-		category:category,
-		prdName:prdName,
-		count:$("#numInput").val(),
-		price : price,
-		discount : discount
-		
-	 */	
-	 	/* pno : pno
-		price : price
-		discount : discount 
-		let basketInfo = {};
-		commonService.addBasket(basketInfo, function() {
-			
-		});  
-	});*/
+	
 </script>
 <%@include file="../includes/footer.jsp" %>

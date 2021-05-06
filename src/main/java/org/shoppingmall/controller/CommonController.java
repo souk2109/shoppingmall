@@ -9,8 +9,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.shoppingmall.domain.BasketVO;
+import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.UserVO;
+import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,8 @@ public class CommonController {
 	private UserService userService;
 	@Autowired
 	private ProductInfoService productInfoService;
-	
+	@Autowired
+	private ProductAttachService productAttachService; 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/login")
 	public void loginPage(String error, Model model) {
@@ -76,17 +79,22 @@ public class CommonController {
 	@GetMapping("/basket")
 	public void basket(HttpServletRequest request, Model model) {
 		Cookie[] cookieList = request.getCookies();
-		List<BasketVO> basketList = new ArrayList<BasketVO>(); 
-		for(Cookie cookie : cookieList) {
-			String cName = cookie.getName();
-			if(cName.startsWith("p")) {
-				int pno = Integer.parseInt(cName.substring(1));
-				ProductInfoVO productInfoVO = productInfoService.getProductInfo(pno);
-				BasketVO basketVO = new BasketVO(productInfoVO.getPno(), productInfoVO.getSellerId(), productInfoVO.getSellerName(), productInfoVO.getBusiName(),
-						productInfoVO.getCategory(), productInfoVO.getPrdName(), Integer.parseInt(cookie.getValue()), productInfoVO.getPrice(), productInfoVO.getDiscount());
-				basketList.add(basketVO);
+		if(cookieList!=null && cookieList.length != 0) {
+			List<BasketVO> basketList = new ArrayList<BasketVO>(); 
+			for(Cookie cookie : cookieList) {
+				String cName = cookie.getName();
+				if(cName.startsWith("p")) {
+					int pno = Integer.parseInt(cName.substring(1));
+					ProductInfoVO productInfoVO = productInfoService.getProductInfo(pno);
+					ProductAttachVO productAttachVO =  productAttachService.getProductMainImage(pno);
+					BasketVO basketVO = new BasketVO(productInfoVO.getPno(), productInfoVO.getSellerId(),
+							productInfoVO.getSellerName(), productInfoVO.getBusiName(),	productInfoVO.getCategory(),
+							productInfoVO.getPrdName(), Integer.parseInt(cookie.getValue()), productInfoVO.getPrice(), 
+							productInfoVO.getDiscount(), productAttachVO, productInfoVO.getStock());
+					basketList.add(basketVO);
+				}
 			}
+			model.addAttribute("basketList", basketList);
 		}
-		model.addAttribute("basketList", basketList);
 	}
 }

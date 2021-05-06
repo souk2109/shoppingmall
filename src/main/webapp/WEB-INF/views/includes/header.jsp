@@ -207,7 +207,7 @@ A:hover {
 										<li><a href="./categories-grid.html">Categories Grid</a></li>
 										<li><a href="./categories-list.html">Categories List</a></li>
 									</ul></li>
-								<li><a href="/shoppingmall/common/basket">장바구니</a></li>
+								<li><a href="/shoppingmall/common/basket"><i class="fa fa-shopping-cart" style="margin-right: 3px;font-size: 20px; color: #FF00FF"></i>장바구니</a></li>
 								
 							</ul>
 						</nav>
