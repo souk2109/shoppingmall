@@ -39,10 +39,6 @@
 <div align="center">
 	<font class="panel-title" size="20px" face="Prompt">Products</font>
 </div>
-${product[0] }
-
-
-
 
 <div style="width: 80%; margin: 0px auto;">
 	<c:forEach items="${products}" var="product">

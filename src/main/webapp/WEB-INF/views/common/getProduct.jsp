@@ -147,7 +147,7 @@
 	const discount = "<c:out value='${product.discount }'/>"; // 할인율
 	const price = "<c:out value='${product.price }'/>"; // 원가
 	const stock = "<c:out value='${product.stock }'/>"; // 재고 수
-	const discountedPrice = makeCeilPrice( parseInt(price) * (1 - parseInt(discount)/100));
+	const discountedPrice = makeFloorPrice( parseInt(price) * (1 - parseInt(discount)/100));
 	// 수량 증가
 	$("#plusBtn").on("click", function() {
 		let num = $("#numInput").val();
@@ -199,9 +199,9 @@
 		return num;
 	}
 	// 1의 자리에서 올림
-	function makeCeilPrice(num) {
+	function makeFloorPrice(num) {
 		num = Number(num);
-		let result = Math.ceil(num/10)*10;
+		let result = Math.floor(num/10)*10;
 		return result;
 	}
 </script>
