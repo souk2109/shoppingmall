@@ -21,7 +21,7 @@ public class SellerRequestTest {
 	public void insertRequestTest() {
 		SellerRequestVO requestVO = new SellerRequestVO();
 		requestVO.setId("user1");
-		requestVO.setCardNum(1232);
+//		requestVO.setCardNum(1232);
 		requestVO.setEmail("zzdw");
 		requestVO.setName("rqd");
 		int result = mapper.insertSellerRequest(requestVO);

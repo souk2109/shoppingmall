@@ -42,4 +42,12 @@ public class CommonRestController {
 		log.info(cookie);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
+	@PostMapping(value = "/removeBasket", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> removeBasket(int pno, HttpServletResponse response){
+		log.info("pno : "+ pno);
+		Cookie cookie = new Cookie("p" + pno, null);
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
 }

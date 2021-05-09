@@ -31,10 +31,22 @@ var commonService = (function() {
 			}
 		});
 	}
-	
+	function removeBasket(pno, callback) {
+		$.ajax({
+			url: '/shoppingmall/common/removeBasket?pno='+pno,
+			dataType: 'text',
+			type: 'POST',
+			success: function(result) {
+				if(callback){
+					callback(result);
+				}
+			}
+		});
+	}
 	return {
 		getIdValidate : getIdValidate,
-		addBasket : addBasket
+		addBasket : addBasket,
+		removeBasket:removeBasket
 	};
 })();
  

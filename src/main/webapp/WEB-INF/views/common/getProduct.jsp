@@ -73,6 +73,12 @@
 		background: #ccc; 
 		margin-right:10px;
 	}
+	.countBtn{
+		position: relative; 
+		height: 25px; 
+		width: 25px; 
+		display: block;
+	}
 </style>
 <div class="container" style="margin-bottom: 100px">
 	<div class="row">
@@ -114,8 +120,8 @@
 						<div style="display: table;margin-top: 10px;width: 80px">
 							<input id="numInput" type="text" value="1" class="prd-quantity-input" maxlength="4" autocomplete="off" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 							<div style="display: table-cell; vertical-align: top;">
-								<button id="plusBtn" style="position: relative;height:20px;width:20px ;display: block;">+</button>
-								<button id="minusBtn" style="position: relative;height:20px;width:20px ;display: block;">-</button>
+								<button id="plusBtn" class="countBtn">+</button>
+								<button id="minusBtn" class="countBtn">-</button>
 							</div>
 						</div>
 					</div>
