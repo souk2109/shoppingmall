@@ -1,8 +1,19 @@
 package org.shoppingmall.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+import org.shoppingmall.domain.BasketVO;
+import org.shoppingmall.domain.ProductAttachVO;
+import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SimpleCardVO;
 import org.shoppingmall.security.CustomUserDetails;
+import org.shoppingmall.service.ProductAttachService;
+import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.SellerRequestService;
 import org.shoppingmall.service.SimpleCardService;
 import org.shoppingmall.service.UserService;
@@ -32,6 +43,12 @@ public class MemberController {
 	@Autowired
 	private SimpleCardService simpleCardService;
 	
+	@Autowired
+	private ProductInfoService productInfoService;
+	
+	@Autowired
+	private ProductAttachService productAttachService;
+	
 	@GetMapping("/myPage")
 	public void myPage(Model model, SecurityContextHolder contextHolder) {
 		Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
@@ -54,9 +71,34 @@ public class MemberController {
 	public void regSimpleCard() {
 	}
 	
-	// 결제 페이지 (회원가입을 해야 결제가 가능)
-	@GetMapping("/payment")
-	public void payment() {
+	// 상품 결제 페이지 (회원가입을 해야 결제가 가능)
+	@GetMapping("/directPayment")
+	public void directPayment(Model model) {
+			
+	}
+	
+	// 장바구니 상품 결제 페이지 (회원가입을 해야 결제가 가능)
+	@GetMapping("/basketPayment")
+	public void payment(Model model, HttpServletRequest request) {
+		Cookie[] cookieList = request.getCookies();
+		if(cookieList!=null && cookieList.length != 0) {
+			List<BasketVO> basketList = new ArrayList<BasketVO>(); 
+			for(Cookie cookie : cookieList) {
+				String cName = cookie.getName();
+				if(cName.startsWith("p")) {
+					int pno = Integer.parseInt(cName.substring(1));
+					ProductInfoVO productInfoVO = productInfoService.getProductInfo(pno);
+					ProductAttachVO productAttachVO =  productAttachService.getProductMainImage(pno);
+					BasketVO basketVO = new BasketVO(productInfoVO.getPno(), productInfoVO.getSellerId(),
+							productInfoVO.getSellerName(), productInfoVO.getBusiName(),	productInfoVO.getCategory(),
+							productInfoVO.getPrdName(), Integer.parseInt(cookie.getValue()), productInfoVO.getPrice(), 
+							productInfoVO.getDiscount(), productAttachVO, productInfoVO.getStock());
+					basketList.add(basketVO);
+				}
+			}
+			model.addAttribute("basketList", basketList);
+		}
+		 
 	}
 	// 판매자 신청 요청
 	@Transactional

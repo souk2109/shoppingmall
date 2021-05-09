@@ -1,9 +1,7 @@
 package org.shoppingmall.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.shoppingmall.domain.BasketVO;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,15 +36,17 @@ public class CommonRestController {
 		cookie.setPath("/");
 		cookie.setMaxAge(60*60*24*7);
 		response.addCookie(cookie);
-		log.info(cookie);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	@PostMapping(value = "/removeBasket", produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> removeBasket(int pno, HttpServletResponse response){
-		log.info("pno : "+ pno);
-		Cookie cookie = new Cookie("p" + pno, null);
+	public ResponseEntity<String> removeBasket(int pno, HttpServletResponse response, HttpServletRequest request){
+		String tagetCookieName = "p"+pno;
+		
+		Cookie cookie = new Cookie(tagetCookieName, null);
 		cookie.setMaxAge(0);
+		cookie.setPath("/");
 		response.addCookie(cookie);
+		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 }

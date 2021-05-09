@@ -134,7 +134,7 @@
 					</div>
 					<div style="margin-top: 20px">
 						<button id="basketBtn" class="prd-buy-info" style="width:100%;color: #346AFF;margin-top: 10px;">장바구니 담기</button>
-						<a href="/shoppingmall/member/payment"><button class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px"> 구매하기 </button></a>
+						<a href="/shoppingmall/member/directPayment"><button class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px"> 구매하기 </button></a>
 					</div>
 				</div>
 			</div>
@@ -247,7 +247,6 @@
 </script>
 <!-- 장바구니 담기 버튼을 눌렀을 때  ajax통신으로 쿠키 생성 및 등록-->
 <script>
- 
 	$("#basketBtn").on("click", function() {
 		let basketInfo = {
 			pno : pno,
@@ -265,6 +264,5 @@
 			alert("장바구니에 추가하였습니다");	
 		});  
 	});
-	
 </script>
 <%@include file="../includes/footer.jsp" %>

@@ -144,17 +144,19 @@
 					</c:forEach>
 				</table>
 			</div>
-			<div class="col-12" style="border-left: 6px solid #ccd;margin-bottom: 10px;margin-top: 40px">
+			<div class="col-12" style="border-left: 6px solid #ccd;margin-bottom: 10px;margin-top: 40px;">
 					<div>총 결제 금액</div>
 			</div>
-			<div class="col-12"  style="font-size: 25px; font-weight: bold;">
+			<div class="col-12"  style="font-size: 25px; font-weight: bold;text-align:center">
 				<div id="totalPrdPrice" style="display: inline;">
 					<script>document.write(makeComma(totalPrdPrice));</script>
 				</div>
 				<span>원</span>
 			</div>
 			<div class="col-12">
-				<div class="btn btn-primary col-12">결제하기</div>
+				<a href="/shoppingmall/member/basketPayment">
+					<div class="btn btn-primary col-12">결제하기</div>
+				</a>
 			</div>
 		<!-- ${basketList[0].productAttachVO } -->
 		</div>
@@ -285,9 +287,7 @@
 		$("#"+pno).remove();
 		getTotalPrice();
 		// 쿠키에서 해당 항목 삭제
-		commonService.removeBasket(pno, function() {
-			alert("삭제 되었습니다.");
-		});
+		commonService.removeBasket(pno);
 		
 	});
 </script>
