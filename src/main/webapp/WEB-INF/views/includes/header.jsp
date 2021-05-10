@@ -27,6 +27,9 @@
 <link rel="stylesheet"
 	href="/shoppingmall/resources/css/font-awesome.min.css" type="text/css">
 <link rel="stylesheet"
+	href="/shoppingmall/resources/css/fontawesome.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />	
+<link rel="stylesheet"
 	href="/shoppingmall/resources/css/elegant-icons.css" type="text/css">
 <link rel="stylesheet"
 	href="/shoppingmall/resources/css/owl.carousel.min.css" type="text/css">
@@ -36,7 +39,6 @@
 	type="text/css">
 <link rel="stylesheet"
 	href="/shoppingmall/resources/css/bootstrap-theme.min.css">
-
 <!-- Js Plugins -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

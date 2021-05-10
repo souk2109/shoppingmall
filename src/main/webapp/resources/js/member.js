@@ -1,7 +1,4 @@
 var memberService = (function() {
-	$.ajaxSetup({
-		
-	});
 	// 최근 하나의 판매자 신청 정보만 가져옴
 	function getRecentSellerRequest(id, callback, error) {
 		$.get("/shoppingmall/member/getRecentSellerRequest/"+id+".json", function(SellerRequestVO) {
@@ -17,6 +14,18 @@ var memberService = (function() {
 	// 모든 판매자 신청 정보를 가져옴
 	function getSellerRequests(id, callback, error) {
 		$.get("/shoppingmall/member/getSellerRequests/"+id+".json", function(list) {
+			if(callback){
+				callback(list);
+			}
+		}).fail(function(xhr, status, err) {
+			if(error){
+				err();
+			}
+		})
+	}
+	// 모든 판매자 신청 정보를 가져옴
+	function getSimpleCards(id, callback, error) {
+		$.get("/shoppingmall/member/getSimpleCards/"+id+".json", function(list) {
 			if(callback){
 				callback(list);
 			}
@@ -43,7 +52,7 @@ var memberService = (function() {
 	return {
 		getRecentSellerRequest : getRecentSellerRequest,
 		getSellerRequests : getSellerRequests,
-		
+		getSimpleCards : getSimpleCards,
 		displayTime:displayTime
 	};
 })();

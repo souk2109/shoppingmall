@@ -50,7 +50,7 @@
 </script>
 <div class="container">
 	<div class="row" style="margin-bottom: 30px">
-		<div class="col-12"><i class="fa fa-shopping-cart fa-3x"></i><font size="30px" style="margin-left: 5px">장바구니</font></div>
+		<div class="col-12"><i class="fa fa-shopping-cart fa-3x"></i><font size="30px" style="margin-left: 5px;">장바구니</font></div>
 	</div>
 	<div class="row" style="margin-bottom: 30px">
 		<div class="col-xs-8 col-sm-8">
@@ -130,9 +130,7 @@
 						</script>
 						<tr id="${basket.pno }">
 							<td>${basket.prdName }
-								(
-								<span id="count${basket.pno}"><script>document.write(count);</script></span>
-								)
+								<span id="count${basket.pno}"><script>document.write("("+count+")");</script></span>
 							</td>
 							<td align="right">
 								<div style="display: inline;" id="totalPrice${basket.pno}">
@@ -155,7 +153,7 @@
 			</div>
 			<div class="col-12">
 				<a href="/shoppingmall/member/basketPayment">
-					<div class="btn btn-primary col-12">결제하기</div>
+					<div class="btn btn-primary">주문하기</div>
 				</a>
 			</div>
 		<!-- ${basketList[0].productAttachVO } -->
@@ -279,6 +277,7 @@
 			totalPrice += makeFloorPrice(cPrice * (1-cDiscount/100)) * cCount;
 		});
 		$("#totalPrdPrice").html(makeComma(totalPrice));
+		return totalPrice;
 	}
 	
 	$(".removeBtn").on("click", function() {
@@ -288,7 +287,6 @@
 		getTotalPrice();
 		// 쿠키에서 해당 항목 삭제
 		commonService.removeBasket(pno);
-		
 	});
 </script>
 <%@include file="../includes/footer.jsp" %>

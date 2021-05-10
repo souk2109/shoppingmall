@@ -7,11 +7,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.shoppingmall.domain.BasketVO;
+import org.shoppingmall.domain.CardVO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SimpleCardVO;
 import org.shoppingmall.security.CustomUserDetails;
+import org.shoppingmall.service.CardService;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.SellerRequestService;
@@ -26,6 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -48,6 +51,9 @@ public class MemberController {
 	
 	@Autowired
 	private ProductAttachService productAttachService;
+	
+	@Autowired
+	private CardService cardService;
 	
 	@GetMapping("/myPage")
 	public void myPage(Model model, SecurityContextHolder contextHolder) {
@@ -109,6 +115,7 @@ public class MemberController {
 		log.info("판매자 신청 성공");
 		return "redirect:/member/myPage";
 	}
+	
 	// 비밀번호 변경 요청
 	@PostMapping("/doModifyPwd")
 	public String doModifyPwd(String id, String oldPwd,String pwd, RedirectAttributes redirectAttributes) {
@@ -145,5 +152,22 @@ public class MemberController {
 			url = "redirect:/member/regSimpleCard";
 		}
 		return url;
+	}
+	// 결제 하기
+	@Transactional
+	@PostMapping("/doPayment")
+	public String doPayment(CardVO cardVO,@RequestParam("discountedTotalPrice") int money, RedirectAttributes redirectAttributes) {
+		log.info(cardVO);
+		log.info(money);
+		
+		int result = cardService.doPayment(cardVO, money);
+		log.info(result);
+		
+		String url = "redirect:/member/myPage";
+		return url;
+		/*
+		 * if(result == "success") { url = "redirect:/member/myPage"; }else { url =
+		 * "redirect:/member/regSimpleCard"; } return url;
+		 */
 	}
 }

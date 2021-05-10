@@ -3,7 +3,9 @@ package org.shoppingmall.controller;
 import java.util.List;
 
 import org.shoppingmall.domain.SellerRequestVO;
+import org.shoppingmall.domain.SimpleCardVO;
 import org.shoppingmall.service.SellerRequestService;
+import org.shoppingmall.service.SimpleCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,8 +22,12 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/member/*")
 @Log4j
 public class MemberRestController {
-	@Autowired SellerRequestService sellerRequestService;
-	 
+	@Autowired 
+	SellerRequestService sellerRequestService;
+	
+	@Autowired
+	private SimpleCardService simpleCardService;
+	
 	@GetMapping(value = "/getRecentSellerRequest/{id}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<SellerRequestVO> getRecentSellerRequest(@PathVariable("id") String id) {
 		SellerRequestVO sellerRequestVO = sellerRequestService.getRecentSellerRequest(id);
@@ -33,5 +39,9 @@ public class MemberRestController {
 		List<SellerRequestVO> sellerRequestVO = sellerRequestService.getSellerRequests(id);
 		return new ResponseEntity<List<SellerRequestVO>>(sellerRequestVO, HttpStatus.OK);
 	}
-	 
+	@GetMapping(value = "/getSimpleCards/{id}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<List<SimpleCardVO>> getSimpleCards(@PathVariable("id") String id) {
+		List<SimpleCardVO> simpleCardList = simpleCardService.getSimpleCardVO(id);
+		return new ResponseEntity<List<SimpleCardVO>>(simpleCardList, HttpStatus.OK);
+	}
 }
