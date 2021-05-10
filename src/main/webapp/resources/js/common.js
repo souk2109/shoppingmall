@@ -43,10 +43,24 @@ var commonService = (function() {
 			}
 		});
 	}
+	
+	function updateBasket(pno, count, callback) {
+		$.ajax({
+			url: '/shoppingmall/common/updateBasket?pno='+pno+'&count='+count,
+			dataType: 'text',
+			type: 'POST',
+			success: function(result) {
+				if(callback){
+					callback(result);
+				}
+			}
+		});
+	}
 	return {
 		getIdValidate : getIdValidate,
 		addBasket : addBasket,
-		removeBasket:removeBasket
+		removeBasket:removeBasket,
+		updateBasket:updateBasket
 	};
 })();
  

@@ -157,17 +157,14 @@ public class MemberController {
 	@Transactional
 	@PostMapping("/doPayment")
 	public String doPayment(CardVO cardVO,@RequestParam("discountedTotalPrice") int money, RedirectAttributes redirectAttributes) {
-		log.info(cardVO);
-		log.info(money);
-		
-		int result = cardService.doPayment(cardVO, money);
-		log.info(result);
-		
+		String msg = cardService.doPayment(cardVO, money);
+		log.info(msg);
+		// TODO : 결제 페이지로 이동하도록 수정
 		String url = "redirect:/member/myPage";
+		if(msg =="noBalance" || msg =="noCard") {
+			redirectAttributes.addFlashAttribute("msg", msg);
+			url = "redirect:/member/basketPayment";
+		}
 		return url;
-		/*
-		 * if(result == "success") { url = "redirect:/member/myPage"; }else { url =
-		 * "redirect:/member/regSimpleCard"; } return url;
-		 */
 	}
 }

@@ -162,6 +162,7 @@
 </div>
 <script type="text/javascript" src="/shoppingmall/resources/js/common.js"></script>
 <script>
+
 	// 이미지 클릭시 해당 상품 페이지로 이동
 	$(".mainImage").on("click", function() {
 		let pno = $(this).data("pno");
@@ -201,11 +202,14 @@
 		 
 		$(this).closest("tr").find(".prd-quantity-input").val(increasedNum);
 		let ctotalPrice = increasedNum * makeFloorPrice(cprice * (1-cdiscount/100));
+		 
 		console.log(pno);
 		$(this).closest("tr").find(".totalPrice").html(makeComma(ctotalPrice));
 		$("#count"+pno).text(increasedNum);
 		$("#totalPrice"+pno).text(makeComma(ctotalPrice));
 		getTotalPrice();
+		// 수량 쿠키에서 변경
+		commonService.updateBasket(pno, increasedNum);
 	});
 	
 	// 수량 감소 버튼 클릭 시
@@ -227,6 +231,7 @@
 		$("#count"+pno).text(decreasedNum);
 		$("#totalPrice"+pno).text(makeComma(ctotalPrice));
 		getTotalPrice();
+		commonService.updateBasket(pno, decreasedNum);
 	});
 	
 	// 직접 수량을 입력한 경우
@@ -248,7 +253,7 @@
 		$("#count"+pno).text($(this).val());
 		$("#totalPrice"+pno).text(makeComma(ctotalPrice));
 		getTotalPrice();
-		
+		commonService.updateBasket(pno, $(this).val());
 	});
 	
 	// input상자가 공백인 상태에서 focusout한 경우 1로 수량 증가

@@ -49,4 +49,14 @@ public class CommonRestController {
 		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
+	@PostMapping(value = "/updateBasket", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> updateBasket(int pno, int count, HttpServletResponse response, HttpServletRequest request){
+		String tagetCookieName = "p"+pno;
+		
+		Cookie cookie = new Cookie(tagetCookieName, String.valueOf(count));
+		cookie.setMaxAge(60*60*24*7);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
 }
