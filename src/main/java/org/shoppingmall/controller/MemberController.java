@@ -160,7 +160,7 @@ public class MemberController {
 		String msg = cardService.doPayment(cardVO, money);
 		log.info(msg);
 		// TODO : 결제 페이지로 이동하도록 수정
-		String url = "redirect:/member/myPage";
+		String url = "redirect:/member/myPage"; 
 		if(msg =="noBalance" || msg =="noCard") {
 			redirectAttributes.addFlashAttribute("msg", msg);
 			url = "redirect:/member/basketPayment";

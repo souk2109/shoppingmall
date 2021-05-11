@@ -116,6 +116,16 @@
  
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
 <script>
+	let msg = '<c:out value='${msg}'/>';
+	console.log(msg);
+	if(msg === 'noBalance'){
+		alert('잔액이 부족하여 결제에 실패하였습니다');
+	}
+	else if(msg === 'noCard'){
+		alert('카드 정보가 잘못되었습니다');
+	}
+</script>
+<script>
 const id = '<c:out value='${loginUser.username}'/>';
 let originTotalPrice=0; //할인 되기전 금액의 총 합
 let discountedTotalPrice=0; // 할인된 금액의 총 합
@@ -221,6 +231,11 @@ $(".baskets-tr").each(function(i, obj) {
 		discountedTotalPrice = discountedTotalPrice.replace("원","");
 		if(!name || !bankName || !cardNum || !validateMonth || !validateYear || !cvc || !cardPwd){
 			alert('모두 입력하세요');
+			return;
+		}
+		// 장바구니가 비어있는 경우
+		if(!discountedTotalPrice){
+			alert('장바구니가 비어있어 결제를 할 수 없습니다.');
 			return;
 		}
 		let str = "";

@@ -152,9 +152,7 @@
 				<span>원</span>
 			</div>
 			<div class="col-12">
-				<a href="/shoppingmall/member/basketPayment">
-					<div class="btn btn-primary">주문하기</div>
-				</a>
+				<div id="orderBtn" class="btn btn-primary">주문하기</div>
 			</div>
 		<!-- ${basketList[0].productAttachVO } -->
 		</div>
@@ -162,7 +160,13 @@
 </div>
 <script type="text/javascript" src="/shoppingmall/resources/js/common.js"></script>
 <script>
-
+	$("#orderBtn").on("click", function() {
+		if(0 === getTotalPrice()){
+			alert('장바구니가 비어있습니다.');
+			return;
+		}
+		window.location.href = "/shoppingmall/member/basketPayment";
+	});
 	// 이미지 클릭시 해당 상품 페이지로 이동
 	$(".mainImage").on("click", function() {
 		let pno = $(this).data("pno");
