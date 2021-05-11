@@ -3,10 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shoppingmall.mapper.SellerMapper">
 	<insert id="insertSellerVO">
-		insert into tbl_seller(id, name, busiName, cardNum, income)
-		values(#{id},#{name},#{busiName},#{cardNum},#{income})
+		insert into tbl_seller(id, name, busiName, cardNum, income, bankName)
+		values(#{id},#{name},#{busiName},#{cardNum},#{income},#{bankName})
 	</insert>
 	<select id="getSellerVO" resultType="org.shoppingmall.domain.SellerVO">
 		select * from tbl_seller where id =#{id}
 	</select>
+	<update id="deposit">
+		update tbl_seller 
+		set income = income + #{money}
+		where id=#{id}
+	</update>
 </mapper>

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.log4j.Log4j;
+@Log4j
 @Service
 public class SellerRequestServiceImpl implements SellerRequestService{
 	@Autowired
@@ -53,20 +55,15 @@ public class SellerRequestServiceImpl implements SellerRequestService{
 	// 4. tbl_seller에 등록해준다.
 	@Transactional
 	@Override
-	public String agreeSellerRequest(String id,String busiName, CardVO cardVO) {
-		sellerRequestMapper.updateStatusAndUpdatedate(id,"승인");
+	public String agreeSellerRequest(SellerVO sellerVO, CardVO cardVO) {
+		log.info("sellerVO  : " + sellerVO + " , cardVO : "+ cardVO);
+		sellerRequestMapper.updateStatusAndUpdatedate(sellerVO.getId(),"승인");
 		cardMapper.insertCardVO(cardVO);
-		
-		SellerVO sellerVO = new SellerVO();
-		sellerVO.setBusiName(busiName);
 		sellerVO.setIncome(0);
-		sellerVO.setId(id);
-		sellerVO.setName(cardVO.getName());
-		sellerVO.setCardNum(cardVO.getCardNum());
 		sellerMapper.insertSellerVO(sellerVO);
 		
 		AuthVO authVO = new AuthVO();
-		authVO.setId(id);
+		authVO.setId(sellerVO.getId());
 		authVO.setAuth("ROLE_SELLER");
 		authMapper.insertAuth(authVO);
 		return "success";

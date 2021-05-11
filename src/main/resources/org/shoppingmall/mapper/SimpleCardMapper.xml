@@ -10,6 +10,6 @@
 		values(#{id}, #{name}, #{cardNum}, #{pwd}, #{bankName},#{validateYear},#{validateMonth}, #{cvc});
 	</insert>
 	<select id="isSimpleCardVO" resultType="int">
-		select count(*) from tbl_simple_card where id = #{id} and cardNum = #{cardNum}
+		select count(*) from tbl_simple_card where id = #{id} and cardNum = #{cardNum} and bankName = #{bankName} and name = #{name}
 	</select>
 </mapper>

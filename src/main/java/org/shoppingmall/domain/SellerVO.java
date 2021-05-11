@@ -16,5 +16,6 @@ public class SellerVO {
 	private String name;
 	private String busiName;
 	private String cardNum;
+	private String bankName;
 	private int income;
 }

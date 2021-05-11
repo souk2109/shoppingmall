@@ -11,12 +11,14 @@ import org.shoppingmall.domain.CardVO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.SellerRequestVO;
+import org.shoppingmall.domain.SellerVO;
 import org.shoppingmall.domain.SimpleCardVO;
 import org.shoppingmall.security.CustomUserDetails;
 import org.shoppingmall.service.CardService;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.SellerRequestService;
+import org.shoppingmall.service.SellerService;
 import org.shoppingmall.service.SimpleCardService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,8 @@ public class MemberController {
 	@Autowired
 	private CardService cardService;
 	
+	@Autowired
+	private SellerService sellerService;
 	@GetMapping("/myPage")
 	public void myPage(Model model, SecurityContextHolder contextHolder) {
 		Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
@@ -156,15 +160,51 @@ public class MemberController {
 	// 결제 하기
 	@Transactional
 	@PostMapping("/doPayment")
-	public String doPayment(CardVO cardVO,@RequestParam("discountedTotalPrice") int money, RedirectAttributes redirectAttributes) {
+	public String doPayment(CardVO cardVO,@RequestParam("discountedTotalPrice") int money, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		String msg = cardService.doPayment(cardVO, money);
-		log.info(msg);
-		// TODO : 결제 페이지로 이동하도록 수정
 		String url = "redirect:/member/myPage"; 
 		if(msg =="noBalance" || msg =="noCard") {
 			redirectAttributes.addFlashAttribute("msg", msg);
 			url = "redirect:/member/basketPayment";
 		}
+//		판매자의 계좌에도 금액이 추가되어야 함.
+//		1. 쿠키에서 상품 정보를 가져와서 해당하는 판매자의 계좌에 금액을 추가해줘야 한다.
+//		2. 주문내역에도 추가가 되어야 함.
+		Cookie[] cookieList = request.getCookies();
+		if(cookieList!=null && cookieList.length != 0) {
+			for(Cookie cookie : cookieList) {
+				String cName = cookie.getName();
+				if(cName.startsWith("p")) {
+					String count = cookie.getValue(); // 구매한 상품의 수량
+					int pno = Integer.parseInt(cName.substring(1));
+					// seller에서 id로 카드번호를 가져온다
+					ProductInfoVO productInfoVO = productInfoService.getProductInfo(pno);
+					String sellerId = productInfoVO.getSellerId(); // 판매자 아이디
+					int price = productInfoVO.getPrice();
+					float discount = productInfoVO.getDiscount();
+					
+					SellerVO sellerVO = sellerService.getSellerVO(sellerId);
+					String sellerCardNum = sellerVO.getCardNum(); // 판매자 카드번호
+					String sellerName = sellerVO.getName(); // 판매자 이름
+					String bankName = sellerVO.getBankName(); // 판매자 은행
+					
+					int totalPrice = Integer.parseInt(count) * ((int)(Math.floor(price * (1-discount/100)))/10*10);
+					log.info("값은 : " +totalPrice);
+					
+					CardVO sellerCardVO = new CardVO();
+					sellerCardVO.setCardNum(sellerCardNum);
+					sellerCardVO.setName(sellerName);
+					sellerCardVO.setBankName(bankName);
+					cardService.deposit(sellerCardVO, totalPrice);
+					
+					// tbl_seller에서의 판매자의 수입(income)에도 추가해줘야 한다.
+					sellerService.deposit(sellerId, totalPrice);
+				}
+			}
+		}
 		return url;
+	}
+	@GetMapping("/orderInfo")
+	public void orderInfo() {
 	}
 }

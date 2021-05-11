@@ -82,7 +82,6 @@
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
 <script>
 	let regSimpleCardResult = "<c:out value='${regSimpleCardResult}'/>";
-	
 	if(regSimpleCardResult){
 		if(regSimpleCardResult === 'notFoundCard'){
 			alert('잘못된 카드 정보입니다');

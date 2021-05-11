@@ -30,4 +30,11 @@ public class CardServiceImpl implements CardService{
 			}
 		}
 	}
+
+
+	@Override
+	public String deposit(CardVO cardVO, int money) {
+		cardMapper.deposit(cardVO, money);
+		return null;
+	}
 }

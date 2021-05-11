@@ -19,5 +19,4 @@ public interface CardMapper {
 	public int deposit(@Param("cardVO")CardVO cardVO, @Param("money") int money); // 입금
 	public int withdraw(@Param("cardVO") CardVO cardVO, @Param("money") int money); // 출금
 	public int insertCardVO(CardVO cardVO);
-	
 }

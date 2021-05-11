@@ -8,11 +8,12 @@
 		and pwd = #{pwd} and bankName = #{bankName} and validateMonth =#{validateMonth} 
 		and validateYear=#{validateYear} and cvc=#{cvc}
 	</select>
+	 
 	<update id="deposit">
 		update tbl_card 
 		set balance = balance + #{money}
 		where name=#{cardVO.name} and cardNum=#{cardVO.cardNum} 
-		and pwd = #{cardVO.pwd} and bankName = #{cardVO.bankName} and validateMonth =#{cardVO.validateMonth} and validateYear=#{cardVO.validateYear}
+		and bankName = #{cardVO.bankName}
 	</update>
 	<update id="withdraw">
 		<![CDATA[

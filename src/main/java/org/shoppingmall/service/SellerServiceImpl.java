@@ -14,6 +14,11 @@ public class SellerServiceImpl implements SellerService {
 	public SellerVO getSellerVO(String id) {
 		return sellerMapper.getSellerVO(id);
 	}
+
+	@Override
+	public int deposit(String id, int money) {
+		return sellerMapper.deposit(id, money);
+	}
 	
 
 }

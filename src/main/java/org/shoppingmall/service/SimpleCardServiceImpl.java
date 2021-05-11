@@ -21,7 +21,7 @@ public class SimpleCardServiceImpl implements SimpleCardService {
 		if(cardMapper.isCardVO(simpleCardVO) == 1) {
 			// 이미 등록한 카드인지 확인
 			// 이미 등록한 카드이면 (등록 불가능)
-			if(simpleCardMapper.isSimpleCardVO(simpleCardVO.getId(), simpleCardVO.getCardNum()) == 1) {
+			if(simpleCardMapper.isSimpleCardVO(simpleCardVO.getId(), simpleCardVO.getCardNum(), simpleCardVO.getBankName(), simpleCardVO.getName()) == 1) {
 				return "overlapCard";
 			}
 			// 이미 등록한 카드가 아니면 (등록가능)

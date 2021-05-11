@@ -10,5 +10,5 @@ public interface SimpleCardMapper {
 	public List<SimpleCardVO> getSimpleCardVO(String id);
 	// 간편 계좌 등록
 	public int insertSimpleCardVO(SimpleCardVO simpleCardVO);
-	public int isSimpleCardVO(@Param("id") String id, @Param("cardNum") String cardNum);
+	public int isSimpleCardVO(@Param("id") String id, @Param("cardNum") String cardNum, @Param("bankName") String bankName, @Param("name") String name);
 }
