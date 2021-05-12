@@ -89,8 +89,10 @@ public class MemberController {
 	
 	// 상품 결제 페이지 (회원가입을 해야 결제가 가능)
 	@GetMapping("/directPayment")
-	public void directPayment(Model model) {
-			
+	public void directPayment(int pno,int count, Model model) {
+		ProductInfoVO productInfoVO = productInfoService.getProductInfo(pno);
+		model.addAttribute("productInfoVO", productInfoVO);
+		model.addAttribute("count", count);
 	}
 	
 	// 장바구니 상품 결제 페이지 (회원가입을 해야 결제가 가능)
@@ -165,7 +167,7 @@ public class MemberController {
 	}
 	// 결제 하기
 	@Transactional
-	@PostMapping("/doPayment")
+	@PostMapping("/doBasketPayment")
 	public String doPayment(CardVO cardVO,@RequestParam("discountedTotalPrice") int money, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		String msg = cardService.doPayment(cardVO, money);
 		String url = ""; 
@@ -177,7 +179,6 @@ public class MemberController {
 //		판매자의 계좌에도 금액이 추가되어야 함.
 //		1. 쿠키에서 상품 정보를 가져와서 해당하는 판매자의 계좌에 금액을 추가해줘야 한다.
 //		2. 주문내역에도 추가가 되어야 함.
-		SecurityContextHolder securityContextHolder = new SecurityContextHolder();
 		CustomUserDetails user = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Cookie[] cookieList = request.getCookies();
 		if(cookieList!=null && cookieList.length != 0) {
@@ -232,6 +233,62 @@ public class MemberController {
 		}
 		return url;
 	}
+	@PostMapping("/doDirectPayment")
+	@Transactional
+	public String doDirectPayment(CardVO cardVO, int pno, int count ,RedirectAttributes redirectAttributes) {
+		ProductInfoVO productInfoVO = productInfoService.getProductInfo(pno);
+		int price = productInfoVO.getPrice();
+		float discount = productInfoVO.getDiscount();
+		int totalPrice = count * ((int)(Math.floor(price * (1-discount/100)))/10*10);
+		String busiName = productInfoVO.getBusiName();
+		String msg = cardService.doPayment(cardVO, totalPrice); // 구매자의 카드에서 착감
+		String url = ""; 
+		if(msg =="noBalance" || msg =="noCard") {
+			redirectAttributes.addFlashAttribute("msg", msg);
+			url = "redirect:/member/basketPayment";
+			return url;
+		}
+		CustomUserDetails user = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String clientId = user.getUsername();
+		String clientName = user.getName();
+		String sellerId = productInfoVO.getSellerId();
+		SellerVO sellerVO = sellerService.getSellerVO(sellerId);
+		String sellerCardNum = sellerVO.getCardNum(); // 판매자 카드번호
+		String sellerName = sellerVO.getName(); // 판매자 이름
+		String bankName = sellerVO.getBankName(); // 판매자 은행
+		
+		CardVO sellerCardVO = new CardVO();
+		sellerCardVO.setCardNum(sellerCardNum);
+		sellerCardVO.setName(sellerName);
+		sellerCardVO.setBankName(bankName);
+		cardService.deposit(sellerCardVO, totalPrice);
+		
+		
+		// tbl_seller에서의 판매자의 수입(income)에도 추가해줘야 한다.
+		sellerService.deposit(sellerId, totalPrice);
+		redirectAttributes.addFlashAttribute("money", totalPrice);
+		url = "redirect:/member/afterPayment";
+		TrHistoryVO historyVO = new TrHistoryVO();
+		historyVO.setSellerId(sellerId);
+		historyVO.setSellerName(sellerName);
+		historyVO.setSellerCardNum(sellerCardNum);
+		historyVO.setClientId(user.getUsername());
+		historyVO.setClientName(user.getName());
+		historyVO.setPaymentCardBankName(cardVO.getBankName());
+		historyVO.setPaymentCardName(cardVO.getName());
+		historyVO.setPaymentCardNum(cardVO.getCardNum());
+		historyVO.setBusiName(busiName);
+		historyVO.setPno(pno);
+		historyVO.setPrice(totalPrice);
+		historyVO.setCount(count);
+		
+		List<TrHistoryVO> trHistoryList = new ArrayList<TrHistoryVO>();
+		trHistoryList.add(historyVO);
+		trHistoryService.addTrHistory(historyVO);
+		redirectAttributes.addFlashAttribute("trHistoryList", trHistoryList);
+		return url;
+	}
+	
 	@GetMapping("/orderInfo")
 	public void orderInfo() {
 	}

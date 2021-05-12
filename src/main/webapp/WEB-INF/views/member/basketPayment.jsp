@@ -110,7 +110,7 @@
 			</div>
 		</div>
 	</div>
-	<form id="submitBtn" action="/shoppingmall/member/doPayment" method="post">
+	<form id="submitBtn" action="/shoppingmall/member/doBasketPayment" method="post">
 	</form>
 </div>
  
@@ -170,7 +170,21 @@ $(".baskets-tr").each(function(i, obj) {
 	    			}
 	    			$("#bankName").html(str);
 	    		}else{
+	    			$("input:checkbox[id='simpleCardCheckbox']").prop("checked", false);
 	    			alert('등록된 카드가 없습니다.');
+	    			$("#name").val("").removeAttr("readonly");
+	    	    	$("#cardNum").val("").removeAttr("readonly");
+	    			$("#validateMonth").val("").removeAttr("readonly");
+	    			$("#validateYear").val("").removeAttr("readonly");
+	    			$("#cvc").val("").removeAttr("readonly");
+	    			
+	    			let str = "";
+	    			str += "<option value=''>은행</option>";
+	    			str += "<option value='하나'>하나</option>";
+	    			str += "<option value='국민'>국민</option>";
+	    			str += "<option value='기업'>기업</option>";
+	    			str += "<option value='농협'>농협</option>";
+	    			$("#bankName").html(str);
 	    		}
 			});
 	    }else{

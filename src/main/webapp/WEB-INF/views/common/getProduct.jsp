@@ -134,7 +134,7 @@
 					</div>
 					<div style="margin-top: 20px">
 						<button id="basketBtn" class="prd-buy-info" style="width:100%;color: #346AFF;margin-top: 10px;">장바구니 담기</button>
-						<a href="/shoppingmall/member/directPayment"><button class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px"> 구매하기 </button></a>
+						<button id="directBtn" class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px"> 구매하기 </button>
 					</div>
 				</div>
 			</div>
@@ -162,7 +162,7 @@
 		}
 		let increasedNum = parseInt(num)+1;
 		$("#numInput").val(increasedNum);
-		totalMoney = discountedPrice * increasedNum;
+		let totalMoney = discountedPrice * increasedNum;
 		totalMoney = makeComma(totalMoney);
 		$("#totalPrice").html(totalMoney);
 	});
@@ -172,7 +172,7 @@
 		if(num > 1){
 			let decreasedNum = parseInt(num)-1;
 			$("#numInput").val(decreasedNum);
-			totalMoney = discountedPrice * decreasedNum;
+			let totalMoney = discountedPrice * decreasedNum;
 			totalMoney = makeComma(totalMoney);
 			$("#totalPrice").html(totalMoney);
 		}
@@ -264,5 +264,10 @@
 			alert("장바구니에 추가하였습니다");	
 		});  
 	});
+	$("#directBtn").on("click", function() {
+		let count = $("#numInput").val();
+		console.log(discountedPrice);
+		window.location.href = "/shoppingmall/member/directPayment?pno="+pno+"&count="+count;
+	})
 </script>
 <%@include file="../includes/footer.jsp" %>
