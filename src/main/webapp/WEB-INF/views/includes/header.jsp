@@ -109,7 +109,7 @@ A:hover {
 				<li><a href="#">할인상품</a></li>
 				<li><a href="#">내 정보</a></li>
 				<li><a href="/shoppingmall/common/basket"><i class="fa fa-shopping-cart" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>장바구니</a></li>
-				<li><a href="/shoppingmall/member/orderInfo"><i class="fa fa-receipt" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>주문정보</a></li>
+				<li><a href="/shoppingmall/member/orderInfo"><i class="fa fa-receipt" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>주문내역</a></li>
 				<sec:authorize access="hasRole('ROLE_SELLER')">
 					<div align="center" class="col-sm-12" style="margin-top: 10px; margin-bottom: 10px">------------ 판매자 카테고리 ------------</div>
 					<li><a href="/shoppingmall/seller/regProduct">상품등록</a></li>
@@ -211,7 +211,7 @@ A:hover {
 									</ul>
 								</li>
 								<li><a href="/shoppingmall/common/basket"><i class="fa fa-shopping-cart" style="margin-right: 3px;font-size: 20px; color: #FF00FF"></i>장바구니</a></li>
-								<li><a href="/shoppingmall/member/orderInfo"><i class="fa fa-receipt" style="margin-right: 3px;font-size: 20px; color: #000000"></i>주문정보</a></li>
+								<li><a href="/shoppingmall/member/orderInfo"><i class="fa fa-receipt" style="margin-right: 3px;font-size: 20px; color: #000000"></i>주문내역</a></li>
 							</ul>
 						</nav>
 					</div>

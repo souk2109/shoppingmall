@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shoppingmall.mapper.TrHistoryMapper">
+	<insert id="insertTransactionHistory">
+		INSERT INTO tbl_transaction_history(sellerId, sellerName, sellerCardNum,clientId,clientName,
+			busiName, pno, price, count, paymentCardNum, paymentCardBankName, paymentCardName)
+		VALUES(#{sellerId}, #{sellerName},#{sellerCardNum}, #{clientId}, 
+			#{clientName}, #{busiName}, #{pno}, #{price}, #{count}, #{paymentCardNum}, 
+			#{paymentCardBankName}, #{paymentCardName})
+		<selectKey resultType="int" keyProperty="orderNum" order="AFTER">
+			 SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>  
+	
+	<!-- <select id="getTransactionHistoryByNum" resultType="org.shoppingmall.domain.TrHistoryVO">
+		select * from tbl_transaction_history where orderNum =#{orderNum}
+	</select> -->
+</mapper>

@@ -13,6 +13,7 @@ import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SellerVO;
 import org.shoppingmall.domain.SimpleCardVO;
+import org.shoppingmall.domain.TrHistoryVO;
 import org.shoppingmall.security.CustomUserDetails;
 import org.shoppingmall.service.CardService;
 import org.shoppingmall.service.ProductAttachService;
@@ -20,6 +21,7 @@ import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.SellerRequestService;
 import org.shoppingmall.service.SellerService;
 import org.shoppingmall.service.SimpleCardService;
+import org.shoppingmall.service.TrHistoryService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -59,6 +61,10 @@ public class MemberController {
 	
 	@Autowired
 	private SellerService sellerService;
+	
+	@Autowired
+	private TrHistoryService trHistoryService;
+	
 	@GetMapping("/myPage")
 	public void myPage(Model model, SecurityContextHolder contextHolder) {
 		Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
@@ -162,16 +168,20 @@ public class MemberController {
 	@PostMapping("/doPayment")
 	public String doPayment(CardVO cardVO,@RequestParam("discountedTotalPrice") int money, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		String msg = cardService.doPayment(cardVO, money);
-		String url = "redirect:/member/myPage"; 
+		String url = ""; 
 		if(msg =="noBalance" || msg =="noCard") {
 			redirectAttributes.addFlashAttribute("msg", msg);
 			url = "redirect:/member/basketPayment";
+			return url;
 		}
 //		판매자의 계좌에도 금액이 추가되어야 함.
 //		1. 쿠키에서 상품 정보를 가져와서 해당하는 판매자의 계좌에 금액을 추가해줘야 한다.
 //		2. 주문내역에도 추가가 되어야 함.
+		SecurityContextHolder securityContextHolder = new SecurityContextHolder();
+		CustomUserDetails user = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Cookie[] cookieList = request.getCookies();
 		if(cookieList!=null && cookieList.length != 0) {
+			List<TrHistoryVO> trHistoryList = new ArrayList<TrHistoryVO>();
 			for(Cookie cookie : cookieList) {
 				String cName = cookie.getName();
 				if(cName.startsWith("p")) {
@@ -182,12 +192,12 @@ public class MemberController {
 					String sellerId = productInfoVO.getSellerId(); // 판매자 아이디
 					int price = productInfoVO.getPrice();
 					float discount = productInfoVO.getDiscount();
+					String busiName = productInfoVO.getBusiName();
 					
 					SellerVO sellerVO = sellerService.getSellerVO(sellerId);
 					String sellerCardNum = sellerVO.getCardNum(); // 판매자 카드번호
 					String sellerName = sellerVO.getName(); // 판매자 이름
 					String bankName = sellerVO.getBankName(); // 판매자 은행
-					
 					int totalPrice = Integer.parseInt(count) * ((int)(Math.floor(price * (1-discount/100)))/10*10);
 					log.info("값은 : " +totalPrice);
 					
@@ -199,12 +209,34 @@ public class MemberController {
 					
 					// tbl_seller에서의 판매자의 수입(income)에도 추가해줘야 한다.
 					sellerService.deposit(sellerId, totalPrice);
+					redirectAttributes.addFlashAttribute("money", money);
+					url = "redirect:/member/afterPayment";
+					TrHistoryVO historyVO = new TrHistoryVO();
+					historyVO.setSellerId(sellerId);
+					historyVO.setSellerName(sellerName);
+					historyVO.setSellerCardNum(sellerCardNum);
+					historyVO.setClientId(user.getUsername());
+					historyVO.setClientName(user.getName());
+					historyVO.setPaymentCardBankName(cardVO.getBankName());
+					historyVO.setPaymentCardName(cardVO.getName());
+					historyVO.setPaymentCardNum(cardVO.getCardNum());
+					historyVO.setBusiName(busiName);
+					historyVO.setPno(pno);
+					historyVO.setPrice(totalPrice);
+					historyVO.setCount(Integer.parseInt(count));
+					trHistoryList.add(historyVO);
+					trHistoryService.addTrHistory(historyVO);
 				}
 			}
+			redirectAttributes.addFlashAttribute("trHistoryList", trHistoryList);
 		}
 		return url;
 	}
 	@GetMapping("/orderInfo")
 	public void orderInfo() {
+	}
+	@GetMapping("/afterPayment")
+	public void afterPayment() {
+		
 	}
 }
