@@ -18,5 +18,4 @@ private ProductAttachMapper productAttachMapper;
 	public ProductAttachVO getProductMainImage(int pno) {
 		return productAttachMapper.getMainAttachVO(pno);
 	}
-
 }

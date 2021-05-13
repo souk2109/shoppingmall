@@ -139,7 +139,7 @@
 							</c:when>
 							<c:otherwise>
 								<button id="basketBtn" class="prd-buy-info" style="width:100%;color: #346AFF;margin-top: 10px;">장바구니 담기</button>
-						<button id="directBtn" class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px"> 구매하기 </button>
+								<button id="directBtn" class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px"> 구매하기 </button>
 							</c:otherwise>
 						</c:choose>
 					</div>

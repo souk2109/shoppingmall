@@ -18,7 +18,7 @@ public class TrHistoryVO {
 	private String paymentCardNum; // 결제한 카드번호
 	private String paymentCardBankName; // 결제한 카드 은행 명
 	private String paymentCardName; // 카드 주인 이름
-	
+	private String productName; // 상품명
 	private String busiName; // 상호명
 	private int pno; // 상품번호
 	private int price; // 상품 결제 금액

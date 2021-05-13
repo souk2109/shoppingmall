@@ -6,6 +6,6 @@ import org.shoppingmall.domain.ProductAttachVO;
 
 public interface ProductAttachService {
 
-	List<ProductAttachVO> getProductImages(int pno);
+	public List<ProductAttachVO> getProductImages(int pno);
 	public ProductAttachVO getProductMainImage(int pno);
 }

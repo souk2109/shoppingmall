@@ -2,8 +2,10 @@ package org.shoppingmall.controller;
 
 import java.util.List;
 
+import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SimpleCardVO;
+import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.SellerRequestService;
 import org.shoppingmall.service.SimpleCardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class MemberRestController {
 	@Autowired
 	private SimpleCardService simpleCardService;
 	
+	@Autowired
+	private ProductAttachService productAttachService;
+	
 	@GetMapping(value = "/getRecentSellerRequest/{id}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<SellerRequestVO> getRecentSellerRequest(@PathVariable("id") String id) {
 		SellerRequestVO sellerRequestVO = sellerRequestService.getRecentSellerRequest(id);
@@ -44,4 +49,10 @@ public class MemberRestController {
 		List<SimpleCardVO> simpleCardList = simpleCardService.getSimpleCardVO(id);
 		return new ResponseEntity<List<SimpleCardVO>>(simpleCardList, HttpStatus.OK);
 	}
+	@GetMapping(value = "/getProductMainImage/{pno}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<ProductAttachVO> getProductMainImage(@PathVariable("pno") int pno) {
+		ProductAttachVO productAttachVO = productAttachService.getProductMainImage(pno);
+		return new ResponseEntity<ProductAttachVO>(productAttachVO, HttpStatus.OK);
+	}
+	 
 }

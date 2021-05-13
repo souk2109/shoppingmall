@@ -30,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -227,6 +228,7 @@ public class MemberController {
 					historyVO.setPno(pno);
 					historyVO.setPrice(totalPrice);
 					historyVO.setCount(Integer.parseInt(count));
+					historyVO.setProductName(productInfoVO.getPrdName());
 					trHistoryList.add(historyVO);
 					trHistoryService.addTrHistory(historyVO);
 				}
@@ -287,7 +289,7 @@ public class MemberController {
 		historyVO.setPno(pno);
 		historyVO.setPrice(totalPrice);
 		historyVO.setCount(count);
-		
+		historyVO.setProductName(productInfoVO.getPrdName());
 		List<TrHistoryVO> trHistoryList = new ArrayList<TrHistoryVO>();
 		trHistoryList.add(historyVO);
 		trHistoryService.addTrHistory(historyVO);
@@ -296,7 +298,10 @@ public class MemberController {
 	}
 	
 	@GetMapping("/orderInfo")
-	public void orderInfo() {
+	public void orderInfo(Model model) {
+		CustomUserDetails user = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<TrHistoryVO> trHistoryList = trHistoryService.getClientTransactionHistorys(user.getUsername());
+		model.addAttribute("trHistoryList", trHistoryList);
 	}
 	@GetMapping("/afterPayment")
 	public void afterPayment() {

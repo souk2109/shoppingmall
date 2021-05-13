@@ -35,6 +35,17 @@ var memberService = (function() {
 			}
 		})
 	}
+	function getProductMainImage(pno, callback, error) {
+		$.get("/shoppingmall/member/getProductMainImage/"+pno+".json", function(obj) {
+			if(callback){
+				callback(obj);
+			}
+		}).fail(function(xhr, status, err) {
+			if(error){
+				err();
+			}
+		})
+	}
 	function displayTime(timeValue) {	
 		let dateObj = new Date(timeValue);
 		let yy = dateObj.getFullYear();
@@ -53,6 +64,7 @@ var memberService = (function() {
 		getRecentSellerRequest : getRecentSellerRequest,
 		getSellerRequests : getSellerRequests,
 		getSimpleCards : getSimpleCards,
+		getProductMainImage:getProductMainImage,
 		displayTime:displayTime
 	};
 })();

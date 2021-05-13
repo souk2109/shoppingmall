@@ -4,16 +4,16 @@
 <mapper namespace="org.shoppingmall.mapper.TrHistoryMapper">
 	<insert id="insertTransactionHistory">
 		INSERT INTO tbl_transaction_history(sellerId, sellerName, sellerCardNum,clientId,clientName,
-			busiName, pno, price, count, paymentCardNum, paymentCardBankName, paymentCardName)
+			busiName, pno, price, count, paymentCardNum, paymentCardBankName, paymentCardName, productName)
 		VALUES(#{sellerId}, #{sellerName},#{sellerCardNum}, #{clientId}, 
 			#{clientName}, #{busiName}, #{pno}, #{price}, #{count}, #{paymentCardNum}, 
-			#{paymentCardBankName}, #{paymentCardName})
+			#{paymentCardBankName}, #{paymentCardName}, #{productName})
 		<selectKey resultType="int" keyProperty="orderNum" order="AFTER">
 			 SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>  
 	
-	<!-- <select id="getTransactionHistoryByNum" resultType="org.shoppingmall.domain.TrHistoryVO">
-		select * from tbl_transaction_history where orderNum =#{orderNum}
-	</select> -->
+	<select id="getClientTransactionHistorys" resultType="org.shoppingmall.domain.TrHistoryVO">
+		select * from tbl_transaction_history where clientId =#{clientId} order by buyDate desc
+	</select>
 </mapper>
