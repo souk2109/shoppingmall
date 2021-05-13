@@ -10,4 +10,5 @@ public interface ProductInfoService {
 	public List<ProductInfoVO>getProductInfoList(String loginedId);
 	public void modifyProductInfoVO(ProductInfoVO productInfoVO);
 	public List<ProductInfoVO> getAllProductInfoList();
+	public void minusProductStock(int pno, int count);
 }

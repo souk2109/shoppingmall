@@ -88,4 +88,9 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 		return list;
 	}
 
+	@Override
+	public void minusProductStock(int pno, int count) {
+		productInfoMapper.minusProductStock(pno, count);
+	}
+
 }

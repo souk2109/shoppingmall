@@ -201,6 +201,8 @@ public class MemberController {
 					String bankName = sellerVO.getBankName(); // 판매자 은행
 					int totalPrice = Integer.parseInt(count) * ((int)(Math.floor(price * (1-discount/100)))/10*10);
 					log.info("값은 : " +totalPrice);
+					// 재고에서 구매한 수만큼 뺸다.
+					productInfoService.minusProductStock(pno, Integer.parseInt(count));
 					
 					CardVO sellerCardVO = new CardVO();
 					sellerCardVO.setCardNum(sellerCardNum);
@@ -268,12 +270,16 @@ public class MemberController {
 		sellerService.deposit(sellerId, totalPrice);
 		redirectAttributes.addFlashAttribute("money", totalPrice);
 		url = "redirect:/member/afterPayment";
+		
+		// 재고에서 구매한 수만큼 뺸다.
+		productInfoService.minusProductStock(pno, count);
+		
 		TrHistoryVO historyVO = new TrHistoryVO();
 		historyVO.setSellerId(sellerId);
 		historyVO.setSellerName(sellerName);
 		historyVO.setSellerCardNum(sellerCardNum);
-		historyVO.setClientId(user.getUsername());
-		historyVO.setClientName(user.getName());
+		historyVO.setClientId(clientId);
+		historyVO.setClientName(clientName);
 		historyVO.setPaymentCardBankName(cardVO.getBankName());
 		historyVO.setPaymentCardName(cardVO.getName());
 		historyVO.setPaymentCardNum(cardVO.getCardNum());

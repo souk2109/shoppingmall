@@ -23,4 +23,9 @@
      		set category=#{category}, prdName=#{prdName}, stock = #{stock}, price = #{price}, discount = #{discount}
      		where pno = #{pno}
      	</update>
+     	<update id="minusProductStock">
+     		update tbl_product_info 
+     		set stock= stock-#{count}
+     		where pno = #{pno}
+     	</update>
 </mapper>
