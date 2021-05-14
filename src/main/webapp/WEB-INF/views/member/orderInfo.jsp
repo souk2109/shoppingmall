@@ -16,7 +16,6 @@
 		return num;
 	}
 </script>
-${trHistoryList[0] }
 <div class="container" align="center">
 	<div class="row" style="margin-bottom: 30px" align="left">
 		<div class="col-12"><i class="fa fa-shopping-bag fa-3x" aria-hidden="true"></i><font size="30px" style="margin-left: 5px">주문내역</font></div>
@@ -26,21 +25,33 @@ ${trHistoryList[0] }
 		<div class="col-12" style="border-bottom: solid 2px #ccd; padding: 5px;margin-bottom: 20px">
 			<h4>주문내역</h4>
 		</div>
+		<div class="col-12" style="padding: 5px;margin-bottom: 20px">
+			<h6>준비중인 상품에 한해서 수량 변경 및 취소가 가능합니다.</h6>
+		</div>
 		<c:forEach items="${trHistoryList }" var="history">
 			<div class="col-10" style="border: solid 1px #ccd; padding: 5px;border-radius: 5px; margin: auto;margin-bottom: 20px">
-				<div style="font-size: 20px;font-weight: bold;">
+				<div style="font-size: 20px;font-weight: bold;margin-bottom: 5px">
 					<fmt:formatDate value="${history.buyDate }" pattern="yyyy.MM.dd주문"/>
 				</div>
+				<div class="col-12" align="left" style="margin-bottom: 10px">
+					<c:choose>
+						<c:when test="${history.prdStatus eq 'ready'}">
+							<font style="font-weight: bold;" color="red">상품 준비중</font>
+						</c:when>
+						<c:when test="${history.prdStatus eq 'shipping'}">
+							<font style="font-weight: bold; "color="blue">배송중</font>
+						</c:when>
+						<c:when test="${history.prdStatus eq 'arrive'}">
+							<font style="font-weight: bold;">상품 도착</font>
+						</c:when>
+					</c:choose>
+					 
+				</div>
+				<div class="prdImg" data-pno="${history.pno }"></div>
 				<div class="col-12" align="left" style="margin-bottom: 10px">
 					<span>주문번호 : </span>
 					<span>${history.orderNum }</span>
 				</div>
-				<div class="col-12" align="left" style="margin-bottom: 10px">
-					<c:if test="${history.prdStatus eq 'ready'}">
-						<font style="font-weight: bold;">상품 준비중</font>
-					</c:if>
-				</div>
-				<div class="prdImg" data-pno="${history.pno }"></div>
 				<div class="col-12" align="left" style="margin-bottom: 10px">
 					<span>상호명 : </span>
 					<span>${history.busiName }</span>
@@ -66,8 +77,8 @@ ${trHistoryList[0] }
 					<span><fmt:formatDate value="${history.buyDate }" pattern="yyyy년 MM월 dd일 hh시 mm분"/></span>
 				</div>
 				<c:if test="${history.prdStatus eq 'ready'}">
-					<div class="col-12" align="left" style="margin-bottom: 10px">
-						<input class="btn" value="취소/변경하기">
+					<div class="col-12" align="center" style="margin-bottom: 10px">
+						<button id="cancelBtn" style="width:70%; background: #346aff;color: #fff;font-size: 13px">취소/환불</button>
 					</div>
 				</c:if>
 			</div>

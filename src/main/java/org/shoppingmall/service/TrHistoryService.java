@@ -8,4 +8,15 @@ public interface TrHistoryService {
 	public int addTrHistory(TrHistoryVO trHistoryVO);
 
 	public List<TrHistoryVO> getClientTransactionHistorys(String clientId);
+
+	public List<TrHistoryVO> getSellerTransactionHistorys(String sellerId);
+
+	public TrHistoryVO getTransactionHistory(int orderNum);
+
+	public String modifyStatusToShipping(int orderNum, String prdStatus);
+
+	public String modifyStatusToArrive(int orderNum, String prdStatus);
+
+	public String modifyStatusToCancel(int orderNum, String prdStatus);
+
 }

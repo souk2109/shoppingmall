@@ -24,5 +24,8 @@ public class TrHistoryVO {
 	private int price; // 상품 결제 금액
 	private String prdStatus; // 상품의 상태(배송중 등..)
 	private Date buyDate; // 구매 날짜
+	private Date shippingTime; // 배송 날짜
+	private Date arriveTime; // 도착 날짜
+	private Date cancelTime; // 취소 날짜
 	private int count; // 구매 수량
 }

@@ -16,4 +16,27 @@
 	<select id="getClientTransactionHistorys" resultType="org.shoppingmall.domain.TrHistoryVO">
 		select * from tbl_transaction_history where clientId =#{clientId} order by buyDate desc
 	</select>
+	
+	<select id="getSellerTransactionHistorys" resultType="org.shoppingmall.domain.TrHistoryVO">
+		select * from tbl_transaction_history where sellerId =#{sellerId} order by buyDate desc
+	</select>
+	
+	<select id="getTransactionHistory" resultType="org.shoppingmall.domain.TrHistoryVO">
+		select * from tbl_transaction_history where orderNum =#{orderNum}
+	</select>
+	 
+	<update id="updateStatusToShipping">
+		update tbl_transaction_history set prdStatus=#{prdStatus} , shippingTime=current_timestamp()
+		where orderNum=#{orderNum}
+	</update>
+	
+	<update id="updateStatusToArrive">
+		update tbl_transaction_history set prdStatus=#{prdStatus} , arriveTime=current_timestamp()
+		where orderNum=#{orderNum}
+	</update>
+	
+	<update id="updateStatusToCancel">
+		update tbl_transaction_history set prdStatus=#{prdStatus} , cancelTime=current_timestamp()
+		where orderNum=#{orderNum}
+	</update>
 </mapper>
