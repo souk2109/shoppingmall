@@ -17,6 +17,6 @@ public interface TrHistoryService {
 
 	public String modifyStatusToArrive(int orderNum, String prdStatus);
 
-	public String modifyStatusToCancel(int orderNum, String prdStatus);
+	public String cancelOrder(int orderNum);
 
 }

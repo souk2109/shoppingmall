@@ -303,6 +303,14 @@ public class MemberController {
 		List<TrHistoryVO> trHistoryList = trHistoryService.getClientTransactionHistorys(user.getUsername());
 		model.addAttribute("trHistoryList", trHistoryList);
 	}
+	
+	@PostMapping("/cancelOrder")
+	public String cancelOrder(int orderNum, RedirectAttributes redirectAttributes) {
+		trHistoryService.cancelOrder(orderNum);
+		redirectAttributes.addFlashAttribute("result", "cancelSuccess");
+		return "redirect:/member/orderInfo";
+	}
+	
 	@GetMapping("/afterPayment")
 	public void afterPayment() {
 		

@@ -14,4 +14,10 @@
 		set income = income + #{money}
 		where id=#{id}
 	</update>
+	
+	<update id="withdraw">
+		update tbl_seller 
+		set income = income - #{price}
+		where id=#{sellerId}
+	</update>
 </mapper>

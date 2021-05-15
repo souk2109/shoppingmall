@@ -9,6 +9,13 @@
 		num = num.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 		return num;
 	}
+	let modifyDetailResult = "<c:out value='${modifyDetailResult }'/>"
+	if(modifyDetailResult === 'modifyStatusToShipping'){
+		alert("정상적으로 '배송 중'으로 변경하였습니다.");
+	}
+	else if(modifyDetailResult === 'modifyStatusToArrive'){
+		alert("정상적으로 '상품 도착'으로 변경하였습니다.");
+	}
 </script>
 <div class="container" align="center">
 	<div class="row" style="margin-bottom: 30px" align="left">
@@ -46,6 +53,9 @@
 									<c:when test="${history.prdStatus eq 'arrive'}">
 										<font style="font-weight: bold;">상품 도착</font>
 									</c:when>
+									<c:when test="${history.prdStatus eq 'cancel'}">
+										<font style="font-weight: bold;">상품 취소</font>
+									</c:when>
 								</c:choose>
 							</td>
 							<!-- 해당 상품의 n개 가격과 삭제를 위한 x표시 -->
@@ -54,7 +64,7 @@
 							</td>
 							<td class="align-middle" style="width: 15%;padding: 0px">
 								<script>
-									document.write(makeComma(${history.price}))
+									document.write(makeComma(${history.price}));
 								</script>
 								<span>원</span>
 							</td>

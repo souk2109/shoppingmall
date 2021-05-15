@@ -9,4 +9,6 @@ public interface SellerMapper {
 	public SellerVO getSellerVO(String id);
 
 	public int deposit(@Param("id")String id, @Param("money")int money);
+
+	public int withdraw(@Param("sellerId")String sellerId, @Param("price")int price);
 }

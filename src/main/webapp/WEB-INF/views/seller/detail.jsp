@@ -65,8 +65,17 @@
 			</div>
 			<div class="col-12" align="left" style="margin-bottom: 10px">
 				<span>결제 시간 : </span> <span><fmt:formatDate
-						value="${trHistory.buyDate }" pattern="yyyy.MM.dd hh:mm" /></span>
+						value="${trHistory.buyDate }" pattern="yyyy.MM.dd hh:mm" />
+				</span>
 			</div>
+			<c:if test="${trHistory.prdStatus eq 'cancel'}">
+				<div class="col-12" align="left" style="margin-bottom: 10px">
+					<span>취소 시간 : </span> 
+					<span>
+						<fmt:formatDate	value="${trHistory.cancelTime }" pattern="yyyy.MM.dd hh:mm" />
+					</span>
+				</div>
+			</c:if>
 			<c:choose>
 				<c:when test="${trHistory.prdStatus eq 'ready'}">
 					<button id="shippingBtn" style="width:70%; background: #346aff;color: #fff;font-size: 13px">배송 중</button>
@@ -78,7 +87,7 @@
 					<button style="width:70%; background: #ccc;color:#000000;font-size: 13px" disabled="disabled">배송 완료</button>
 				</c:when>
 				<c:when test="${trHistory.prdStatus eq 'cancel'}">
-					<button style="width:70%; background: #ccc;color:#000000;font-size: 13px" disabled="disabled">구매 취소</button>
+					<button style="width:70%; background: #ccc;color:#000000;font-size: 13px" disabled="disabled">취소된 상품</button>
 				</c:when>
 			</c:choose>
 			<div style="margin: 20px">

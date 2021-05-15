@@ -15,6 +15,14 @@
 		where name=#{cardVO.name} and cardNum=#{cardVO.cardNum} 
 		and bankName = #{cardVO.bankName}
 	</update>
+	
+	<update id="authWithdraw">
+		update tbl_card 
+		set balance = balance - #{money}
+		where name=#{cardVO.name} and cardNum=#{cardVO.cardNum} 
+		and bankName = #{cardVO.bankName}
+	</update>
+	 
 	<update id="withdraw">
 		<![CDATA[
 			update tbl_card

@@ -84,10 +84,8 @@ public class SellerController {
 		else if("arrive".equals(prdStatus)) {
 			result = trHistoryService.modifyStatusToArrive(orderNum, prdStatus);
 		}
-		else if("cancel".equals(prdStatus)) {
-			result = trHistoryService.modifyStatusToCancel(orderNum, prdStatus);
-		}
-		redirectAttributes.addFlashAttribute("modifyResult", result);
+		
+		redirectAttributes.addFlashAttribute("modifyDetailResult", result);
 		return "redirect:/seller/sellerInfo";
 	}
 	private String getLoginedId() {
