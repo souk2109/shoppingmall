@@ -39,4 +39,7 @@
 		update tbl_transaction_history set prdStatus=#{prdStatus} , cancelTime=current_timestamp()
 		where orderNum=#{orderNum}
 	</update>
+	<select id="getValidateCheck" resultType="int">
+		select count(*) from tbl_transaction_history where pno =#{pno} and orderNum =#{orderNum} and clientId =#{clientId}
+	</select>
 </mapper>

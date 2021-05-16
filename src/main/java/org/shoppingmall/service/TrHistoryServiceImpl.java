@@ -92,4 +92,9 @@ public class TrHistoryServiceImpl implements TrHistoryService{
 		return "success";
 	}
 
+	@Override
+	public int getValidateCheck(int pno, int orderNum, String clientId) {
+		return trHistoryMapper.getValidateCheck(pno, orderNum, clientId);
+	}
+
 }

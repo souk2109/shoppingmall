@@ -22,4 +22,7 @@ public interface TrHistoryMapper {
 	public int updateStatusToShipping(@Param("orderNum")int orderNum, @Param("prdStatus")String prdStatus);
 	public int updateStatusToArrive(@Param("orderNum")int orderNum, @Param("prdStatus")String prdStatus);
 	public int updateStatusToCancel(@Param("orderNum")int orderNum, @Param("prdStatus")String prdStatus);
+	
+	// 상품번호, 주문번호, id를 통해 거래내역이 있는지 확인
+	public int getValidateCheck(@Param("pno")int pno, @Param("orderNum")int orderNum, @Param("clientId")String clientId);
 }

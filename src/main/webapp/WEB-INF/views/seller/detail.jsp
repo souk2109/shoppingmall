@@ -51,10 +51,14 @@
 			</div>
 			<div class="col-12" align="left" style="margin-bottom: 10px">
 				<span>총 금액 : </span> 
-				<span><script>document.write(makeComma(${trHistory.price}));</script>원</span>
+				<span>
+					<script>
+						document.write(makeComma("<c:out value='${trHistory.price }'/>"));
+					</script>원</span>
 			</div>
-			<div class="col-12" align="left" style="margin-bottom: 10px">
-				<span>결제 카드 : </span> <span>(${trHistory.paymentCardBankName })${trHistory.paymentCardNum }
+			<div class="col-12" align="left" style="margin-bottom: 10px;">
+				<span>결제 카드 : </span> 
+				<span>(${trHistory.paymentCardBankName })${trHistory.paymentCardNum }
 					[${trHistory.paymentCardName }]</span>
 			</div>
 			<div class="col-12" align="left" style="margin-bottom: 10px">

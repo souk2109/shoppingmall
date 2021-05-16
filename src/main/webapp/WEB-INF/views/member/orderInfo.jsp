@@ -3,6 +3,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<sec:authentication property="principal" var="loginUser"/>
 <script>
 	//올림 함수
 	function makeFloorPrice(num) {
@@ -20,7 +22,6 @@
 		alert("정상적으로 구매를 취소하였습니다.");
 	}
 </script>
-${trHistoryList[0] }
 <div class="container" align="center">
 	<div class="row" style="margin-bottom: 30px" align="left">
 		<div class="col-12"><i class="fa fa-shopping-bag fa-3x" aria-hidden="true"></i><font size="30px" style="margin-left: 5px">주문내역</font></div>
@@ -28,7 +29,7 @@ ${trHistoryList[0] }
 	 
 	<div class="row col-md-8 col-sm-12" style="margin-bottom: 30px; border: solid 2px #ccd;padding: 0px">
 		<div class="col-12" style="border-bottom: solid 2px #ccd; padding: 5px;margin-bottom: 20px">
-			<h4>주문내역</h4>
+			<h4>최근 주문내역</h4>
 		</div>
 		<div class="col-12" style="padding: 5px;margin-bottom: 20px">
 			<h6>준비중인 상품에 한해서 수량 변경 및 취소가 가능합니다.</h6>
@@ -122,6 +123,12 @@ ${trHistoryList[0] }
 						<span><fmt:formatDate value="${history.cancelTime }" pattern="yyyy년 MM월 dd일 hh시 mm분"/></span>
 					</div>
 				</c:if>
+				<c:if test="${history.prdStatus eq 'arrive'}">
+					<div class="col-12" align="left" style="margin-bottom: 10px">
+						<input class="btn review" type="button" style="width:100%; background: #69EEA8;color: #fff;margin-top: 10px" 
+							value=" 리뷰작성하기" data-orderNum="${history.orderNum  }" data-pno="${history.pno  }">
+					</div>
+				</c:if>
 			</div>
 		</c:forEach>
 	</div>
@@ -153,6 +160,12 @@ ${trHistoryList[0] }
 			$("#formObj").append(str);
 			$("#formObj").submit();
 		}
+	});
+	$(".review").on("click", function() {
+		let pno = $(this).data("pno");
+		let orderNum = $(this).data("ordernum");
+		let clientId = "<c:out value='${loginUser.username }'/>";
+		window.location.href="/shoppingmall/member/writeReview?pno="+pno+"&orderNum="+orderNum+"&clientId="+clientId;
 	});
 </script>
  

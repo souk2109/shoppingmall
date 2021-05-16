@@ -19,4 +19,6 @@ public interface TrHistoryService {
 
 	public String cancelOrder(int orderNum);
 
+	public int getValidateCheck(int pno, int orderNum, String clientId);
+
 }

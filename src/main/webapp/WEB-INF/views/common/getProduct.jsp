@@ -138,7 +138,7 @@
 								<input class="btn prd-buy-info" style="width:100%;color: #346AFF;margin-top: 10px;"readonly="readonly" disabled="disabled" value="품절"/>
 							</c:when>
 							<c:otherwise>
-								<button id="basketBtn" class="prd-buy-info" style="width:100%;color: #346AFF;margin-top: 10px;">장바구니 담기</button>
+								<button id="basketBtn" class="prd-buy-info" style="width:100%;color: #346AFF;margin-top: 10px;"><i class="fa fa-heart" aria-hidden="true"></i> 장바구니 담기</button>
 								<button id="directBtn" class="prd-buy-info" style="width:100%; background: #346aff;color: #fff;margin-top: 10px"> 구매하기 </button>
 							</c:otherwise>
 						</c:choose>
