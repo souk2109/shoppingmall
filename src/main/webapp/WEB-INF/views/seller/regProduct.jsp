@@ -98,7 +98,68 @@
 								</div>
 							</div>
 						</div>
-						
+						<div class="form-group" align="left">
+							<div class="col-sm-12" style="margin-bottom: 20px">
+								<div style="margin-bottom: 5px">
+									<span>리뷰 설문조사 질문1</span>
+									<input name="question1" type='text' class='form-control' placeholder='질문을 작성하세요'  autocomplete='off'>
+								</div>
+								<div style="display: table;margin-bottom: 5px">
+									<div style="display: table-cell;">
+										답변항목1
+									</div>
+									<div style="display: table-cell;padding-left: 10px">
+										<input name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+									</div>
+								</div>
+								<div style="display: table;margin-bottom: 5px">
+									<div style="display: table-cell;">
+										답변항목2
+									</div>
+									<div style="display: table-cell;padding-left: 10px">
+										<input name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+									</div>
+								</div>
+								<div style="display: table;margin-bottom: 5px">
+									<div style="display: table-cell;">
+										답변항목3
+									</div>
+									<div style="display: table-cell;padding-left: 10px">
+										<input name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div style="margin-bottom: 5px">
+									<span>리뷰 설문조사 질문2</span>
+									<input name="question2" type='text' class='form-control' placeholder='질문을 작성하세요'  autocomplete='off'>
+								</div>
+								<div style="display: table;margin-bottom: 5px">
+									<div style="display: table-cell;">
+										답변항목1
+									</div>
+									<div style="display: table-cell;padding-left: 10px">
+										<input name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+									</div>
+								</div>
+								<div style="display: table;margin-bottom: 5px">
+									<div style="display: table-cell;">
+										답변항목2
+									</div>
+									<div style="display: table-cell;padding-left: 10px">
+										<input name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+									</div>
+								</div>
+								<div style="display: table;margin-bottom: 5px">
+									<div style="display: table-cell;">
+										답변항목3
+									</div>
+									<div style="display: table-cell;padding-left: 10px">
+										<input name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-12">
 								<input id="registerBtn" type="submit"  value="등록하기" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: green; color: white;">

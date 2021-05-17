@@ -22,16 +22,17 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 	
 	@Transactional
 	@Override
-	public void insertProductInfoVO(ProductInfoVO productInfoVO) {
+	public int insertProductInfoVO(ProductInfoVO productInfoVO) {
 		productInfoMapper.insertProductInfo(productInfoVO);
+		int pno = productInfoVO.getPno();
 		if(productInfoVO.getAttachList() == null || productInfoVO.getAttachList().size() <= 0) {
-			return;
+			return pno;
 		}
-		int pno = productInfoMapper.getLastPnoByUserid(productInfoVO.getSellerId());
 		productInfoVO.getAttachList().forEach(attach -> {
 			attach.setPno(pno);
 			productAttachMapper.insertProductAttachVO(attach);
 		});
+		return pno;
 	}
 
 	@Override

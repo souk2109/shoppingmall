@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.log4j.Log4j;
+@Log4j
 @Service
 public class TrHistoryServiceImpl implements TrHistoryService{
 	@Autowired
@@ -27,7 +29,9 @@ public class TrHistoryServiceImpl implements TrHistoryService{
 	
 	@Override
 	public int addTrHistory(TrHistoryVO trHistoryVO) {
-		return trHistoryMapper.insertTransactionHistory(trHistoryVO);
+		int result = trHistoryMapper.insertTransactionHistory(trHistoryVO);
+		log.info(result);
+		return result;
 	}
 
 	@Override

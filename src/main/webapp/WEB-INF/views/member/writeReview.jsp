@@ -29,7 +29,7 @@
 			<div class="col">
 				<h4>상품 리뷰</h4>
 			</div>
-			<div class="col">
+			<div class="col" style="margin-bottom: 20px;">
 				<h5>이 상품의 품질에 대해서 얼마나 만족하시나요?</h5>
 			</div>
 		</div>
@@ -50,6 +50,31 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="col-12" align="left" style="border-bottom:1px solid #ddd;display: table;margin-bottom: 20px">
+			<div class="col" style="display: table-cell;vertical-align: top;width: 30%;padding: 10px">
+				<h4>리뷰</h4>
+			</div>
+			<c:forEach items="${questionList }" var="questionVO">
+				<div class="col" style="vertical-align: top;padding: 10px">
+					<div>${questionVO.question }</div>
+					<c:forEach items="${questionVO.itemList }" var="itemVO">
+						<div style="margin-left: 5px">
+							<!-- 첫번째 질문 항목인 경우 -->
+							<c:choose>
+								<c:when test="${questionVO.qno eq questionList[0].qno}">
+									<input type="radio" name="firstItem" value="${itemVO.ino }">
+									<span>${itemVO.item }</span>
+								</c:when>
+								<c:otherwise>
+									<input type="radio" name="secondItem" value="${itemVO.ino }">
+									<span>${itemVO.item }</span>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</c:forEach>
+				</div>
+			</c:forEach>
 		</div>
 		<div class="col-12" align="left" style="border-bottom:1px solid #ddd;display: table;margin-bottom: 20px">
 			<div class="col" style="display: table-cell;vertical-align: top;width: 30%;padding: 10px">

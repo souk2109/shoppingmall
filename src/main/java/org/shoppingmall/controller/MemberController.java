@@ -10,6 +10,7 @@ import org.shoppingmall.domain.BasketVO;
 import org.shoppingmall.domain.CardVO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
+import org.shoppingmall.domain.ProductQuestionVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SellerVO;
 import org.shoppingmall.domain.SimpleCardVO;
@@ -18,6 +19,7 @@ import org.shoppingmall.security.CustomUserDetails;
 import org.shoppingmall.service.CardService;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ProductInfoService;
+import org.shoppingmall.service.ProductQuestionService;
 import org.shoppingmall.service.SellerRequestService;
 import org.shoppingmall.service.SellerService;
 import org.shoppingmall.service.SimpleCardService;
@@ -64,7 +66,8 @@ public class MemberController {
 	
 	@Autowired
 	private TrHistoryService trHistoryService;
-	
+	@Autowired
+	private ProductQuestionService productQuestionService;
 	@GetMapping("/myPage")
 	public void myPage(Model model, SecurityContextHolder contextHolder) {
 		Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
@@ -319,8 +322,11 @@ public class MemberController {
 		int result = trHistoryService.getValidateCheck(pno, orderNum, clientId);
 		if(result == 0) {
 			model.addAttribute("validateCheck", "false");
+			return;
 		}
+		List<ProductQuestionVO> questionList = productQuestionService.getProductQuestionList(pno);
 		TrHistoryVO trHistoryVO = trHistoryService.getTransactionHistory(orderNum);
+		model.addAttribute("questionList", questionList);
 		model.addAttribute("trHistoryVO", trHistoryVO);
 	}
 }

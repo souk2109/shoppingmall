@@ -3,10 +3,14 @@ package org.shoppingmall.controller;
 import java.util.List;
 
 import org.shoppingmall.domain.ProductInfoVO;
+import org.shoppingmall.domain.ProductQuestionItemVO;
+import org.shoppingmall.domain.ProductQuestionVO;
 import org.shoppingmall.domain.TrHistoryVO;
 import org.shoppingmall.mapper.SellerRequestMapper;
 import org.shoppingmall.security.CustomUserDetails;
 import org.shoppingmall.service.ProductInfoService;
+import org.shoppingmall.service.ProductQuestionItemService;
+import org.shoppingmall.service.ProductQuestionService;
 import org.shoppingmall.service.SellerRequestService;
 import org.shoppingmall.service.SellerService;
 import org.shoppingmall.service.TrHistoryService;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -33,6 +38,10 @@ public class SellerController {
 	private ProductInfoService productInfoService;
 	@Autowired
 	private TrHistoryService trHistoryService;
+	@Autowired
+	private ProductQuestionService productQuestionService;
+	@Autowired
+	private ProductQuestionItemService productQuestionItemService;
 	
 	@GetMapping("/regProduct")
 	public void regProduct(Model model) {
@@ -50,9 +59,36 @@ public class SellerController {
 	}
 	
 	@PostMapping("/doRegisteProduct")
-	public String regProduct(ProductInfoVO productInfoVO) {
-		productInfoService.insertProductInfoVO(productInfoVO);
-		log.info(productInfoVO);
+	public String regProduct(ProductInfoVO productInfoVO, String question1, String question2,
+			@RequestParam("firstItems") List<String> firstItems, @RequestParam("secondItems") List<String> secondItems) {
+		int pno = productInfoService.insertProductInfoVO(productInfoVO);
+
+		ProductQuestionVO firstQuestion = new ProductQuestionVO();
+		firstQuestion.setPno(pno);
+		firstQuestion.setQuestion(question1);
+		productQuestionService.insertProductQuestion(firstQuestion);
+		int firstQno = firstQuestion.getQno();
+		firstItems.forEach(item -> {
+			ProductQuestionItemVO itemVO = new ProductQuestionItemVO();
+			itemVO.setQno(firstQno);
+			itemVO.setPno(pno);
+			itemVO.setItem(item);
+			productQuestionItemService.addProductQuestionItem(itemVO);
+		});
+		
+		ProductQuestionVO secondQuestion = new ProductQuestionVO();
+		secondQuestion.setPno(pno);
+		secondQuestion.setQuestion(question2);
+		productQuestionService.insertProductQuestion(secondQuestion);
+		int secondQno = secondQuestion.getQno();
+		secondItems.forEach(item -> {
+			ProductQuestionItemVO itemVO = new ProductQuestionItemVO();
+			itemVO.setQno(secondQno);
+			itemVO.setPno(pno);
+			itemVO.setItem(item);
+			productQuestionItemService.addProductQuestionItem(itemVO);
+		});
+		
 		return "redirect:/seller/myProducts";
 	}
 	

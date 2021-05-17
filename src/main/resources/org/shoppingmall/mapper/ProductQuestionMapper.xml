@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shoppingmall.mapper.ProductQuestionMapper">
+	<insert id="insertProductQuestion">
+		insert into tbl_product_question(pno,question) values(#{pno},#{question})
+		<selectKey resultType="int" keyProperty="qno" order="AFTER">
+			 SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<resultMap type="org.shoppingmall.domain.ProductQuestionVO" id="productQuestionVO">
+		<result column="qno" property="qno"/>
+		<result column="pno" property="pno"/>
+		<result column="question" property="question"/>
+		<collection property="itemList" resultMap="itemVO"></collection>
+	</resultMap>
+	
+	<resultMap type="org.shoppingmall.domain.ProductQuestionItemVO" id="itemVO">
+		<result column="ino" property="ino"/>
+		<result column="qno" property="qno"/>
+		<result column="pno" property="pno"/>
+		<result column="item" property="item"/>
+		<result column="grade" property="grade"/>
+	</resultMap>
+	
+	<select id="getProductQuestionList" resultMap="productQuestionVO">
+		SELECT t1.*, t2.*
+		FROM tbl_product_question t1
+		LEFT JOIN tbl_product_question_item t2
+		ON t1.qno = t2.qno
+		WHERE t1.pno = #{pno}
+	</select>
+</mapper>
