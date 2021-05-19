@@ -39,11 +39,27 @@ var fileuploadService = (function() {
 			}
 		});
 	}
-	 
+	// 리뷰에 첨부한 이미지
+	function uploadReviewImage(formData, callback, error) {
+		$.ajax({
+			url: '/shoppingmall/uploadReviewImageAction',
+			processData: false,
+			contentType: false,
+			data: formData,
+			type: 'POST',
+			dataType : 'json',
+			success: function(result) {
+				if(callback){
+					callback(result);
+				}
+			}
+		});
+	};
 	return {
 		uploadProductImage : uploadProductImage,
 		deleteProductImage : deleteProductImage,
-		getProductImages : getProductImages
+		getProductImages : getProductImages,
+		uploadReviewImage : uploadReviewImage
 	};
 })();
  

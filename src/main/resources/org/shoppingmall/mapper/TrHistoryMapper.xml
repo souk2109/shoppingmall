@@ -42,4 +42,8 @@
 	<select id="getValidateCheck" resultType="int">
 		select count(*) from tbl_transaction_history where pno =#{pno} and orderNum =#{orderNum} and clientId =#{clientId}
 	</select>
+	<update id="updateReviewStatusByOrderNum">
+		update tbl_transaction_history set reviewStatus = 1
+		where orderNum=#{orderNum}
+	</update>
 </mapper>

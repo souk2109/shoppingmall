@@ -28,4 +28,5 @@ public class TrHistoryVO {
 	private Date arriveTime; // 도착 날짜
 	private Date cancelTime; // 취소 날짜
 	private int count; // 구매 수량
+	private int reviewStatus; // 리뷰 등록 여부
 }

@@ -125,8 +125,16 @@
 				</c:if>
 				<c:if test="${history.prdStatus eq 'arrive'}">
 					<div class="col-12" align="left" style="margin-bottom: 10px">
-						<input class="btn review" type="button" style="width:100%; background: #69EEA8;color: #fff;margin-top: 10px" 
-							value=" 리뷰작성하기" data-orderNum="${history.orderNum  }" data-pno="${history.pno  }">
+						<c:choose>
+							<c:when test="${history.reviewStatus eq 0}">
+								<input class="btn review" type="button" style="width:100%; background: #69EEA8;color: #fff;margin-top: 10px" 
+								value="리뷰작성하기" data-orderNum="${history.orderNum  }" data-pno="${history.pno  }">
+							</c:when>
+							<c:when test="${history.reviewStatus eq 1}">
+								<input class="btn review" type="button" style="width:100%; background: #FEBEBE;color: #fff;margin-top: 10px" 
+								value="리뷰 수정하기" data-orderNum="${history.orderNum  }" data-pno="${history.pno  }">
+							</c:when>
+						</c:choose>
 					</div>
 				</c:if>
 			</div>

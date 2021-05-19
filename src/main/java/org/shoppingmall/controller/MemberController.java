@@ -11,6 +11,7 @@ import org.shoppingmall.domain.CardVO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.ProductQuestionVO;
+import org.shoppingmall.domain.ReviewVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SellerVO;
 import org.shoppingmall.domain.SimpleCardVO;
@@ -20,6 +21,7 @@ import org.shoppingmall.service.CardService;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.ProductQuestionService;
+import org.shoppingmall.service.ReviewService;
 import org.shoppingmall.service.SellerRequestService;
 import org.shoppingmall.service.SellerService;
 import org.shoppingmall.service.SimpleCardService;
@@ -38,36 +40,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
-
 @Log4j
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
 	@Autowired
 	private SellerRequestService sellerRequestService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private SimpleCardService simpleCardService;
-	
+
 	@Autowired
 	private ProductInfoService productInfoService;
-	
+
 	@Autowired
 	private ProductAttachService productAttachService;
-	
+
 	@Autowired
 	private CardService cardService;
-	
+
 	@Autowired
 	private SellerService sellerService;
-	
+
 	@Autowired
 	private TrHistoryService trHistoryService;
+
 	@Autowired
 	private ProductQuestionService productQuestionService;
+
+	@Autowired
+	private ReviewService reviewService;
+	
 	@GetMapping("/myPage")
 	public void myPage(Model model, SecurityContextHolder contextHolder) {
 		Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
@@ -328,5 +334,13 @@ public class MemberController {
 		TrHistoryVO trHistoryVO = trHistoryService.getTransactionHistory(orderNum);
 		model.addAttribute("questionList", questionList);
 		model.addAttribute("trHistoryVO", trHistoryVO);
+	}
+	
+	@PostMapping("/registerReview")
+	public String registerReview(ReviewVO reviewVO) {
+		log.info(reviewVO);
+		// 리뷰를 등록시 리뷰사진 등록, 거래내역의 리뷰등록 여부 변경, 설문조사 형식의 리뷰 카운트 수정
+		reviewService.addReview(reviewVO);
+		return "redirect:/member/orderInfo";
 	}
 }

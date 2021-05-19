@@ -25,4 +25,6 @@ public interface TrHistoryMapper {
 	
 	// 상품번호, 주문번호, id를 통해 거래내역이 있는지 확인
 	public int getValidateCheck(@Param("pno")int pno, @Param("orderNum")int orderNum, @Param("clientId")String clientId);
+	
+	public int updateReviewStatusByOrderNum(int orderNum);
 }

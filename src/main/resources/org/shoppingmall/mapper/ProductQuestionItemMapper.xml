@@ -6,4 +6,10 @@
 		insert into tbl_product_question_item(qno, pno, item, grade)
 		values(#{qno}, #{pno}, #{item}, grade+1)
 	</insert>
+	<update id="increaseItemGrade">
+		update tbl_product_question_item set grade = grade +1 where ino = #{ino};
+	</update>
+	<update id="decreaseItemGrade">
+		update tbl_product_question_item set grade = grade -1 where ino = #{ino};
+	</update>
 </mapper>
