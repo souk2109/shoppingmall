@@ -43,7 +43,7 @@
 			<div class="col" style="display: table;">
 				<div style="display: table-cell;width: 140px;padding: 10px" id="prdImg" align="center" data-pno="${trHistoryVO.pno }"></div>
 				<div style="display: table-cell;vertical-align: middle;">
-					<div>
+					<div class="col-12">
 						<span>${trHistoryVO.productName },</span>
 						<span>${trHistoryVO.count }개</span>
 					</div>

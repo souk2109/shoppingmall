@@ -26,8 +26,9 @@
 	href="/shoppingmall/resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet"
 	href="/shoppingmall/resources/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet"
-	href="/shoppingmall/resources/css/fontawesome.min.css" type="text/css">
+<!-- <link rel="stylesheet"
+	href="/shoppingmall/resources/css/fontawesome.min.css" type="text/css"> -->
+	<link rel="stylesheet" href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />	
 <link rel="stylesheet"
 	href="/shoppingmall/resources/css/elegant-icons.css" type="text/css">

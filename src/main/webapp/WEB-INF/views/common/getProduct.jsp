@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="preconnect" href="https://fonts.gstatic.com">
+<!-- <link rel="stylesheet" href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css"> -->
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
 <style>
 	.prd-img{
@@ -79,10 +80,48 @@
 		width: 25px; 
 		display: block;
 	}
+
+    .graph { 
+        position: relative; /* IE is dumb */
+        width: 30%;
+        border: 1px solid #B1D632; 
+        padding: 2px; 
+		font-size:11px;
+		font-family:tahoma;
+		margin-bottom:3px;
+    }
+    .graph .greenBar { 
+        display: block;
+        position: relative;
+        background: #B1D632; 
+        text-align: right; 
+        color: white; 
+        height: 2em; 
+        line-height: 2em;            
+    }
+    .graph .blueBar { 
+        display: block;
+        position: relative;
+        background: #6480e4; 
+        text-align: right; 
+        color: white;
+        height: 2em; 
+        line-height: 2em;            
+    }
+    .graph .greenBar span { position: absolute; left: 1em; }
+    .graph .blueBar span { position: absolute; left: 1em; }
+    
+    .prdQuestionItem{
+    	padding: 5px;
+    	font-size: 12px;
+    }
 </style>
 <div class="container" style="margin-bottom: 100px">
-	<div class="row">
+	<div class="row" style="border-bottom: 1px solid #ddd;">
 		<div class="col-md-10" style="margin: 0 auto;">
+			<div class="col-12" style="margin-bottom: 20px">
+				<font size="30px" style="margin-left: 5px">상세 페이지</font>
+			</div>
 			<div class="panel-default">
 				<div class="prd-img" align="center" style="height: 500px">
 					<div>대표 이미지</div>
@@ -144,6 +183,44 @@
 						</c:choose>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 20px;border-bottom: 1px solid #ddd;">
+		<div class="col-md-10" style="margin: 0 auto;">
+			<div class="col-12" style="margin-bottom: 20px">
+				<font size="30px" style="margin-left: 5px">상품평</font>
+				<i class="fa fa-star-half-full" aria-hidden="true"></i>
+			</div>
+			<div class="row" style="margin-bottom: 20px">
+				<c:forEach items="${productQuestionList}" var="productQuestion" varStatus="status">
+					<div class="col-md-6 col-sm-12">
+						<h5>${productQuestion.question}</h5>
+						<ul style="list-style: none;">
+							<li style="width: 100%">
+								<div id="firstItem${status.index }" class="graph" style="display: inline-block;">
+								</div>
+								<div style="display: inline-block;width: 60%">
+									<span class="prdQuestionItem">${productQuestion.itemList[0].item}</span>
+								</div>
+							</li>
+							<li style="width: 100%">
+								<div id="secondItem${status.index }" class="graph" style="display: inline-block;">
+								</div>
+								<div style="display: inline-block;width: 60%">
+									<span class="prdQuestionItem">${productQuestion.itemList[1].item}</span>
+								</div>
+							</li>
+							<li style="width: 100%">
+								<div id="thirdItem${status.index }" class="graph" style="display: inline-block;">
+								</div>
+								<div style="display: inline-block;width: 60%">
+									<span class="prdQuestionItem">${productQuestion.itemList[2].item}</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -277,4 +354,62 @@
 		window.location.href = "/shoppingmall/member/directPayment?pno="+pno+"&count="+count;
 	})
 </script>
+<script>
+	let fQfirstItem = parseInt("<c:out value='${productQuestionList[0].itemList[0].grade}'/>");
+	let fQsecondItem = parseInt("<c:out value='${productQuestionList[0].itemList[1].grade}'/>");
+	let fQthirdItem = parseInt("<c:out value='${productQuestionList[0].itemList[2].grade}'/>");
+	
+	let sQfirstItem = parseInt("<c:out value='${productQuestionList[1].itemList[0].grade}'/>");
+	let sQsecondItem = parseInt("<c:out value='${productQuestionList[1].itemList[1].grade}'/>");
+	let sQthirdItem = parseInt("<c:out value='${productQuestionList[1].itemList[2].grade}'/>");
+	
+	
+	let firstTotalGrade = fQfirstItem + fQsecondItem + fQthirdItem;
+	let secondTotalGrade = sQfirstItem + sQsecondItem + sQthirdItem;
+	
+	// fQFI(firstQuestionfirstItem)
+	let fQFIPercentage = ((fQfirstItem/firstTotalGrade)*100).toFixed(1);
+	let fQSIPercentage = ((fQsecondItem/firstTotalGrade)*100).toFixed(1);
+	let fQTIPercentage = ((fQthirdItem/firstTotalGrade)*100).toFixed(1);
+	if(isNaN(fQFIPercentage)){
+		fQFIPercentage = 0.0;
+	}
+	if(isNaN(fQSIPercentage)){
+		fQSIPercentage = 0.0;
+	}
+	if(isNaN(fQTIPercentage)){
+		fQTIPercentage = 0.0;
+	}
+	let sQFIPercentage = ((sQfirstItem/firstTotalGrade)*100).toFixed(1);
+	let sQSIPercentage = ((sQsecondItem/firstTotalGrade)*100).toFixed(1);
+	let sQTIPercentage = ((sQthirdItem/firstTotalGrade)*100).toFixed(1);
+	if(isNaN(sQFIPercentage)){
+		sQFIPercentage = 0.0;
+	}
+	if(isNaN(sQSIPercentage)){
+		sQSIPercentage = 0.0;
+	}
+	if(isNaN(sQTIPercentage)){
+		sQTIPercentage = 0.0;
+	}
+	console.log(((fQfirstItem/firstTotalGrade)*100).toFixed(1));
+ 	$("#firstItem0").append("<div class='greenBar' style='width: " + fQFIPercentage + "%;'>" + fQFIPercentage + "%</div>");
+	$("#secondItem0").append("<div class='greenBar' style='width: " + fQSIPercentage + "%;'>" + fQSIPercentage + "%</div>");
+	$("#thirdItem0").append("<div class='greenBar' style='width: " + fQTIPercentage + "%;'>" + fQTIPercentage + "%</div>");
+	
+	$("#firstItem1").append("<div class='blueBar' style='width: " + sQFIPercentage + "%;'>" + sQFIPercentage + "%</div>");
+	$("#secondItem1").append("<div class='blueBar' style='width: " + sQSIPercentage + "%;'>" + sQSIPercentage + "%</div>");
+	$("#thirdItem1").append("<div class='blueBar' style='width: " + sQTIPercentage + "%;'>" + sQTIPercentage + "%</div>");
+</script>
+
+
+
+
+
+
+
+
+
+
+
 <%@include file="../includes/footer.jsp" %>

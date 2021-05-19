@@ -14,6 +14,7 @@ import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.UserVO;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ProductInfoService;
+import org.shoppingmall.service.ProductQuestionServiceImpl;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,10 +32,16 @@ import lombok.extern.log4j.Log4j;
 public class CommonController {
 	@Autowired
 	private UserService userService;
+	
 	@Autowired
 	private ProductInfoService productInfoService;
+	
 	@Autowired
 	private ProductAttachService productAttachService; 
+	
+	@Autowired
+	private ProductQuestionServiceImpl productQuestionServiceImpl;
+	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/login")
 	public void loginPage(String error, Model model) {
@@ -73,6 +80,7 @@ public class CommonController {
 	@GetMapping("/getProduct")
 	public void getProduct(int pno, Model model) {
 		model.addAttribute("product", productInfoService.getProductInfo(pno));
+		model.addAttribute("productQuestionList", productQuestionServiceImpl.getProductQuestionList(pno));
 	}
 	
 	// 장바구니 페이지
