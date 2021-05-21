@@ -6,4 +6,7 @@
 		insert into tbl_review_attach(uuid, rno, id, path, fileName)
 		values(#{uuid}, #{rno}, #{id}, #{path}, #{fileName})
 	</insert>
+	<select id="getReviewAttachVO" resultType="org.shoppingmall.domain.ReviewAttachVO">
+		select * from tbl_review_attach where rno=#{rno}
+	</select>
 </mapper>

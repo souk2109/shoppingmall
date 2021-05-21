@@ -8,6 +8,7 @@ import lombok.Data;
 public class ReviewVO {
 	private int rno;
 	private int pno;
+	private String nickname;
 	private int orderNum;
 	private String id;
 	private float grade;

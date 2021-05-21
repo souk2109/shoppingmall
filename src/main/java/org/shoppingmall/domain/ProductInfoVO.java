@@ -18,4 +18,7 @@ public class ProductInfoVO {
 	private float discount;
 	private Date regDate;
 	private List<ProductAttachVO> attachList;
+	
+	private int totalReviewGrade; // 리뷰 별점 누적 합계
+	private int reviewNum; // 총 리뷰 개수
 }

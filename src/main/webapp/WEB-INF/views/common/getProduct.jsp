@@ -1,8 +1,10 @@
 <%@include file="../includes/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<!-- <link rel="stylesheet" href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css"> -->
+<!-- 반쪽 별을 위한 링크 -->
+<link rel="stylesheet" href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css">
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
 <style>
 	.prd-img{
@@ -117,7 +119,7 @@
     }
 </style>
 <div class="container" style="margin-bottom: 100px">
-	<div class="row" style="border-bottom: 1px solid #ddd;">
+	<div class="row" style="border-bottom: 2px solid;">
 		<div class="col-md-10" style="margin: 0 auto;">
 			<div class="col-12" style="margin-bottom: 20px">
 				<font size="30px" style="margin-left: 5px">상세 페이지</font>
@@ -189,8 +191,7 @@
 	<div class="row" style="margin-top: 20px;border-bottom: 1px solid #ddd;">
 		<div class="col-md-10" style="margin: 0 auto;">
 			<div class="col-12" style="margin-bottom: 20px">
-				<font size="30px" style="margin-left: 5px">상품평</font>
-				<i class="fa fa-star-half-full" aria-hidden="true"></i>
+				<h2>상품평</h2>
 			</div>
 			<div class="row" style="margin-bottom: 20px">
 				<c:forEach items="${productQuestionList}" var="productQuestion" varStatus="status">
@@ -222,6 +223,42 @@
 					</div>
 				</c:forEach>
 			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 20px;border-bottom: 1px solid #ddd;">
+		<div class="col-md-10" style="margin: 0 auto;">
+			<div class="col-12" style="margin-bottom: 20px">
+				<h2 style="display: inline;margin-right: 5px">리뷰(${product.reviewNum })</h2>
+				<span id="reviewAvgGrade"></span>
+			</div>
+			<c:forEach items="${reviewList }" var="review">
+				<div class="row" style="margin-bottom: 20px;border: 1px solid #ccc;padding-top: 10px">
+					<div class="col-12">
+						<c:forEach begin="1" end="${review.grade }">
+							<i class='fa fa-star' style='color: #FFA500;padding:0px;font-size: 1.3em;'></i>
+						</c:forEach>
+						<c:forEach begin="1" end="${5-review.grade }">
+							<i class='fa fa-star-o' style='color: #FFA500;padding:0px;font-size: 1.3em;'></i>
+						</c:forEach>
+					</div>
+					<div class="col-12">
+						<span>${review.productName}</span>
+						<span>, ${review.count}개</span>
+					</div>
+					<div class="col-12">
+						<span>${review.review }</span>
+					</div>
+					<div class="col-12">
+						<span><fmt:formatDate value="${review.regDate }" pattern="yyyy.MM.dd a hh시 mm분"/></span>
+					</div>
+					<div class="col-12">
+						<div style="display: table;margin-bottom: 10px">
+							<div class="reviewImg" data-rno="${review.rno }"></div>
+						</div>
+					</div>
+					 
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 </div>
@@ -354,6 +391,7 @@
 		window.location.href = "/shoppingmall/member/directPayment?pno="+pno+"&count="+count;
 	})
 </script>
+<!-- 상품평 관련 javascript -->
 <script>
 	let fQfirstItem = parseInt("<c:out value='${productQuestionList[0].itemList[0].grade}'/>");
 	let fQsecondItem = parseInt("<c:out value='${productQuestionList[0].itemList[1].grade}'/>");
@@ -401,15 +439,52 @@
 	$("#secondItem1").append("<div class='blueBar' style='width: " + sQSIPercentage + "%;'>" + sQSIPercentage + "%</div>");
 	$("#thirdItem1").append("<div class='blueBar' style='width: " + sQTIPercentage + "%;'>" + sQTIPercentage + "%</div>");
 </script>
-
-
-
-
-
-
-
-
-
-
+<!-- 리뷰 관련 코드  -->
+<script>
+	function showReviewStar() {
+		let totalReviewGrade = parseInt("<c:out value='${product.totalReviewGrade }'/>");
+		let reviewNum =	parseInt("<c:out value='${product.reviewNum }'/>");
+		let reviewAvgGrade = totalReviewGrade/reviewNum;
+		if(isNaN(reviewAvgGrade)){
+			reviewAvgGrade = 0;
+		}
+		// 아래쪽 수저어어어엉어ㅓ!!!!!!!!!!
+		
+		let str = "";
+		let full_star_num = Math.floor(reviewAvgGrade);
+		let half_star_num = Math.round(reviewAvgGrade - full_star_num);
+		let gray_star_num = 5 - full_star_num - half_star_num;
+		for(var i=0;i<full_star_num; i++){
+			str += "<i class='fa fa-star' style='color: #FFA500;padding:0px;font-size: 2em;'></i>";
+		}
+		if(half_star_num === 1){
+			str += "<i class='fa fa-star-half-o' style='color: #FFA500;padding:0px;font-size: 2em;'></i>";
+		}
+		for(var i=0;i<gray_star_num; i++){
+			str += "<i class='fa fa-star-o' style='color: #FFA500;padding:0px;font-size: 2em;'></i>";
+		}
+		$("#reviewAvgGrade").append(str);
+	}
+	showReviewStar();
+	
+	function showReviewImages() {
+		$(".reviewImg").each(function(i, obj) {
+			let rno = $(this).data("rno");
+			commonService.getReviewImages(rno, function(list) {
+				if(list){
+					console.log("-----------rno : " + rno + "-----------------");
+					for(var i=0;i<list.length;i++){
+						let fileCallPath = encodeURIComponent(list[i].path+"/" + list[i].uuid +"_" + list[i].fileName);
+						let str = "<div style='display: table-cell;width: 100px;padding:5px;border:1px solid #ccc'>";
+						str += "<img src='/shoppingmall/reviewDisplay?fileName="+fileCallPath+"' style='height: 100px'>";
+						str += "</div>";
+						$(obj).append(str);
+					}
+				}
+			});
+		})
+	}
+	showReviewImages();
+</script>
 
 <%@include file="../includes/footer.jsp" %>

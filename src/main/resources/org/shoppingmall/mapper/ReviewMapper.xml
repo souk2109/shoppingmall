@@ -3,10 +3,21 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shoppingmall.mapper.ReviewMapper">
 	<insert id="insertReviewVO">
-		insert into tbl_review(pno, id, orderNum, grade, review, firstItem, secondItem)
-		values(#{pno}, #{id},#{orderNum}, #{grade}, #{review}, #{firstItem}, #{secondItem})
+		insert into tbl_review(pno, id, nickname, orderNum, grade, review, firstItem, secondItem)
+		values(#{pno}, #{id},#{nickname},#{orderNum}, #{grade}, #{review}, #{firstItem}, #{secondItem})
 		<selectKey resultType="int" keyProperty="rno" order="AFTER">
 			 SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
+	<select id="getReviewList" resultType="org.shoppingmall.domain.ReviewVO">
+		select * from tbl_review where pno = #{pno}
+	</select>
+	
+	<select id="getReviewOutputList" resultType="org.shoppingmall.domain.ReviewOutputDTO">
+		SELECT t1.rno, t1.nickname, t1.grade, t1.review ,t1.regDate, t2.count, t2.productName, t2.arriveTime
+		FROM tbl_review t1
+		LEFT JOIN tbl_transaction_history t2
+		ON t1.orderNum = t2.orderNum
+		WHERE t1.pno = #{pno};
+	</select>
 </mapper>

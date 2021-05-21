@@ -26,11 +26,12 @@
 	href="/shoppingmall/resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet"
 	href="/shoppingmall/resources/css/font-awesome.min.css" type="text/css">
-<!-- <link rel="stylesheet"
-	href="/shoppingmall/resources/css/fontawesome.min.css" type="text/css"> -->
-	<link rel="stylesheet" href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />	
 <link rel="stylesheet"
+	href="/shoppingmall/resources/css/fontawesome.min.css" type="text/css">
+<link rel="stylesheet" 
+	href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />	
+ <link rel="stylesheet"
 	href="/shoppingmall/resources/css/elegant-icons.css" type="text/css">
 <link rel="stylesheet"
 	href="/shoppingmall/resources/css/owl.carousel.min.css" type="text/css">
@@ -40,6 +41,8 @@
 	type="text/css">
 <link rel="stylesheet"
 	href="/shoppingmall/resources/css/bootstrap-theme.min.css">
+<!-- <link rel="stylesheet"
+	href="/shoppingmall/resources/css/all.css" type="text/css"> -->
 <!-- Js Plugins -->
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/shoppingmall/resources/js/bootstrap.min.js"></script>
@@ -109,7 +112,7 @@ A:hover {
 				<li><a href="#">할인상품</a></li>
 				<li><a href="#">내 정보</a></li>
 				<li><a href="/shoppingmall/common/basket"><i class="fa fa-shopping-cart" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>장바구니</a></li>
-				<li><a href="/shoppingmall/member/orderInfo"><i class="fa fa-receipt" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>주문내역</a></li>
+				<li><a href="/shoppingmall/member/orderInfo"><i class="fas fa-receipt" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>주문내역</a></li>
 				<sec:authorize access="hasRole('ROLE_SELLER')">
 					<div align="center" class="col-sm-12" style="margin-top: 10px; margin-bottom: 10px">------------ 판매자 카테고리 ------------</div>
 					<li><a href="/shoppingmall/seller/regProduct">상품등록</a></li>
@@ -211,7 +214,7 @@ A:hover {
 									</ul>
 								</li>
 								<li><a href="/shoppingmall/common/basket"><i class="fa fa-shopping-cart" style="margin-right: 3px;font-size: 20px; color: #FF00FF"></i>장바구니</a></li>
-								<li><a href="/shoppingmall/member/orderInfo"><i class="fa fa-receipt" style="margin-right: 3px;font-size: 20px; color: #000000"></i>주문내역</a></li>
+								<li><a href="/shoppingmall/member/orderInfo"><i class="fas fa-receipt" style="margin-right: 3px;font-size: 20px; color: #000000"></i>주문내역</a></li>
 							</ul>
 						</nav>
 					</div>

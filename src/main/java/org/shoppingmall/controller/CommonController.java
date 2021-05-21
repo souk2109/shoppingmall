@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.shoppingmall.domain.BasketVO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
+import org.shoppingmall.domain.ReviewOutputDTO;
+import org.shoppingmall.domain.ReviewVO;
 import org.shoppingmall.domain.UserVO;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.ProductQuestionServiceImpl;
+import org.shoppingmall.service.ReviewService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +44,9 @@ public class CommonController {
 	
 	@Autowired
 	private ProductQuestionServiceImpl productQuestionServiceImpl;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/login")
@@ -79,8 +85,13 @@ public class CommonController {
 	
 	@GetMapping("/getProduct")
 	public void getProduct(int pno, Model model) {
+		// 상품 상세페이지 관련 정보를 view에 전송
 		model.addAttribute("product", productInfoService.getProductInfo(pno));
 		model.addAttribute("productQuestionList", productQuestionServiceImpl.getProductQuestionList(pno));
+		
+		// 상품 리뷰 관련 정보를 view에 전송
+		List<ReviewOutputDTO> reviewList = reviewService.getReviewOutputList(pno);
+		model.addAttribute("reviewList", reviewList);
 	}
 	
 	// 장바구니 페이지

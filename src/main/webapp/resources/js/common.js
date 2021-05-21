@@ -56,11 +56,23 @@ var commonService = (function() {
 			}
 		});
 	}
+	function getReviewImages(rno, callback) {
+		$.get("/shoppingmall/common/getReviewImages/" + rno + ".json", function(list) {
+			if(callback){
+				callback(list);
+			}
+		}).fail(function(xhr, status, err) {
+			if(error){
+				err();
+			}
+		})
+	};
 	return {
 		getIdValidate : getIdValidate,
 		addBasket : addBasket,
 		removeBasket:removeBasket,
-		updateBasket:updateBasket
+		updateBasket:updateBasket,
+		getReviewImages:getReviewImages
 	};
 })();
  

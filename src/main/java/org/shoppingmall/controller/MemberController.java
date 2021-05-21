@@ -338,6 +338,9 @@ public class MemberController {
 	
 	@PostMapping("/registerReview")
 	public String registerReview(ReviewVO reviewVO) {
+		CustomUserDetails user = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		// 닉네임을 담아서 저장
+		reviewVO.setNickname(user.getNickname());
 		log.info(reviewVO);
 		// 리뷰를 등록시 리뷰사진 등록, 거래내역의 리뷰등록 여부 변경, 설문조사 형식의 리뷰 카운트 수정
 		reviewService.addReview(reviewVO);
