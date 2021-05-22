@@ -9,6 +9,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.shoppingmall.domain.BasketVO;
+import org.shoppingmall.domain.Criteria;
+import org.shoppingmall.domain.PageDTO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.ReviewOutputDTO;
@@ -75,8 +77,20 @@ public class CommonController {
 	}
 	
 	@GetMapping("/main")
-	public void mainPage(Model model) {
-		model.addAttribute("products", productInfoService.getAllProductInfoList());
+	public void mainPage(Model model, Criteria criteria) {
+		log.info(criteria);
+		int total = productInfoService.getCount(criteria);
+		log.info("검색된 수량: " + total);
+		PageDTO pageDTO = new PageDTO(criteria, total); 
+		log.info("pageDTO : "+pageDTO);
+
+		model.addAttribute("products", productInfoService.getProductInfoListWithPaging(criteria));
+		model.addAttribute("pageMaker", pageDTO); 
+		model.addAttribute("total", total);
+				
+		/*
+		 * model.addAttribute("products", productInfoService.getAllProductInfoList());
+		 */
 	}
 	
 	@GetMapping("/products")

@@ -37,7 +37,22 @@
 	
 </style>
 <div align="center">
-	<font class="panel-title" size="20px" face="Prompt">Products</font>
+	<font class="panel-title" size="20px" face="Prompt">판매중 상품</font>
+</div>
+
+<div style="width: 80%; margin: 0px auto;margin-bottom: 30px">
+	<form id="searchform" method="get" action="/shoppingmall/common/main" style="margin-bottom: 20px; align-content: center;">
+		<select name="category" style="width: 20%;height: 30px">
+			<option value="CF" ${criteria.category eq 'CF' ?'selected':'' }>모두</option>
+			<option value="C" ${criteria.category eq 'C' ?'selected':''}>패션 의류/잡화</option>
+			<option value="F" ${criteria.category eq 'F' ?'selected':''}>식품</option>
+		</select>
+		<input name="keyword" type="text" value="${criteria.keyword==null?'':criteria.keyword}"
+			autocomplete="off" style="height: 30px;width: 30%" placeholder="상품명">
+		<input type="submit" value="검색" style="width: 20%">
+		<input type="hidden" name="pageNum" value="1">
+		<input type="hidden" name="amount" value="12">
+	</form>
 </div>
 
 <div style="width: 80%; margin: 0px auto;">
@@ -82,6 +97,34 @@
 		</div>
 	</c:forEach>
 </div>
+<div style="width: 80%; margin: 0 auto;margin-bottom: 40px" align="center">
+	<c:if test="${pageMaker.prev }">
+		<a class="paginate_button" href="${pageMaker.startPage-1 }">
+			<button class="btn btn-default prev">prev</button>
+		</a>
+	</c:if>
+
+	<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }"
+		varStatus="status">
+		<a class="paginate_button" href="${status.index }">
+			<button
+				class="btn ${status.index eq criteria.pageNum ?'btn-info':'btn-default'}">${status.index }</button>
+		</a>
+	</c:forEach>
+
+	<c:if test="${pageMaker.next}">
+		<a class="paginate_button" href="${pageMaker.endPage+1 }">
+			<button class="btn btn-default next">next</button>
+		</a>
+	</c:if>
+</div>
+
+<form id="mainForm" method="get" action="/shoppingmall/common/main">
+	<input type="hidden" name="pageNum" value="${criteria.pageNum }">
+	<input type="hidden" name="amount" value="${criteria.amount }">
+	<input type="hidden" name="category" value="${criteria.category}">
+	<input type="hidden" name="keyword" value="${criteria.keyword }">
+</form>
 <script>
 	$(".mainImage").each(function(i, obj) {
 		let jobj= $(obj);
@@ -106,4 +149,12 @@
 	});
 </script>
 
+<script>
+	let mainForm = $("#mainForm");
+	$(".paginate_button").on("click", function(e) {
+		e.preventDefault();
+		mainForm.find("input[name='pageNum']").val($(this).attr("href"));
+		mainForm.submit();
+	});
+</script>
 <%@include file="../includes/footer.jsp"%>

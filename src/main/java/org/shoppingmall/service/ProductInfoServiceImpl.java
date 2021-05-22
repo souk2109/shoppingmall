@@ -3,6 +3,7 @@ package org.shoppingmall.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.shoppingmall.domain.Criteria;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.mapper.ProductAttachMapper;
@@ -76,6 +77,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 		});
 	}
 
+	// 페이징 처리 전의 모든 상품정보를 가져오는 메소드
 	@Override
 	public List<ProductInfoVO> getAllProductInfoList() {
 		List<ProductInfoVO> list = productInfoMapper.getAllProductInfoList();
@@ -92,6 +94,24 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 	@Override
 	public void minusProductStock(int pno, int count) {
 		productInfoMapper.minusProductStock(pno, count);
+	}
+
+	@Override
+	public int getCount(Criteria criteria) {
+		return productInfoMapper.getCount(criteria);
+	}
+
+	@Override
+	public List<ProductInfoVO> getProductInfoListWithPaging(Criteria criteria) {
+		List<ProductInfoVO> list = productInfoMapper.getProductInfoListWithPaging(criteria);
+		list.forEach(product -> {
+			int pno = product.getPno();
+			ProductAttachVO mainPicture = productAttachMapper.getMainAttachVO(pno);
+			List<ProductAttachVO> ProductAttachList = new ArrayList<ProductAttachVO>();
+			ProductAttachList.add(mainPicture);
+			product.setAttachList(ProductAttachList);
+		});
+		return list;
 	}
 
 }

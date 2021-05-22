@@ -3,6 +3,7 @@ package org.shoppingmall.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.shoppingmall.domain.Criteria;
 import org.shoppingmall.domain.ProductInfoVO;
 
 public interface ProductInfoMapper {
@@ -16,4 +17,7 @@ public interface ProductInfoMapper {
 	
 	// 리뷰 개수와 리뷰 총 별점 값을 증가시킨다.
 	public int increaseReviewNumAndTotalReviewGrade(@Param("pno") int pno, @Param("grade")int grade);
+	
+	public int getCount(Criteria criteria);
+	public List<ProductInfoVO> getProductInfoListWithPaging(Criteria criteria);
 }
