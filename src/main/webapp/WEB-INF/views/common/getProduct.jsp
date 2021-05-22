@@ -117,6 +117,16 @@
     	padding: 5px;
     	font-size: 12px;
     }
+    .main-image{
+    	width: 100%; 
+    	height: 60%;
+    }
+    @media(max-width:740px){
+		.main-image{
+			width: 100%; 
+    		height: 30%;
+		}
+	}
 </style>
 <div class="container" style="margin-bottom: 100px">
 	<div class="row" style="border-bottom: 2px solid;">
@@ -126,12 +136,11 @@
 			</div>
 			<div class="panel-default">
 				<div class="prd-img" align="center" style="height: 500px">
-					<div>대표 이미지</div>
-					<div id="main-image" style="width: 100%; height: 60%; padding: 20px;">
+					<div id="main-image" class="main-image">
 					</div>
-					<div style="margin-top: 1px solid #346aff;">첨부 이미지</div>
-					<div id="sub-image" style="width: 100%; height: 40%;">
+					<div class="sub-image" id="sub-image" style="width: 100%; height: 40%;margin-top: 30px">
 						<ul></ul>
+						<div style="color: blue;font-size: 13px">이미지를 클릭하여 자세히 확인하세요</div>
 					</div>
 				</div>
 				<div class="prd-info">
@@ -149,8 +158,10 @@
 					</div>
 					
 					<div class="prd-info-container">
-						<div class="prd-info-category">${product.discount }%</div>
-						<del style="color: #888;" id="originPrice"></del><span>원</span>
+						<c:if test="${product.discount > 0 }">
+							<div class="prd-info-category">${product.discount }%</div>
+							<del style="color: #888;" id="originPrice"></del><span>원</span>
+						</c:if>
 						<div>
 							<div id="discountedPrice" style="font-size: 20px;display: inline;"></div>
 							<span>원</span>
@@ -256,12 +267,28 @@
 							<div class="reviewImg" data-rno="${review.rno }"></div>
 						</div>
 					</div>
-					 
 				</div>
 			</c:forEach>
 		</div>
 	</div>
 </div>
+
+<div class="fade modal" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content" align="center" style="text-align: center;">
+			<div class="modal-header">
+				<span>첨부 이미지</span>
+				<span id="cancelBtn" style="float: right;"><i class="fa fa-times" aria-hidden="true"></i></span>
+			</div>
+			<div class="modal-body">
+				<div id="modal-image"></div>
+			</div>
+			<div class="modal-footer"></div>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript" src="/shoppingmall/resources/js/common.js"></script>
 <script type="text/javascript" src="/shoppingmall/resources/js/fileupload.js"></script>
 <script>
@@ -358,8 +385,8 @@
 				mainImage.append(str);
 			}else{
 				let str ="";
-				str += "<li>";
-				str += "<img src='/shoppingmall/display?fileName="+fileCallPath+"'style='width:100px;height:100%'>";
+				str += "<li class='fileName' data-fileName=" + fileCallPath +">";
+				str += "<img src='/shoppingmall/display?fileName="+fileCallPath+"' style='width:100px;height:100%'>";
 				str += "</li>";
 				subImage.append(str);
 			}
@@ -448,8 +475,6 @@
 		if(isNaN(reviewAvgGrade)){
 			reviewAvgGrade = 0;
 		}
-		// 아래쪽 수저어어어엉어ㅓ!!!!!!!!!!
-		
 		let str = "";
 		let full_star_num = Math.floor(reviewAvgGrade);
 		let half_star_num = Math.round(reviewAvgGrade - full_star_num);
@@ -475,7 +500,7 @@
 					console.log("-----------rno : " + rno + "-----------------");
 					for(var i=0;i<list.length;i++){
 						let fileCallPath = encodeURIComponent(list[i].path+"/" + list[i].uuid +"_" + list[i].fileName);
-						let str = "<div style='display: table-cell;width: 100px;padding:5px;border:1px solid #ccc'>";
+						let str = "<div class='reviewFileName' data-fileName=" + fileCallPath + " style='display: table-cell;width: 100px;padding:5px;border:1px solid #ccc'>";
 						str += "<img src='/shoppingmall/reviewDisplay?fileName="+fileCallPath+"' style='height: 100px'>";
 						str += "</div>";
 						$(obj).append(str);
@@ -486,5 +511,31 @@
 	}
 	showReviewImages();
 </script>
-
+<script>
+	function showImage(fileCallPath) {
+		$("#modal-image")
+			.html("<img src='/shoppingmall/display?fileName="+fileCallPath+"'>")
+			.animate({width:'100%', height:'100%'}, 500);
+	}
+	function showReviewImage(fileCallPath) {
+		$("#modal-image")
+			.html("<img src='/shoppingmall/reviewDisplay?fileName="+fileCallPath+"'>")
+			.animate({width:'100%', height:'100%'}, 500);
+	}
+	 
+	$(".sub-image ul").on("click","li",function(){
+		let fileName = $(this).data("filename");
+		showImage(fileName.replace(new RegExp(/\\/g),"/"));
+		$(".modal").modal("show");
+	});
+	
+	$(document).on('click', ".reviewFileName", function() {
+		let fileName = $(this).data("filename");
+		showReviewImage(fileName.replace(new RegExp(/\\/g),"/"));
+		$(".modal").modal("show");
+	});
+	$("#cancelBtn").on("click", function() {
+		$(".modal").modal("hide");
+	});
+</script>
 <%@include file="../includes/footer.jsp" %>

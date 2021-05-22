@@ -102,14 +102,14 @@
 							<div class="col-sm-12" style="margin-bottom: 20px">
 								<div style="margin-bottom: 5px">
 									<span>리뷰 설문조사 질문1</span>
-									<input name="question1" type='text' class='form-control' placeholder='질문을 작성하세요'  autocomplete='off'>
+									<input id="q1" name="question1" type='text' class='form-control' placeholder='질문을 작성하세요'  autocomplete='off'>
 								</div>
 								<div style="display: table;margin-bottom: 5px">
 									<div style="display: table-cell;">
 										답변항목1
 									</div>
 									<div style="display: table-cell;padding-left: 10px">
-										<input name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+										<input id="q1firstItem" name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
 									</div>
 								</div>
 								<div style="display: table;margin-bottom: 5px">
@@ -117,7 +117,7 @@
 										답변항목2
 									</div>
 									<div style="display: table-cell;padding-left: 10px">
-										<input name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+										<input id="q1secondItem" name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
 									</div>
 								</div>
 								<div style="display: table;margin-bottom: 5px">
@@ -125,21 +125,21 @@
 										답변항목3
 									</div>
 									<div style="display: table-cell;padding-left: 10px">
-										<input name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+										<input id="q1thirdItem" name="firstItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-12">
 								<div style="margin-bottom: 5px">
 									<span>리뷰 설문조사 질문2</span>
-									<input name="question2" type='text' class='form-control' placeholder='질문을 작성하세요'  autocomplete='off'>
+									<input id="q2" name="question2" type='text' class='form-control' placeholder='질문을 작성하세요'  autocomplete='off'>
 								</div>
 								<div style="display: table;margin-bottom: 5px">
 									<div style="display: table-cell;">
 										답변항목1
 									</div>
 									<div style="display: table-cell;padding-left: 10px">
-										<input name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+										<input id="q2firstItem" name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
 									</div>
 								</div>
 								<div style="display: table;margin-bottom: 5px">
@@ -147,7 +147,7 @@
 										답변항목2
 									</div>
 									<div style="display: table-cell;padding-left: 10px">
-										<input name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+										<input id="q2secondItem" name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
 									</div>
 								</div>
 								<div style="display: table;margin-bottom: 5px">
@@ -155,7 +155,7 @@
 										답변항목3
 									</div>
 									<div style="display: table-cell;padding-left: 10px">
-										<input name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
+										<input id="q2thirdItem" name="secondItems" type='text' class='form-control' placeholder='답변을 입력하세요'  autocomplete='off' style='margin-bottom:10px;width: 210px'>
 									</div>
 								</div>
 							</div>
@@ -176,10 +176,54 @@
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 <script type="text/javascript" src="/shoppingmall/resources/js/fileupload.js"></script>
 <script>
+	let mainImgCheck = false;
 	const id = '<c:out value='${loginUser.username}'/>';
+	
 	let registerForm = $("#registerForm");
 	$("#registerBtn").on("click", function(e) {
 		e.preventDefault();
+		// 모든 항목을 작성했는지 확인하기 
+		let categoryVal = $("#category").val();
+		if(!categoryVal){
+			alert('카테고리를 선택해주세요');
+			return;
+		}
+		 
+		let prdNameVal = $("#prdName").val().trim();
+		if(!prdNameVal){
+			alert('상품명을 입력해주세요');
+			return;
+		}
+		
+		let stockVal = $("#stock").val().trim();
+		if(!stockVal){
+			alert('재고를 입력해주세요');
+			return;
+		}
+		
+		let priceVal = $("#price").val().trim();
+		if(!priceVal){
+			alert('가격을 입력해주세요');
+			return;
+		}
+		if(!mainImgCheck){
+			alert('대표 이미지를 선택해주세요!');
+			return;
+		}
+		let q1 = $("#q1").val().trim();
+		let q1firstItem = $("#q1firstItem").val().trim();
+		let q1secondItem = $("#q1secondItem").val().trim();
+		let q1thirdItem = $("#q1thirdItem").val().trim();
+		
+		let q2 = $("#q2").val().trim();
+		let q2firstItem = $("#q2firstItem").val().trim();
+		let q2secondItem = $("#q2secondItem").val().trim();
+		let q2thirdItem = $("#q2thirdItem").val().trim();
+		if(!q1 || !q1firstItem || !q1secondItem || !q1thirdItem || 
+			!q2 || !q2firstItem || !q2secondItem || !q2thirdItem){
+			alert('설문 질문과 항목을 모두 입력해주세요')
+			return;
+		}
 		let str = '';
 		$(".uploadResult ul li").each(function(i, obj) {
 			let jobj= $(obj);
@@ -190,8 +234,7 @@
 			str +=	"<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
 			str +=	"<input type='hidden' name='attachList["+i+"].main' value='"+jobj.data("main")+"'>";
 		});
-		console.log(str);
-		registerForm.append(str).submit();	
+		registerForm.append(str).submit();
 	});
 	
 	function mainPictureSelection() {
@@ -200,6 +243,7 @@
 			$(".uploadResult ul li").removeAttr("style");
 			$(this).closest("li").attr("data-main", 1);
 			$(this).closest("li").attr("style", "border : 3px solid green");
+			mainImgCheck = true;
 		});
 	}
 	

@@ -3,6 +3,9 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<link rel="stylesheet" href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css">
+
 <script>
 	//올림 함수
 	function makeFloorPrice(num) {
@@ -29,14 +32,33 @@
 		padding: 10px;
 		border-radius: 10px;
 	}
+	
+	@media(max-width:740px){
+		.product{
+			margin-bottom: 20px;
+			width: 47%;
+			display: inline-block;
+			font-size: 12px;
+			border: 1px solid;
+			padding: 10px;
+			border-radius: 10px;
+		}
+	}
 	.img-container{
 		overflow: hidden;
 		width:100%;
 		height: 80px;
 	}
-	
+	@media(max-width:740px){
+		.page-container{
+			height: 25px;
+			width: 25px;
+			font-size: 10px;
+			text-align: center;
+		}
+	}
 </style>
-<div align="center">
+<div align="center" style="margin-bottom: 20px">
 	<font class="panel-title" size="20px" face="Prompt">판매중 상품</font>
 </div>
 
@@ -68,10 +90,13 @@
 				<div class="price-area">
 					<div class="price-wrap">
 						<div class="price">
-							<strong><span class="discount-percentage">${product.discount }%</span></strong>
-							<del>
-								<fmt:formatNumber value="${product.price }" type="number" />원 
-							</del>
+							<c:if test="${product.discount > 0 }">
+								<strong><span class="discount-percentage">${product.discount }%</span></strong>
+								<del>
+									<fmt:formatNumber value="${product.price }" type="number" />원 
+								</del>
+							</c:if>
+							
 							<em class="sale ">
 								<strong class="price-value">
 									<script>
@@ -87,20 +112,54 @@
 					</div>
 				</div>
 				<div class="other-info">
-					<div class="rating-star">
-						<span class="star"><em class="rating" style="width: 90%">4.5</em></span>
-						<span class="rating-total-count">(7932)</span>
+					<div>
+						<span class="star">
+							<em class="rating" style="width: 90%">
+								<c:choose>
+									<c:when test="${product.totalReviewGrade/product.reviewNum eq 'NaN'}">
+										0.0
+									</c:when>
+									<c:otherwise>
+										${ Math.round((product.totalReviewGrade/product.reviewNum)*2)/2}
+									</c:otherwise>
+								</c:choose>
+						 	</em>
+						 </span>
+						<span class="rating-total-count">(${product.reviewNum})</span>
 					</div>
+				</div>
+				<div>
+					<script>
+						var totalReviewGrade = parseInt("<c:out value='${product.totalReviewGrade }'/>");
+						var reviewNum = parseInt("<c:out value='${product.reviewNum }'/>");
+						var avgStarNum = Math.round((totalReviewGrade/reviewNum)*2)/2;
+						if(isNaN(avgStarNum)){
+							avgStarNum = 0.0;
+						}
+						var fullStarNum = Math.floor(avgStarNum);
+						var halfStarNum = Math.ceil(avgStarNum - fullStarNum);
+						var emptyStarNum = 5-fullStarNum-halfStarNum;
+						for(var i=0;i<fullStarNum;i++){
+							document.write("<i class='fa fa-star' style='color: #FFA500;padding:0px;font-size: 1.25em;'></i>");
+						}
+						for(var i=0;i<halfStarNum;i++){
+							document.write("<i class='fa fa-star-half-o' style='color: #FFA500;padding:0px;font-size: 1.25em;'></i>");
+						}
+						for(var i=0;i<emptyStarNum;i++){
+							document.write("<i class='fa fa-star-o' style='color: #FFA500;padding:0px;font-size: 1.25em;'></i>");
+						}
+					</script>
+				 
 				</div>
 				<button class="btn btn-info detailBtn" data-pno="${product.pno}">상세보기</button>
 			</div>
 		</div>
 	</c:forEach>
 </div>
-<div style="width: 80%; margin: 0 auto;margin-bottom: 40px" align="center">
+<div style="width: 100%; margin: 0 auto;margin-bottom: 40px" align="center">
 	<c:if test="${pageMaker.prev }">
 		<a class="paginate_button" href="${pageMaker.startPage-1 }">
-			<button class="btn btn-default prev">prev</button>
+			<button class="btn page-container btn-default prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
 		</a>
 	</c:if>
 
@@ -108,17 +167,21 @@
 		varStatus="status">
 		<a class="paginate_button" href="${status.index }">
 			<button
-				class="btn ${status.index eq criteria.pageNum ?'btn-info':'btn-default'}">${status.index }</button>
+				class="btn page-container ${status.index eq criteria.pageNum ?'btn-info':'btn-default'}">${status.index }</button>
 		</a>
 	</c:forEach>
 
 	<c:if test="${pageMaker.next}">
 		<a class="paginate_button" href="${pageMaker.endPage+1 }">
-			<button class="btn btn-default next">next</button>
+			<button class="btn page-container btn-default next"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
 		</a>
 	</c:if>
 </div>
-
+<c:if test="${fn:length(products) eq 0 }">
+	<div style="width: 80%; margin: 0px auto;margin-bottom: 100px" align="center">
+		<div>검색하신 상품이 없습니다.</div>
+	</div>
+</c:if>
 <form id="mainForm" method="get" action="/shoppingmall/common/main">
 	<input type="hidden" name="pageNum" value="${criteria.pageNum }">
 	<input type="hidden" name="amount" value="${criteria.amount }">
