@@ -74,4 +74,19 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewMapper.getReviewOutputList(pno);
 	}
 
+	@Override
+	public List<ReviewOutputDTO> getReviewWithHighGrade(String pno) {
+		return reviewMapper.getReviewWithHighGrade(pno);
+	}
+
+	@Override
+	public List<ReviewOutputDTO> getReviewWithRegdateDesc(String pno) {
+		return reviewMapper.getReviewWithRegdateDesc(pno);
+	}
+
+	@Override
+	public List<ReviewOutputDTO> getReviewWithLowGrade(String pno) {
+		return reviewMapper.getReviewWithLowGrade(pno);
+	}
+
 }

@@ -104,8 +104,10 @@ public class CommonController {
 		model.addAttribute("productQuestionList", productQuestionServiceImpl.getProductQuestionList(pno));
 		
 		// 상품 리뷰 관련 정보를 view에 전송
-		List<ReviewOutputDTO> reviewList = reviewService.getReviewOutputList(pno);
-		model.addAttribute("reviewList", reviewList);
+		/*
+		 * List<ReviewOutputDTO> reviewList = reviewService.getReviewOutputList(pno);
+		 * model.addAttribute("reviewList", reviewList);
+		 */
 	}
 	
 	// 장바구니 페이지

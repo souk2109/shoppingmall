@@ -140,7 +140,7 @@
 					</div>
 					<div class="sub-image" id="sub-image" style="width: 100%; height: 40%;margin-top: 30px">
 						<ul></ul>
-						<div style="color: blue;font-size: 13px">이미지를 클릭하여 자세히 확인하세요</div>
+						<div style="color: blue;font-size: 13px">이미지를 클릭하여 자세히 확인하세요!</div>
 					</div>
 				</div>
 				<div class="prd-info">
@@ -242,37 +242,19 @@
 				<h2 style="display: inline;margin-right: 5px">리뷰(${product.reviewNum })</h2>
 				<span id="reviewAvgGrade"></span>
 			</div>
-			<c:forEach items="${reviewList }" var="review">
-				<div class="row" style="margin-bottom: 20px;border: 1px solid #ccc;padding-top: 10px">
-					<div class="col-12">
-						<c:forEach begin="1" end="${review.grade }">
-							<i class='fa fa-star' style='color: #FFA500;padding:0px;font-size: 1.3em;'></i>
-						</c:forEach>
-						<c:forEach begin="1" end="${5-review.grade }">
-							<i class='fa fa-star-o' style='color: #FFA500;padding:0px;font-size: 1.3em;'></i>
-						</c:forEach>
-					</div>
-					<div class="col-12">
-						<span>${review.productName}</span>
-						<span>, ${review.count}개</span>
-					</div>
-					<div class="col-12">
-						<span>${review.review }</span>
-					</div>
-					<div class="col-12">
-						<span><fmt:formatDate value="${review.regDate }" pattern="yyyy.MM.dd a hh시 mm분"/></span>
-					</div>
-					<div class="col-12">
-						<div style="display: table;margin-bottom: 10px">
-							<div class="reviewImg" data-rno="${review.rno }"></div>
-						</div>
-					</div>
-				</div>
-			</c:forEach>
+			<div>
+				<span>정렬</span>
+				<select id="sortSelectbox">
+					<option value="recentRegdateSort">최근 등록일순</option>
+					<option value="lowGradeSort">별점 낮은순</option> 
+					<option value="highGradeSort">별점 높은순</option>
+				</select>
+			</div>
+			<div id="reviewContainer">
+			</div>
 		</div>
 	</div>
 </div>
-
 <div class="fade modal" id="myModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -360,7 +342,7 @@
 	}
 </script>
 
-<!--  사진 보여주기  -->
+<!--  상품 사진 보여주기  -->
 <script>
 	function startDisplay() {
 		fileuploadService.getProductImages(pno, function(list) {
@@ -407,14 +389,12 @@
 			price : price,
 			discount : discount
 		};
-		console.log(basketInfo);
 		commonService.addBasket(basketInfo, function() {
 			alert("장바구니에 추가하였습니다");	
 		});  
 	});
 	$("#directBtn").on("click", function() {
 		let count = $("#numInput").val();
-		console.log(discountedPrice);
 		window.location.href = "/shoppingmall/member/directPayment?pno="+pno+"&count="+count;
 	})
 </script>
@@ -457,7 +437,6 @@
 	if(isNaN(sQTIPercentage)){
 		sQTIPercentage = 0.0;
 	}
-	console.log(((fQfirstItem/firstTotalGrade)*100).toFixed(1));
  	$("#firstItem0").append("<div class='greenBar' style='width: " + fQFIPercentage + "%;'>" + fQFIPercentage + "%</div>");
 	$("#secondItem0").append("<div class='greenBar' style='width: " + fQSIPercentage + "%;'>" + fQSIPercentage + "%</div>");
 	$("#thirdItem0").append("<div class='greenBar' style='width: " + fQTIPercentage + "%;'>" + fQTIPercentage + "%</div>");
@@ -497,7 +476,6 @@
 			let rno = $(this).data("rno");
 			commonService.getReviewImages(rno, function(list) {
 				if(list){
-					console.log("-----------rno : " + rno + "-----------------");
 					for(var i=0;i<list.length;i++){
 						let fileCallPath = encodeURIComponent(list[i].path+"/" + list[i].uuid +"_" + list[i].fileName);
 						let str = "<div class='reviewFileName' data-fileName=" + fileCallPath + " style='display: table-cell;width: 100px;padding:5px;border:1px solid #ccc'>";
@@ -510,6 +488,82 @@
 		})
 	}
 	showReviewImages();
+	
+	// ajax를 통해 받아온 review list를  화면에 뿌려주는 함수
+	function makeReviewLists(list) {
+		$("#reviewContainer").html("");
+		let str = "";
+		for(var i=0; i<list.length;i++){
+			str += "<div class='row' style='margin-bottom: 20px;border: 1px solid #ccc;padding-top: 10px'>";
+			str += "<div class='col-12'>";
+			for(var j=0;j<parseInt(list[i].grade);j++){
+				str += "<i class='fa fa-star' style='color: #FFA500;padding:0px;font-size: 1.3em;'></i>";
+			}
+			for(var j=0;j<5-parseInt(list[i].grade);j++){
+				str += "<i class='fa fa-star-o' style='color: #FFA500;padding:0px;font-size: 1.3em;'></i>";
+			}
+			str += "</div>";
+			str += "<div class='col-12'>";
+			str += "<span>" + list[i].productName + "</span>";
+			str += "<span>, " + list[i].count + "개</span>";
+			str += "</div>";
+			str += "<div class='col-12'>";
+			str += "<span>"+list[i].review+"</span>";
+			str += "</div>";
+			str += "<div class='col-12'>";
+			let time = commonService.displayTime(list[i].regDate);
+			str += "<span>" + time + "</span>";
+			str += "</div>";
+			str += "<div class='col-12'>"; 
+			str += "<div style='display: table;margin-bottom: 10px'>";
+			str += "<div class='reviewImg' data-rno=" + list[i].rno + ">";
+			
+			let rno = list[i].rno;
+			commonService.getReviewImages(rno, function(attachList) {
+				if(attachList){
+					for(var k=0;k<attachList.length;k++){
+						var fileCallPath = encodeURIComponent(attachList[k].path + "/" + attachList[k].uuid + "_" + attachList[k].fileName);
+						str += "<div class='reviewFileName' data-fileName=" + fileCallPath + " style='display: table-cell;width: 100px;padding:5px;border:1px solid #ccc'>";
+						str += "<img src='/shoppingmall/reviewDisplay?fileName="+fileCallPath+"' style='height: 100px'>";
+						str += "</div>";
+					}
+				}
+			});
+			str += "</div>";
+			str += "</div>";
+			str += "</div>";
+			str += "</div>";
+		}
+		$("#reviewContainer").append(str);
+	}
+	
+	
+	$("#sortSelectbox").change(function() {
+		sortMethod = $(this).val();
+		if(sortMethod === 'highGradeSort'){
+			commonService.getReviewWithHighGrade(pno, function(list) {
+				makeReviewLists(list);
+			});
+			return;
+		}
+		if(sortMethod === 'lowGradeSort'){
+			commonService.getReviewWithLowGrade(pno, function(list) {
+				makeReviewLists(list);
+			});
+			return;
+		}
+		if(sortMethod === 'recentRegdateSort'){
+			commonService.getReviewWithRegdateDesc(pno, function(list) {
+				makeReviewLists(list);
+			});
+			return;
+		}
+	});
+	
+	// 처음 화면에 들어오자마자 최신 등록일 순으로 리뷰를 보여준다.
+	commonService.getReviewWithRegdateDesc(pno, function(list) {
+		makeReviewLists(list);
+	});
 </script>
 <script>
 	function showImage(fileCallPath) {

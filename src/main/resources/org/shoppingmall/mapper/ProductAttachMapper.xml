@@ -18,4 +18,7 @@
 	 <select id="getMainAttachVO" resultType="org.shoppingmall.domain.ProductAttachVO">
 	 	select * from tbl_product_attach where pno =#{pno} and main = '1'
 	 </select>
+	 <select id="getYesterDayAttaches" resultType="org.shoppingmall.domain.ProductAttachVO">
+	 	select * from tbl_product_attach where path = DATE_FORMAT(now()- INTERVAL 1 DAY, '%Y\%m\%d');
+	 </select>
 </mapper>

@@ -11,4 +11,10 @@ public interface ReviewMapper {
 	public List<ReviewVO> getReviewList(int pno);
 
 	public List<ReviewOutputDTO> getReviewOutputList(int pno);
+
+	public List<ReviewOutputDTO> getReviewWithHighGrade(String pno);
+
+	public List<ReviewOutputDTO> getReviewWithRegdateDesc(String pno);
+
+	public List<ReviewOutputDTO> getReviewWithLowGrade(String pno);
 }

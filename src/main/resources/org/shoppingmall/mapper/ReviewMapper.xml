@@ -18,6 +18,33 @@
 		FROM tbl_review t1
 		LEFT JOIN tbl_transaction_history t2
 		ON t1.orderNum = t2.orderNum
-		WHERE t1.pno = #{pno};
+		WHERE t1.pno = #{pno}
+	</select>
+	
+	<select id="getReviewWithHighGrade" resultType="org.shoppingmall.domain.ReviewOutputDTO">
+		SELECT t1.rno, t1.nickname, t1.grade, t1.review ,t1.regDate, t2.count, t2.productName, t2.arriveTime
+		FROM tbl_review t1
+		LEFT JOIN tbl_transaction_history t2
+		ON t1.orderNum = t2.orderNum
+		WHERE t1.pno = #{pno}
+		order by t1.grade desc, t1.regdate desc
+	</select>
+	
+	<select id="getReviewWithRegdateDesc" resultType="org.shoppingmall.domain.ReviewOutputDTO">
+		SELECT t1.rno, t1.nickname, t1.grade, t1.review ,t1.regDate, t2.count, t2.productName, t2.arriveTime
+		FROM tbl_review t1
+		LEFT JOIN tbl_transaction_history t2
+		ON t1.orderNum = t2.orderNum
+		WHERE t1.pno = #{pno}
+		order by t1.regdate desc
+	</select>
+	
+	<select id="getReviewWithLowGrade" resultType="org.shoppingmall.domain.ReviewOutputDTO">
+		SELECT t1.rno, t1.nickname, t1.grade, t1.review ,t1.regDate, t2.count, t2.productName, t2.arriveTime
+		FROM tbl_review t1
+		LEFT JOIN tbl_transaction_history t2
+		ON t1.orderNum = t2.orderNum
+		WHERE t1.pno = #{pno}
+		order by t1.grade asc, t1.regdate desc
 	</select>
 </mapper>

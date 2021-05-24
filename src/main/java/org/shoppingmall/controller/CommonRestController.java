@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.shoppingmall.domain.BasketVO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ReviewAttachVO;
+import org.shoppingmall.domain.ReviewOutputDTO;
+import org.shoppingmall.domain.ReviewVO;
+import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ReviewAttachService;
+import org.shoppingmall.service.ReviewService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +38,8 @@ public class CommonRestController {
 	private UserService userService;
 	@Autowired
 	private ReviewAttachService reviewAttachService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	@PostMapping(value = "/getIdValidate")
 	public ResponseEntity<String> getIdValidate(String id){
@@ -76,5 +82,23 @@ public class CommonRestController {
 	public ResponseEntity<List<ReviewAttachVO>> getReviewImages(@PathVariable("rno") int rno) {
 		List<ReviewAttachVO> list = reviewAttachService.getReviewImages(rno);
 		return new ResponseEntity<List<ReviewAttachVO>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getReviewWithHighGrade/{pno}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<List<ReviewOutputDTO>> getReviewWithHighGrade(@PathVariable("pno") String pno) {
+		List<ReviewOutputDTO> list = reviewService.getReviewWithHighGrade(pno);
+		return new ResponseEntity<List<ReviewOutputDTO>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getReviewWithLowGrade/{pno}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<List<ReviewOutputDTO>> getReviewWithLowGrade(@PathVariable("pno") String pno) {
+		List<ReviewOutputDTO> list = reviewService.getReviewWithLowGrade(pno);
+		return new ResponseEntity<List<ReviewOutputDTO>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getReviewWithRegdateDesc/{pno}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<List<ReviewOutputDTO>> getReviewWithRegdateDesc(@PathVariable("pno") String pno) {
+		List<ReviewOutputDTO> list = reviewService.getReviewWithRegdateDesc(pno);
+		return new ResponseEntity<List<ReviewOutputDTO>>(list, HttpStatus.OK);
 	}
 }

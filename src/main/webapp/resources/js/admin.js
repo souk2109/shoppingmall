@@ -1,6 +1,5 @@
 var adminService = (function() {
 	$.ajaxSetup({
-		
 	});
 
 	function getAllSellerRequests(callback, error) {

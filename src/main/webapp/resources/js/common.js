@@ -1,4 +1,8 @@
 var commonService = (function() {
+	$.ajaxSetup({
+		async: false
+	});
+	
 	function getIdValidate(id, callback, error) {
 		$.ajax({
 			type : 'post',
@@ -67,12 +71,68 @@ var commonService = (function() {
 			}
 		})
 	};
+	function getReviewWithHighGrade(pno, callback) {
+		$.get("/shoppingmall/common/getReviewWithHighGrade/" + pno + ".json", function(list) {
+			if(callback){
+				callback(list);
+			}
+		}).fail(function(xhr, status, err) {
+			if(error){
+				err();
+			}
+		})
+	};
+	function getReviewWithLowGrade(pno, callback) {
+		$.get("/shoppingmall/common/getReviewWithLowGrade/" + pno + ".json", function(list) {
+			if(callback){
+				callback(list);
+			}
+		}).fail(function(xhr, status, err) {
+			if(error){
+				err();
+			}
+		})
+	};
+	function getReviewWithRegdateDesc(pno, callback) {
+		$.get("/shoppingmall/common/getReviewWithRegdateDesc/" + pno + ".json", function(list) {
+			if(callback){
+				callback(list);
+			}
+		}).fail(function(xhr, status, err) {
+			if(error){
+				err();
+			}
+		})
+	};
+	function displayTime(timeValue) {	
+		let dateObj = new Date(timeValue);
+		let yy = dateObj.getFullYear();
+		let mm = dateObj.getMonth()+1;
+		let dd = dateObj.getDate();
+		let hh = dateObj.getHours();
+		let mi = dateObj.getMinutes();
+		let division = ' 오전 ';
+		if(hh>12){
+			division = ' 오후 ';
+			hh = hh - 12;
+		}
+		 
+		mm = mm < 10 ? '0' + mm : mm;
+		dd = dd < 10 ? '0' + dd : dd;
+		hh = hh < 10 ? '0' + hh : hh;
+		mi = mi < 10 ? '0' + mi : mi;
+		return yy + '.' + mm + '.' + dd + division + hh+'시 '+ mi+'분 ';
+	}
 	return {
 		getIdValidate : getIdValidate,
 		addBasket : addBasket,
 		removeBasket:removeBasket,
 		updateBasket:updateBasket,
-		getReviewImages:getReviewImages
+		getReviewImages:getReviewImages,
+		getReviewWithHighGrade:getReviewWithHighGrade,
+		getReviewWithLowGrade:getReviewWithLowGrade,
+		getReviewWithRegdateDesc:getReviewWithRegdateDesc,
+		displayTime:displayTime
 	};
 })();
  

@@ -13,4 +13,10 @@ public interface ReviewService {
 	
 	List<ReviewOutputDTO> getReviewOutputList(int pno);
 
+	List<ReviewOutputDTO> getReviewWithHighGrade(String pno);
+
+	List<ReviewOutputDTO> getReviewWithRegdateDesc(String pno);
+
+	List<ReviewOutputDTO> getReviewWithLowGrade(String pno);
+
 }
