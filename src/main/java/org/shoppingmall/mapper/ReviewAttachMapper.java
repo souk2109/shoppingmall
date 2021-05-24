@@ -9,5 +9,7 @@ public interface ReviewAttachMapper {
 	int insertReviewAttachVO(ReviewAttachVO reviewAttachVO);
 
 	List<ReviewAttachVO> getReviewAttachVO(int rno);
+
+	List<ReviewAttachVO> getYesterDayAttaches();
 	
 }

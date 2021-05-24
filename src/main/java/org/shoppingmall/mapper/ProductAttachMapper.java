@@ -10,4 +10,5 @@ public interface ProductAttachMapper {
 	public List<ProductAttachVO> getAttachsByPno(int pno);
 	public void deleteProductAttachsByPno(int pno);
 	public ProductAttachVO getMainAttachVO(int pno);
+	public List<ProductAttachVO> getYesterDayAttaches();
 }

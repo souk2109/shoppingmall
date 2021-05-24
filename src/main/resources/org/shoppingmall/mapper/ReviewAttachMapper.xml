@@ -9,4 +9,8 @@
 	<select id="getReviewAttachVO" resultType="org.shoppingmall.domain.ReviewAttachVO">
 		select * from tbl_review_attach where rno=#{rno}
 	</select>
+	
+	<select id="getYesterDayAttaches" resultType="org.shoppingmall.domain.ReviewAttachVO">
+		select * from tbl_review_attach where path = DATE_FORMAT(now()- INTERVAL 1 DAY, '%Y\%m\%d');
+	</select>
 </mapper>
