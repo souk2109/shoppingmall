@@ -6,8 +6,8 @@
 		select * from tbl_user;
 	</select>
 	<insert id="insertUser">
-		insert into tbl_user(id, pwd, name, gender, nickname, birthday, postalCode, email)
-		values(#{id},#{pwd},#{name},#{gender},#{nickname},#{birthday},#{postalCode},#{email});
+		insert into tbl_user(id, pwd, name, gender, nickname, birthday, postalCode, roadAddress, detailAddress, email)
+		values(#{id},#{pwd},#{name},#{gender},#{nickname},#{birthday},#{postalCode},#{roadAddress}, #{detailAddress},#{email});
 	</insert>
 	
 	<select id="getValidateById" resultType="int">
@@ -22,6 +22,8 @@
 		<result column="nickname" property="nickname"/>
 		<result column="birthday" property="birthday"/>
 		<result column="postalCode" property="postalCode"/>
+		<result column="roadAddress" property="roadAddress"/>
+		<result column="detailAddress" property="detailAddress"/>
 		<result column="email" property="email"/>
 		<result column="enabled" property="enabled"/>
 		<result column="regDate" property="regDate"/>
@@ -44,6 +46,12 @@
 	
 	<update id="updatePwd">
 		update tbl_user set pwd=#{pwd} where id = #{id};
+	</update>
+	
+	<update id="updateBasicAdress">
+		update tbl_user set postalCode=#{postalDTO.postalCode},
+		roadAddress=#{postalDTO.roadAddress}, detailAddress=#{postalDTO.detailAddress}
+		where id = #{id};
 	</update>
 	
 	<select id="getUserById" resultMap="userVO">

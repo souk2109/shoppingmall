@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.shoppingmall.domain.BasketVO;
 import org.shoppingmall.domain.CardVO;
+import org.shoppingmall.domain.PostalDTO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
 import org.shoppingmall.domain.ProductQuestionVO;
@@ -177,7 +178,7 @@ public class MemberController {
 	// 결제 하기
 	@Transactional
 	@PostMapping("/doBasketPayment")
-	public String doPayment(CardVO cardVO,@RequestParam("discountedTotalPrice") int money, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	public String doPayment(CardVO cardVO, PostalDTO postalDTO, @RequestParam("discountedTotalPrice") int money, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		String msg = cardService.doPayment(cardVO, money);
 		String url = ""; 
 		if(msg =="noBalance" || msg =="noCard") {
@@ -237,6 +238,12 @@ public class MemberController {
 					historyVO.setPrice(totalPrice);
 					historyVO.setCount(Integer.parseInt(count));
 					historyVO.setProductName(productInfoVO.getPrdName());
+					
+					// 배송지 정보를 담음
+					historyVO.setPostalCode(postalDTO.getPostalCode());
+					historyVO.setRoadAddress(postalDTO.getRoadAddress());
+					historyVO.setDetailAddress(postalDTO.getDetailAddress());
+					
 					trHistoryList.add(historyVO);
 					trHistoryService.addTrHistory(historyVO);
 				}
@@ -247,7 +254,7 @@ public class MemberController {
 	}
 	@PostMapping("/doDirectPayment")
 	@Transactional
-	public String doDirectPayment(CardVO cardVO, int pno, int count ,RedirectAttributes redirectAttributes) {
+	public String doDirectPayment(CardVO cardVO, int pno, int count , PostalDTO postalDTO, RedirectAttributes redirectAttributes) {
 		ProductInfoVO productInfoVO = productInfoService.getProductInfo(pno);
 		int price = productInfoVO.getPrice();
 		float discount = productInfoVO.getDiscount();
@@ -298,10 +305,17 @@ public class MemberController {
 		historyVO.setPrice(totalPrice);
 		historyVO.setCount(count);
 		historyVO.setProductName(productInfoVO.getPrdName());
+		
+		// 배송지 정보를 담음
+		historyVO.setPostalCode(postalDTO.getPostalCode());
+		historyVO.setRoadAddress(postalDTO.getRoadAddress());
+		historyVO.setDetailAddress(postalDTO.getDetailAddress());
+		
 		List<TrHistoryVO> trHistoryList = new ArrayList<TrHistoryVO>();
 		trHistoryList.add(historyVO);
 		trHistoryService.addTrHistory(historyVO);
 		redirectAttributes.addFlashAttribute("trHistoryList", trHistoryList);
+		 
 		return url;
 	}
 	
@@ -321,6 +335,10 @@ public class MemberController {
 	
 	@GetMapping("/afterPayment")
 	public void afterPayment() {
+		
+	}
+	@GetMapping("/basicAddressModify")
+	public void basicAddressModify() {
 		
 	}
 	@GetMapping("/writeReview")
@@ -345,5 +363,19 @@ public class MemberController {
 		// 리뷰를 등록시 리뷰사진 등록, 거래내역의 리뷰등록 여부 변경, 설문조사 형식의 리뷰 카운트 수정
 		reviewService.addReview(reviewVO);
 		return "redirect:/member/orderInfo";
+	}
+	
+	// 기본 배송지 변경 요청
+	@PostMapping("/doModifyBasicAddress")
+	public String doModifyBasicAddress(String id, PostalDTO postalDTO, RedirectAttributes redirectAttributes) {
+		CustomUserDetails user = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		user.setPostalCode(postalDTO.getPostalCode());
+		user.setRoadAddress(postalDTO.getRoadAddress());
+		user.setDetailAddress(postalDTO.getDetailAddress());
+		log.info("postalDTO : "+postalDTO);
+		String result = userService.changeBasicAdress(id, postalDTO);
+		log.info("기본 배송지 수정 결과 : "+result);
+		redirectAttributes.addFlashAttribute("adressResult", result);
+		return "redirect:/member/myPage";
 	}
 }

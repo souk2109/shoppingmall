@@ -13,7 +13,10 @@ public class UserVO {
 	private String gender;
 	private String nickname;
 	 
-	private String postalCode;
+	private String postalCode; // 우편번호
+	private String roadAddress; // 도로명 주소
+	private String detailAddress; // 상세 주소
+	
 	private String email;
 	private boolean enabled;
 	

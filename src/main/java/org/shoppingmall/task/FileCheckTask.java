@@ -37,7 +37,7 @@ public class FileCheckTask {
 		return str.replace("-", File.separator);
 	}
 	
-	@Scheduled(cron="0 2 * * * *")  // 밤 11시 30분반마다 실행
+	@Scheduled(cron="0 10 * * * *")  // 매시 10분에 실행
 	public void deleteProductAttaches() throws Exception{
 		log.warn("File Check Task run................");
 		log.warn(new Date());
@@ -80,14 +80,15 @@ public class FileCheckTask {
 
 		log.warn("================ db에 없어서 삭제할 파일 ======================");
 		// 하나씩 삭제
-		for (File file : removeFiles) {
-			log.warn(file.getAbsolutePath());
-			file.delete();
+		if(removeFiles != null) {
+			for (File file : removeFiles) {
+				log.warn(file.getAbsolutePath());
+				file.delete();
+			}
 		}
-		
 	}
 	
-	@Scheduled(cron="0 2 * * * *")  // 밤 11시 30분반마다 실행
+	@Scheduled(cron="0 10 * * * *")  // // 매시 10분에 실행
 	public void deleteReviewAttaches() throws Exception{
 		log.warn("File Check Task run................");
 		log.warn(new Date());
@@ -128,11 +129,11 @@ public class FileCheckTask {
 				file -> fileListPaths.contains(file.toPath()) == false);
 
 		log.warn("================ db에 없어서 삭제할 파일 ======================");
-		// 하나씩 삭제
-		for (File file : removeFiles) {
-			log.warn(file.getAbsolutePath());
-			file.delete();
+		if(removeFiles != null) {
+			for (File file : removeFiles) {
+				log.warn(file.getAbsolutePath());
+				file.delete();
+			}
 		}
-		
 	}
 }

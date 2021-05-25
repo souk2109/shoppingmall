@@ -56,6 +56,10 @@
 						document.write(makeComma("<c:out value='${trHistory.price }'/>"));
 					</script>원</span>
 			</div>
+			<div class="col-12" align="left" style="margin-bottom: 10px">
+				<span>배송지 : </span>
+				<span>${trHistory.roadAddress }&nbsp${trHistory.detailAddress }</span>
+			</div>
 			<div class="col-12" align="left" style="margin-bottom: 10px;">
 				<span>결제 카드 : </span> 
 				<span>(${trHistory.paymentCardBankName })${trHistory.paymentCardNum }

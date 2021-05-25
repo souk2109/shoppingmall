@@ -60,7 +60,16 @@
 			</div>
 			<div>
 				<div class="col-12" style="border-left: 6px solid #ccd;margin-bottom: 10px;margin-top: 40px;">
-					배송지
+					<div style="display: inline;margin-right: 5px">배송지</div>
+					<input type="checkbox" id="shipCheckbox">기본 배송지 사용
+				</div>
+				<div class="col-md-6 col-sm-12" style="margin-bottom: 20px">
+					<div style="margin-top: 10px;margin-bottom: 10px">
+						<input type="text" id="postalCode" name="postalCode" class="form-control" placeholder="우편번호" style="width: 50%;display: inline;" readonly="readonly">
+						<input type="button" id="findPostalBtn" class="form-control" onclick="startDaumPostcode()" value="우편번호 검색" style="width: 45%;display: inline;float: right;">
+					</div>
+					<input type="text" id="roadAddress" name="roadAddress" class="form-control" placeholder="도로명주소" readonly="readonly" style="margin-bottom: 10px">
+					<input type="text" id="detailAddress" name="detailAddress" class="form-control" placeholder="상세주소" autocomplete="new-password">
 				</div>
 			</div>
 			<!--  카드 입력 -->
@@ -104,7 +113,7 @@
 						placeholder="비밀번호 4자리" maxlength="4" autocomplete="off" onkeypress="inNumber();">
 				</div>
 			</div>
-			 
+			
 			<div style="margin-bottom: 10px;margin-top: 40px;">
 				<div id="paymentBtn" class="btn btn-primary col-12">결제하기</div>
 			</div>
@@ -113,8 +122,45 @@
 	<form id="submitBtn" action="/shoppingmall/member/doBasketPayment" method="post">
 	</form>
 </div>
- 
+
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
+
+<!-- 다음 우편번호 검색 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	function startDaumPostcode() {
+		new daum.Postcode({
+		oncomplete: function(data) {
+			document.getElementById("postalCode").value = data.zonecode;
+			document.getElementById("roadAddress").value = data.roadAddress;
+		}
+		}).open();
+	}
+	
+	$("#shipCheckbox").change(function() {
+		if($("#shipCheckbox").is(":checked")){
+			let autoPostalCode = "<c:out value='${loginUser.postalCode }'/>";
+			if(autoPostalCode){
+				let postalCode = "<c:out value='${loginUser.postalCode }'/>";
+				let roadAddress = "<c:out value='${loginUser.roadAddress }'/>";
+				let detailAddress = "<c:out value='${loginUser.detailAddress }'/>";
+				$("#postalCode").val(postalCode);
+				$("#roadAddress").val(roadAddress);
+				$("#detailAddress").val(detailAddress).attr("readonly",true);
+				$("#findPostalBtn").prop("disabled", true);
+			}else{
+				$("input:checkbox[id='shipCheckbox']").prop("checked", false);
+				alert('기본으로 설정된 배송지가 없습니다');
+			}
+		}else{
+			$("#postalCode").val("");
+			$("#roadAddress").val("");
+			$("#detailAddress").val("").attr("readonly",false);
+			$("#findPostalBtn").prop("disabled", false);
+		}
+	});
+</script>
+
 <script>
 	let msg = '<c:out value='${msg}'/>';
 	console.log(msg);
@@ -242,8 +288,12 @@ $(".baskets-tr").each(function(i, obj) {
 		let discountedTotalPrice = $("#discountedTotalPrice").html();
 		let cardPwd = $("#cardPwd").val();
 		
+		let postalCode = $("#postalCode").val();
+		let roadAddress = $("#roadAddress").val();
+		let detailAddress= $("#detailAddress").val();
+		
 		discountedTotalPrice = discountedTotalPrice.replace("원","");
-		if(!name || !bankName || !cardNum || !validateMonth || !validateYear || !cvc || !cardPwd){
+		if(!name || !bankName || !cardNum || !validateMonth || !validateYear || !cvc || !cardPwd || !postalCode || !roadAddress || !detailAddress){
 			alert('모두 입력하세요');
 			return;
 		}
@@ -262,6 +312,10 @@ $(".baskets-tr").each(function(i, obj) {
 		str += "<input type='hidden' name='cvc' value='"+cvc+"'>";
 		str += "<input type='hidden' name='discountedTotalPrice' value='"+discountedTotalPrice+"'>";
 		str += "<input type='hidden' name='pwd' value='"+cardPwd+"'>";
+		
+		str += "<input type='hidden' name='postalCode' value='"+postalCode+"'>";
+		str += "<input type='hidden' name='roadAddress' value='"+roadAddress+"'>";
+		str += "<input type='hidden' name='detailAddress' value='"+detailAddress+"'>";
 		
 		$("#submitBtn").append(str);
 		$("#submitBtn").submit();

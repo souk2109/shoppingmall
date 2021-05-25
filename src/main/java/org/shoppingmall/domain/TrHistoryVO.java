@@ -29,4 +29,8 @@ public class TrHistoryVO {
 	private Date cancelTime; // 취소 날짜
 	private int count; // 구매 수량
 	private int reviewStatus; // 리뷰 등록 여부
+	
+	private String postalCode; // 우편번호
+	private String roadAddress; // 도로명 주소
+	private String detailAddress; // 세부 주소
 }

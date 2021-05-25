@@ -6,12 +6,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
 <sec:authentication property="principal" var="loginUser"/>
+<style>
+	.myPageTable{
+		width: 60%; 
+		text-align: center; 
+		margin-top: 20px; 
+		font-size: 15px
+	}
+	@media(max-width:740px){
+		.myPageTable{
+			width: 100%; 
+			text-align: center; 
+			margin-top: 20px; 
+			font-size: 10px
+		}
+	}
+</style>
 <div class="container" align="center">
 	<div align="center" class="panel-title" >
 		<font size="6px" face="Prompt">마이 페이지</font>
 	</div>
 	
-	<table class="table" style="width: 60%; text-align: center; margin-top: 20px" >
+	<table class="table myPageTable">
 		<tr>
 			<th>항목</th>
 			<th>개인정보</th>
@@ -49,13 +65,15 @@
 			<td>${loginUser.email}</td>
 		</tr>
 		<tr>
-			<td>우편번호</td>
+			<td>기본 배송지</td>
 			<td>
 				<c:choose>
 					<c:when test="${empty loginUser.postalCode}">-
 					</c:when>
 					<c:otherwise>
-						${loginUser.postalCode}
+						${loginUser.roadAddress}
+						${loginUser.detailAddress}
+						[${loginUser.postalCode}]
 					</c:otherwise>
 				</c:choose>
 			</td>
@@ -86,14 +104,20 @@
 			</c:otherwise>
 		</c:choose>
 	</table>
-	
-	<a href="/shoppingmall/member/pwdModify">
-		<div class="col-sm-6 btn" style="border: hidden; color: white; margin-top: 20px; font-size: 18px; background-color: #CCCCCC;">비밀번호 변경하기</div>
-	</a>
-	
+	<div class="col-sm-6 btn" style="border: hidden;margin-top: 20px; font-size: 18px; background-color: #CCCCCC;">
+		<a href="/shoppingmall/member/basicAddressModify">
+			<span style="color: white">기본 배송지 수정하기</span>
+		</a>
+	</div>
+	<div class="col-sm-6 btn" style="border: hidden;margin-top: 20px; font-size: 18px; background-color: #CCCCCC;">
+		<a href="/shoppingmall/member/pwdModify">
+			<span style="color: white">비밀번호 변경하기</span>
+		</a>
+	</div>
+
 	<div align="center" class="panel-title" style="margin-top: 30px">
 		<font size="6px" face="Prompt">판매자 신청 현황</font>
-		<table class="table" style="width: 60%; text-align: center; margin-top: 20px; font-size: 12px" >
+		<table class="table myPageTable">
 			<thead>
 				<tr>
 					<th>이름</th>

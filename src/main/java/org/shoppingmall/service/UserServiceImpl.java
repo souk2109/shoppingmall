@@ -1,6 +1,7 @@
 package org.shoppingmall.service;
 
 import org.shoppingmall.domain.AuthVO;
+import org.shoppingmall.domain.PostalDTO;
 import org.shoppingmall.domain.UserVO;
 import org.shoppingmall.mapper.AuthMapper;
 import org.shoppingmall.mapper.UserMapper;
@@ -52,7 +53,6 @@ public class UserServiceImpl implements UserService{
 		}else {
 			return "fail";
 		}
-		 
 	}
 
 	@Override
@@ -77,5 +77,15 @@ public class UserServiceImpl implements UserService{
 		String encodedPassword = userMapper.getUser(id).getPwd();
 		boolean result = encoder.matches(inputPwd, encodedPassword);
 		return result;
+	}
+
+	@Override
+	public String changeBasicAdress(String id, PostalDTO postalDTO) {
+		int result =  userMapper.updateBasicAdress(id, postalDTO);
+		if(result == 1) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 }

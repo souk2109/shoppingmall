@@ -100,28 +100,33 @@ A:hover {
 	<div class="humberger__menu__wrapper">
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
-				<li class="dropdown"><a href="#">카테고리</a>
+				<li class="dropdown">
+					<a href="/shoppingmall/common/main">
+						<i class="fa fa-gift" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>판매상품
+					</a>
 					<ul class="dropdown__menu">
-						<li><a href="./categories-grid.html" style="font-size: 12px">식료품</a></li>
-						<li><a href="./categories-list.html" style="font-size: 12px">가구</a></li>
-						<li><a href="./single-post.html" style="font-size: 12px">의류</a></li>
-						<li><a href="./signin.html" style="font-size: 12px">신발</a></li>
-						<li><a href="./404.html" style="font-size: 12px">등등</a></li>
-						<li><a href="./typography.html" style="font-size: 12px">뭐하지</a></li>
-					</ul></li>
-				<li><a href="#">할인상품</a></li>
-				<li><a href="#">내 정보</a></li>
+						<li><a href="/shoppingmall/common/main?category=B" style="font-size: 12px">뷰티</a></li>
+						<li><a href="/shoppingmall/common/main?category=L" style="font-size: 12px">생활용품</a></li>
+						<li><a href="/shoppingmall/common/main?category=F" style="font-size: 12px">식품</a></li>
+						<li><a href="/shoppingmall/common/main?category=C" style="font-size: 12px">패션의류/잡화</a></li>
+					</ul>
+				</li>
 				<li><a href="/shoppingmall/common/basket"><i class="fa fa-shopping-cart" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>장바구니</a></li>
 				<li><a href="/shoppingmall/member/orderInfo"><i class="fas fa-receipt" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>주문내역</a></li>
+				<li><a href="/shoppingmall/member/myPage"><i class="fa fa-user" style="margin-right: 5px;font-size: 20px; color: #FFFFFF"></i>내 정보</a></li>
 				<sec:authorize access="hasRole('ROLE_SELLER')">
-					<div align="center" class="col-sm-12" style="margin-top: 10px; margin-bottom: 10px">------------ 판매자 카테고리 ------------</div>
+					<div class="col-sm-12" style="margin-top: 10px;border-top: 1px solid white;padding: 10px">
+						<i class="fa fa-arrow-down" aria-hidden="true"></i>판매자 목록
+					</div>
 					<li><a href="/shoppingmall/seller/regProduct">상품등록</a></li>
 					<li><a href="/shoppingmall/seller/myProducts">판매 중 상품</a></li>
 					<li><a href="/shoppingmall/seller/sellerInfo">거래내역</a></li>
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<div align="center" class="col-sm-12" style="margin-top: 10px; margin-bottom: 10px">------------ 관리자 카테고리 ------------</div>
-					<li><a href="/shoppingmall/admin/showSellerRequests">판매자 신청 보기</a></li>
+					<div class="col-sm-12" style="margin-top: 10px;border-top: 1px solid white;padding: 10px">
+						<i class="fa fa-arrow-down" aria-hidden="true"></i>관리자 목록
+					</div>
+					<li><a href="/shoppingmall/admin/showSellerRequests">판매자 신청 현황</a></li>
 				</sec:authorize>
 			</ul>
 		</nav>
@@ -160,7 +165,6 @@ A:hover {
 					<span class="top-bar-menu-item"><a href="/shoppingmall/member/doLogout">로그아웃</a></span>
 					<span class="top-bar-menu-item"><a href="/shoppingmall/member/myPage">내정보</a></span>
 				</sec:authorize>
-				<span class="top-bar-menu-item"><a href="#">문의하기</a></span>
 			</div>
 		</article>
 		<div class="container">
@@ -188,31 +192,15 @@ A:hover {
 					<div class="col-lg-8 col-md-10 order-md-2 order-3">
 						<nav class="header__menu">
 							<ul>
-								<li><a href="#">Recipes</a>
-									<div class="header__megamenu__wrapper">
-										<div class="header__megamenu">
-											<div class="header__megamenu__item">
-												<div class="header__megamenu__item--pic set-bg"
-													data-setbg="/shoppingmall/resources/img/megamenu/p-1.jpg">
-													<div class="label">Vegan</div>
-												</div>
-												<div class="header__megamenu__item--text">
-													<h5>
-														<a href="#">How to Make a Milkshake With Any Ice Cream
-															...</a>
-													</h5>
-												</div>
-											</div>
-										</div>
-									</div></li>
-								<li><a href="#">Dinner</a></li>
-								<li><a href="#">Desserts</a></li>
-								<li class="dropdown"><a href="#">Pages</a>
+								<li class="dropdown"><a href="/shoppingmall/common/main"><i class="fa fa-gift" style="margin-right: 5px;font-size: 20px; color: #ccc"></i>판매상품</a>
 									<ul class="dropdown__menu">
-										<li><a href="./categories-grid.html">Categories Grid</a></li>
-										<li><a href="./categories-list.html">Categories List</a></li>
+										<li><a href="/shoppingmall/common/main?category=B">뷰티</a></li>
+										<li><a href="/shoppingmall/common/main?category=L">생활용품</a></li>
+										<li><a href="/shoppingmall/common/main?category=F">식품</a></li>
+										<li><a href="/shoppingmall/common/main?category=C">패션의류/잡화</a></li>
 									</ul>
 								</li>
+								 
 								<li><a href="/shoppingmall/common/basket"><i class="fa fa-shopping-cart" style="margin-right: 3px;font-size: 20px; color: #FF00FF"></i>장바구니</a></li>
 								<li><a href="/shoppingmall/member/orderInfo"><i class="fas fa-receipt" style="margin-right: 3px;font-size: 20px; color: #000000"></i>주문내역</a></li>
 							</ul>
@@ -220,7 +208,7 @@ A:hover {
 					</div>
 					<div class="col-lg-2 col-md-1 col-6 order-md-3 order-2">
 						<div class="header__search">
-							<i class="fa fa-search search-switch"></i>
+							<!-- <i class="fa fa-search search-switch"></i> -->
 						</div>
 					</div>
 				</div>

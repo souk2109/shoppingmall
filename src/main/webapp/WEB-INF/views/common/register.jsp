@@ -56,7 +56,7 @@
 							<div class="col-sm-12" style="padding-left: 15px; padding-right: 15px;margin: 0 auto;">
 								<div align="center" style="height: 45px; font-family: 'Nunito Sans', sans-serif">
 									<input id="year" name="year" maxlength="4" type="text"  placeholder="년" autocomplete="off" style="width: 32%">
-									<select aria-label="월" id="month" style="width: 32%">
+									<select aria-label="월" id="month" style="width: 32%;height: 30px;">
 										<option value="">월</option>
 										<option value="01">1월</option>
 										<option value="02">2월</option>
@@ -99,12 +99,17 @@
 						</div>
 						
 						<div class="form-group" align="left">
-							<div class="col-sm-12">우편번호</div>
+							<div class="col-sm-12">기본 배송지</div>
 							<div class="col-sm-12">
-								<input id="postalCode" name="postalCode" type="text" class="form-control" placeholder="우편번호" autocomplete="new-password">
+								<div style="margin-top: 10px;margin-bottom: 10px">
+									<input type="text" id="postalCode" name="postalCode" class="form-control" placeholder="우편번호" style="width: 50%;display: inline;" readonly="readonly">
+							    	<input type="button" class="form-control" onclick="startDaumPostcode()" value="우편번호 검색" style="width: 45%;display: inline;float: right;">
+							    </div>
+							    <input type="text" id="roadAddress" name="roadAddress" class="form-control" placeholder="도로명주소" readonly="readonly" style="margin-bottom: 10px">
+							    <input type="text" id="detailAddress" name="detailAddress" class="form-control" placeholder="상세주소" autocomplete="new-password">
 							</div>
 						</div>
-						
+						 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-12">
 								<input id="registerBtn" type="submit"  value="회원가입" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: green; color: white;">
@@ -118,6 +123,18 @@
 	</div>
 </div>
 <script type="text/javascript" src="/shoppingmall/resources/js/common.js"></script>
+<!-- 다음 우편번호 검색 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	function startDaumPostcode() {
+		new daum.Postcode({
+		oncomplete: function(data) {
+			document.getElementById("postalCode").value = data.zonecode;
+			document.getElementById("roadAddress").value = data.roadAddress;
+		}
+		}).open();
+	}
+</script>
 <script type="text/javascript">
 	let submitCheck = 0;
 
@@ -202,7 +219,14 @@
 		}else{
 			emailCheck = 1;
 		}
-		
+		let postalCode = $("#postalCode").val().trim();
+		let detailAddress = $("#detailAddress").val().trim();
+		if(postalCode){
+			if(!detailAddress){
+				alert('기본 배송지를 저장하기 위해서 상세 주소를 반드시 입력해주세요');
+				return;
+			}
+		}
 		submitCheck = pwdCheck * idCheck * nameCheck * nicknameCheck * birthdayCheck * emailCheck;
 		if(submitCheck === 1){
 			registerForm.submit();

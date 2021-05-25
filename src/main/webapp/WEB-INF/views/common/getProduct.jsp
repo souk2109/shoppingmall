@@ -1,7 +1,6 @@
 <%@include file="../includes/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <!-- 반쪽 별을 위한 링크 -->
 <link rel="stylesheet" href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css">
@@ -26,6 +25,7 @@
     	padding: 0 0 10px;
     	border-bottom: 1px solid #ccc;
 	}
+	
 	.prd-info-name{
 		font-size: 18px;
     	font-weight: bold;
@@ -242,7 +242,7 @@
 				<h2 style="display: inline;margin-right: 5px">리뷰(${product.reviewNum })</h2>
 				<span id="reviewAvgGrade"></span>
 			</div>
-			<div>
+			<div style="margin-bottom: 20px">
 				<span>정렬</span>
 				<select id="sortSelectbox">
 					<option value="recentRegdateSort">최근 등록일순</option>

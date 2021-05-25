@@ -206,6 +206,13 @@
 			alert('가격을 입력해주세요');
 			return;
 		}
+		
+		let discount = $("#discount").val().trim();
+		if(!discount){
+			alert('할인율을 입력해주세요(0%이면 0을 작성해주세요)');
+			return;
+		}
+		 
 		if(!mainImgCheck){
 			alert('대표 이미지를 선택해주세요!');
 			return;

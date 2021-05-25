@@ -65,9 +65,11 @@
 <div style="width: 80%; margin: 0px auto;margin-bottom: 30px">
 	<form id="searchform" method="get" action="/shoppingmall/common/main" style="margin-bottom: 20px; align-content: center;">
 		<select name="category" style="width: 20%;height: 30px">
-			<option value="CF" ${criteria.category eq 'CF' ?'selected':'' }>모두</option>
-			<option value="C" ${criteria.category eq 'C' ?'selected':''}>패션 의류/잡화</option>
+			<option value="CF" ${criteria.category eq 'CFLB' ?'selected':'' }>모두</option>
+			<option value="F" ${criteria.category eq 'B' ?'selected':''}>뷰티</option>
+			<option value="F" ${criteria.category eq 'L' ?'selected':''}>생활용품</option>
 			<option value="F" ${criteria.category eq 'F' ?'selected':''}>식품</option>
+			<option value="C" ${criteria.category eq 'C' ?'selected':''}>패션 의류/잡화</option>
 		</select>
 		<input name="keyword" type="text" value="${criteria.keyword==null?'':criteria.keyword}"
 			autocomplete="off" style="height: 30px;width: 30%" placeholder="상품명">
@@ -156,7 +158,7 @@
 		</div>
 	</c:forEach>
 </div>
-<div style="width: 100%; margin: 0 auto;margin-bottom: 40px" align="center">
+<div style="width: 100%; margin: 0 auto;margin-top:30px;margin-bottom: 100px" align="center">
 	<c:if test="${pageMaker.prev }">
 		<a class="paginate_button" href="${pageMaker.startPage-1 }">
 			<button class="btn page-container btn-default prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>

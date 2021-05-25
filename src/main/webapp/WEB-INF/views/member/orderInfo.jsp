@@ -85,8 +85,17 @@
 					<span>${history.count }개</span>
 				</div>
 				<div class="col-12" align="left" style="margin-bottom: 10px">
-					<span>금액 : </span>
-					<span>${history.price }원</span>
+					<span>금액 :</span>
+					<span>
+						<script>
+							var hprice = parseInt("<c:out value='${history.price }'/>");
+							document.write(makeComma(hprice)+'원');
+						</script>
+					</span>
+				</div>
+				<div class="col-12" align="left" style="margin-bottom: 10px">
+					<span>배송지 : </span>
+					<span>${history.roadAddress }&nbsp${history.detailAddress }</span>
 				</div>
 				<div class="col-12" align="left" style="margin-bottom: 10px">
 					<span>결제 카드 : </span>
@@ -114,7 +123,8 @@
 				</c:if>
 				<c:if test="${history.prdStatus eq 'ready'}">
 					<div class="col-12" align="center" style="margin-bottom: 10px">
-						<button class="cancelBtn" data-orderNum="${history.orderNum  }"  style="width:70%; background: #346aff;color: #fff;font-size: 13px">취소/환불</button>
+						<input class="btn cancelBtn" type="button" style="width:100%; background: #346aff;color: #fff;margin-top: 10px" 
+								value="취소/환불" data-orderNum="${history.orderNum  }">
 					</div>
 				</c:if>
 				<c:if test="${history.prdStatus eq 'cancel'}">

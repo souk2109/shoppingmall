@@ -3,6 +3,7 @@ package org.shoppingmall.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.shoppingmall.domain.PostalDTO;
 import org.shoppingmall.domain.UserVO;
 
 public interface UserMapper {
@@ -13,4 +14,5 @@ public interface UserMapper {
 	public UserVO getUserById(String id); // id로 사용자의 모든 정보를 가져옴
 	public void updatePwd(@Param("id") String id, @Param("pwd")String pwd);
 	public int deleteUser(String id); // id로 사용자를 삭제
+	public int updateBasicAdress(@Param("id") String id,@Param("postalDTO") PostalDTO postalDTO);
 }
