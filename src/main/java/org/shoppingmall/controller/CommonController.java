@@ -80,17 +80,12 @@ public class CommonController {
 	public void mainPage(Model model, Criteria criteria) {
 		log.info(criteria);
 		int total = productInfoService.getCount(criteria);
-		log.info("검색된 수량: " + total);
 		PageDTO pageDTO = new PageDTO(criteria, total); 
 		log.info("pageDTO : "+pageDTO);
 
 		model.addAttribute("products", productInfoService.getProductInfoListWithPaging(criteria));
 		model.addAttribute("pageMaker", pageDTO); 
 		model.addAttribute("total", total);
-				
-		/*
-		 * model.addAttribute("products", productInfoService.getAllProductInfoList());
-		 */
 	}
 	
 	@GetMapping("/products")
@@ -102,12 +97,6 @@ public class CommonController {
 		// 상품 상세페이지 관련 정보를 view에 전송
 		model.addAttribute("product", productInfoService.getProductInfo(pno));
 		model.addAttribute("productQuestionList", productQuestionServiceImpl.getProductQuestionList(pno));
-		
-		// 상품 리뷰 관련 정보를 view에 전송
-		/*
-		 * List<ReviewOutputDTO> reviewList = reviewService.getReviewOutputList(pno);
-		 * model.addAttribute("reviewList", reviewList);
-		 */
 	}
 	
 	// 장바구니 페이지

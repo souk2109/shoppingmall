@@ -133,7 +133,7 @@
 		</table>
 	</div>
 </div>
-<div align="center" style="font-size: 14px; margin-top: 30px; margin-bottom: 30px" class="col-sm-12">
+<div align="center" style="font-size: 14px; margin-top: 30px; margin-bottom: 100px" class="col-sm-12">
 	<span class="top-bar-menu-item"><a href="/shoppingmall/member/sellerApply">판매자 신청</a></span>
 	<span class="top-bar-menu-item"><a href="/shoppingmall/member/regSimpleCard">간편 카드 등록하기</a></span>
 	<span class="top-bar-menu-item"><a href="/shoppingmall/member/deactivatePage">탈퇴하기</a></span>
@@ -195,9 +195,5 @@
 	}
 </script>
 
-<script>
-	/* let myCard = "<c:out value='${myCard}'/>";
-	console.log(myCard); */
-</script>
 <!-- 탈퇴하기, 수정하기, 판매자 신청하기 -->
 <%@include file="../includes/footer.jsp" %>

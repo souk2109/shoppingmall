@@ -84,11 +84,17 @@
 				<foreach collection="categoryArr" item="category">
 					<trim prefix="OR">
 						<choose>
-							<when test="category=='C'.toString()">
-								category = 'clothes'
+							<when test="category=='B'.toString()">
+								category = 'beauty'
+							</when>
+							<when test="category=='L'.toString()">
+								category = 'life'
 							</when>
 							<when test="category=='F'.toString()">
 								category = 'food'
+							</when>
+							<when test="category=='C'.toString()">
+								category = 'clothes'
 							</when>
 						</choose>
 					</trim>

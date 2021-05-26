@@ -28,6 +28,12 @@
 				<td>${product.prdName}</td>
 				
 				<c:choose>
+					<c:when test="${'life' eq product.category}">
+						<td>생활용품</td>
+					</c:when>
+					<c:when test="${'beauty' eq product.category}">
+						<td>뷰티</td>
+					</c:when>
 					<c:when test="${'food' eq product.category}">
 						<td>음식</td>
 					</c:when>

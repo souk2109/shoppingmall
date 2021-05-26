@@ -88,7 +88,7 @@
 	<input type="hidden" name="pwd" value="${sellerRequest.pwd}">
 	<input type="hidden" name="busiName" value="${sellerRequest.busiName}">
 	<input type="hidden" name="bankName" value="${sellerRequest.bankName}">
-	 
+	<sec:csrfInput/>
 </form>
 
 

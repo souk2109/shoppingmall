@@ -66,7 +66,6 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
 	<script>
-	
 	function showImage(fileCallPath) {
 		console.log("요청한 파일 명 : "+fileCallPath);
 		$(".bigPictureWrapper").css("display","flex").show();

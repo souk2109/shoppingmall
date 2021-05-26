@@ -115,7 +115,7 @@
 								<input id="registerBtn" type="submit"  value="회원가입" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: green; color: white;">
 							</div>
 						</div>
-						
+						<sec:csrfInput/>
 					</form>
 				</div>
 			</div>

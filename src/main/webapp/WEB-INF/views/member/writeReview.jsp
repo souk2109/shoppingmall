@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <sec:authentication property="principal" var="loginUser"/>
 <style>
 	.star{
@@ -119,6 +120,7 @@
 			<input type="hidden" name="pno" value="${trHistoryVO.pno }">
 			<input type="hidden" name="orderNum" value="${trHistoryVO.orderNum }">
 			<input type="hidden" name="id" value="${loginUser.username }">
+			<sec:csrfInput/>
 		</form>
 	</div>
 </div>
@@ -181,7 +183,6 @@ $("#cancelBtn").on("click", function() {
 		var formData = new FormData();
 		var inputFile = $("input[name='attachFile']");
 		var files = inputFile[0].files;
-		console.log(files);
 		for(var i=0; i< files.length; i++){
 			if(!checkExtension(files[i].name, files[i].size)){
 				if ($.browser.msie) {

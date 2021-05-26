@@ -37,8 +37,6 @@
 								</div>
 							</div>
 						</c:if>
-						 
-						
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-12">
@@ -52,6 +50,7 @@
             				<span class="top-bar-menu-item"><a href="#">비밀번호 찾기</a></span>
             				<span class="top-bar-menu-item"><a href="/shoppingmall/common/register">회원가입</a></span>
 						</div>
+						<sec:csrfInput/>
 					</form>
 				</div>
 			</div>

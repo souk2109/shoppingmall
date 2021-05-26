@@ -41,6 +41,7 @@
 								<input id="modifyBtn" type="submit"  value="변경하기" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: green; color: white;">
 							</div>
 						</div>
+						<sec:csrfInput/>
 					</form>
 				</div>
 			</div>

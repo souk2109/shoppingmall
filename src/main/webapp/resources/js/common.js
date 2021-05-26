@@ -1,4 +1,7 @@
 var commonService = (function() {
+	var csrfHeaderName = $("meta[name='csrfHeaderName']").attr("content");
+	var csrfTokenValue = $("meta[name='csrfTokenValue']").attr("content");
+	
 	$.ajaxSetup({
 		async: false
 	});
@@ -8,6 +11,9 @@ var commonService = (function() {
 			type : 'post',
 			url : '/shoppingmall/common/getIdValidate',
 			data : 'id='+id,
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			success : function(result, status, xhr) {
 				if(callback){
 					callback(result);
@@ -25,6 +31,9 @@ var commonService = (function() {
 		$.ajax({
 			url: '/shoppingmall/common/addBasket',
 			data: JSON.stringify(basketInfo),
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			dataType: 'text',
 			type: 'POST',
 			contentType: "application/json; charset=utf-8",
@@ -40,6 +49,9 @@ var commonService = (function() {
 			url: '/shoppingmall/common/removeBasket?pno='+pno,
 			dataType: 'text',
 			type: 'POST',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			success: function(result) {
 				if(callback){
 					callback(result);
@@ -53,6 +65,9 @@ var commonService = (function() {
 			url: '/shoppingmall/common/updateBasket?pno='+pno+'&count='+count,
 			dataType: 'text',
 			type: 'POST',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			success: function(result) {
 				if(callback){
 					callback(result);

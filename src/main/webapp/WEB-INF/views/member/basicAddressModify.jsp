@@ -4,14 +4,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
 
 <sec:authentication property="principal" var="loginUser"/>
-<div class="container" align="center">
+<div class="container" align="center" style="margin-bottom: 100px">
+	<div align="left" class="row" style="margin-bottom: 30px">
+		<div class="col-12 title-font">기본 배송지 수정하기</div>
+	</div>
 	<div class="row">
 		<div class="col-md-6" style="margin: 0 auto;">
 			<div class="panel-default">
-				<div align="center">
-					<font class="panel-title" size="20px" face="Prompt">기본 배송지 수정하기</font>
-				</div>
-				
 				<div class="panel-body" style="margin-top: 20px;">
 					<form id="modifyForm" action="/shoppingmall/member/doModifyBasicAddress" method="post">
 						<div class="form-group" align="left">
@@ -32,6 +31,7 @@
 							</div>
 						</div>
 						 <input type="hidden" name="id" value="${loginUser.username }">
+						 <sec:csrfInput/>
 					</form>
 				</div>
 			</div>

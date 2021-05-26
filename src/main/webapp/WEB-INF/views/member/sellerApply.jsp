@@ -6,13 +6,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
 <sec:authentication property="principal" var="loginUser"/>
 <div class="container" align="center">
+	<div align="left" class="row">
+		<div class="col-12 title-font" style="margin-bottom: 30px">
+			판매자 신청
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-6" style="margin: 0 auto;">
 			<div class="panel-default">
-				<div align="center">
-					<font class="panel-title" size="20px" face="Prompt">판매자 신청</font>
-				</div>
-				
 				<div class="panel-body" style="margin-top: 20px;">
 					<form id="registerForm" action="/shoppingmall/member/doSellerApply" method="post">
 						<div class="form-group" align="left">
@@ -89,7 +90,7 @@
 								<input id="registerBtn" type="submit"  value="신청하기" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: green; color: white;">
 							</div>
 						</div>
-						
+						<sec:csrfInput/>
 					</form>
 				</div>
 			</div>

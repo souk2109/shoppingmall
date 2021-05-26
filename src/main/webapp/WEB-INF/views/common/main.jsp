@@ -58,22 +58,27 @@
 		}
 	}
 </style>
-<div align="center" style="margin-bottom: 20px">
-	<font class="panel-title" size="20px" face="Prompt">판매중 상품</font>
+
+<div class="container" style="margin-bottom: 30px"> 
+	<div class="row">
+		<div class="col-12 title-font">
+			판매중 상품
+		</div>
+	</div>
 </div>
 
 <div style="width: 80%; margin: 0px auto;margin-bottom: 30px">
 	<form id="searchform" method="get" action="/shoppingmall/common/main" style="margin-bottom: 20px; align-content: center;">
-		<select name="category" style="width: 20%;height: 30px">
-			<option value="CF" ${criteria.category eq 'CFLB' ?'selected':'' }>모두</option>
-			<option value="F" ${criteria.category eq 'B' ?'selected':''}>뷰티</option>
-			<option value="F" ${criteria.category eq 'L' ?'selected':''}>생활용품</option>
+		<select name="category" style="width: 25%;height: 30px">
+			<option value="CF" ${criteria.category eq 'BLFC' ?'selected':'' }>모두</option>
+			<option value="B" ${criteria.category eq 'B' ?'selected':''}>뷰티</option>
+			<option value="L" ${criteria.category eq 'L' ?'selected':''}>생활용품</option>
 			<option value="F" ${criteria.category eq 'F' ?'selected':''}>식품</option>
 			<option value="C" ${criteria.category eq 'C' ?'selected':''}>패션 의류/잡화</option>
 		</select>
 		<input name="keyword" type="text" value="${criteria.keyword==null?'':criteria.keyword}"
-			autocomplete="off" style="height: 30px;width: 30%" placeholder="상품명">
-		<input type="submit" value="검색" style="width: 20%">
+			autocomplete="off" style="height: 30px;width: 40%" placeholder="상품명">
+		<input type="submit" value="검색" style="width: 25%">
 		<input type="hidden" name="pageNum" value="1">
 		<input type="hidden" name="amount" value="12">
 	</form>

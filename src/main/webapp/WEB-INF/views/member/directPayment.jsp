@@ -61,7 +61,16 @@
 			</div>
 			<div>
 				<div class="col-12" style="border-left: 6px solid #ccd;margin-bottom: 10px;margin-top: 40px;">
-					배송지
+					<div style="display: inline;margin-right: 5px">배송지</div>
+					<input type="checkbox" id="shipCheckbox">기본 배송지 사용
+				</div>
+				<div class="col-md-6 col-sm-12" style="margin-bottom: 20px">
+					<div style="margin-top: 10px;margin-bottom: 10px">
+						<input type="text" id="postalCode" name="postalCode" class="form-control" placeholder="우편번호" style="width: 50%;display: inline;" readonly="readonly">
+						<input type="button" id="findPostalBtn" class="form-control" onclick="startDaumPostcode()" value="우편번호 검색" style="width: 45%;display: inline;float: right;">
+					</div>
+					<input type="text" id="roadAddress" name="roadAddress" class="form-control" placeholder="도로명주소" readonly="readonly" style="margin-bottom: 10px">
+					<input type="text" id="detailAddress" name="detailAddress" class="form-control" placeholder="상세주소" autocomplete="new-password">
 				</div>
 			</div>
 			<!--  카드 입력 -->
@@ -104,24 +113,6 @@
 					<input id="cardPwd" name="cardPwd" type="password" class="form-control" 
 						placeholder="비밀번호 4자리" maxlength="4" autocomplete="off" onkeypress="inNumber();">
 				</div>
-				
-				<div class="col-md-6 col-sm-12" style="margin-bottom: 20px">
-					<div style="margin-bottom: 3px">기본 배송지</div>
-				</div>
-			</div>
-			<div>
-				<div class="col-12" style="border-left: 6px solid #ccd;margin-bottom: 10px;margin-top: 40px;">
-					<div style="display: inline;margin-right: 5px">배송지</div>
-					<input type="checkbox" id="shipCheckbox">기본 배송지 사용
-				</div>
-				<div class="col-md-6 col-sm-12" style="margin-bottom: 20px">
-					<div style="margin-top: 10px;margin-bottom: 10px">
-						<input type="text" id="postalCode" name="postalCode" class="form-control" placeholder="우편번호" style="width: 50%;display: inline;" readonly="readonly">
-						<input type="button" id="findPostalBtn" class="form-control" onclick="startDaumPostcode()" value="우편번호 검색" style="width: 45%;display: inline;float: right;">
-					</div>
-					<input type="text" id="roadAddress" name="roadAddress" class="form-control" placeholder="도로명주소" readonly="readonly" style="margin-bottom: 10px">
-					<input type="text" id="detailAddress" name="detailAddress" class="form-control" placeholder="상세주소" autocomplete="new-password">
-				</div>
 			</div>
 			<div style="margin-bottom: 10px;margin-top: 40px;">
 				<div id="paymentBtn" class="btn btn-primary col-12">결제하기</div>
@@ -129,6 +120,7 @@
 		</div>
 	</div>
 	<form id="submitBtn" action="/shoppingmall/member/doDirectPayment" method="post">
+		<sec:csrfInput/>
 	</form>
 </div>
 

@@ -72,7 +72,7 @@
 								<input id="registerBtn" type="submit"  value="등록하기" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: green; color: white;">
 							</div>
 						</div>
-						
+						<sec:csrfInput/>
 					</form>
 				</div>
 			</div>
@@ -97,6 +97,7 @@
 	}
 </script>
 <script>
+
 $("#registerBtn").on("click", function(e) {
 	let name = $("#name").val().trim();
 	let cardNum = $("#cardNum").val().trim();

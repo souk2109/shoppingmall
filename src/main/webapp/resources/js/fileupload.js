@@ -1,10 +1,17 @@
 var fileuploadService = (function() {
+	var csrfHeaderName = $("meta[name='csrfHeaderName']").attr("content");
+	var csrfTokenValue = $("meta[name='csrfTokenValue']").attr("content");
+	
+	console.log(csrfHeaderName + ", "+csrfTokenValue);
 	function uploadProductImage(formData, callback, error) {
 		$.ajax({
 			url: '/shoppingmall/uploadImageAction',
 			processData: false,
 			contentType: false,
 			data: formData,
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			type: 'POST',
 			dataType : 'json',
 			success: function(result) {
@@ -30,6 +37,9 @@ var fileuploadService = (function() {
 		$.ajax({
 			url: '/shoppingmall/deleteFile',
 			data: {fileName: targetFile, type:type},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			dataType: 'text',
 			type: 'POST',
 			success: function(result) {
@@ -46,6 +56,9 @@ var fileuploadService = (function() {
 			processData: false,
 			contentType: false,
 			data: formData,
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			type: 'POST',
 			dataType : 'json',
 			success: function(result) {

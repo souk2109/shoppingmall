@@ -60,7 +60,7 @@
 							</td>
 							<!-- 해당 상품의 n개 가격과 삭제를 위한 x표시 -->
 							<td class="align-middle" style="width: 15%;padding: 0px">
-								<fmt:formatDate value="${history.buyDate }" pattern="yyyy.MM.dd hh:mm" />
+								<fmt:formatDate value="${history.buyDate }" pattern="yyyy.MM.dd a hh:mm" />
 							</td>
 							<td class="align-middle" style="width: 15%;padding: 0px">
 								<script>

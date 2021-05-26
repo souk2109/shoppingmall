@@ -55,8 +55,10 @@
 							<div class="col-sm-12">
 								<select aria-label="카테고리" id="category" name="category" style="width: 100%">
 									<option value="">선택</option>
-									<option value="clothes">패션 의류/잡화</option>
+									<option value="beauty">뷰티</option>
+									<option value="life">생활용품</option>
 									<option value="food">식품</option>
+									<option value="clothes">패션 의류/잡화</option>
 								</select> 
 							</div>
 						</div>
@@ -165,6 +167,7 @@
 								<input id="registerBtn" type="submit"  value="등록하기" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: green; color: white;">
 							</div>
 						</div>
+						<sec:csrfInput/>
 					</form>
 				</div>
 			</div>

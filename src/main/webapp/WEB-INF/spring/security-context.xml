@@ -19,9 +19,8 @@
 		<security:form-login login-page="/common/login" login-processing-url="/common/doLogin" 
 			username-parameter="id" password-parameter="pwd"/>
 		<security:logout logout-success-url="/common/login" logout-url="/member/doLogout" invalidate-session="true"/>	
-		<security:csrf disabled="true"/>
+		<security:csrf disabled="false"/>
 	</security:http>
-	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="userService">
 			<security:password-encoder ref="encoder"/>

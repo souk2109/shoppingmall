@@ -57,6 +57,7 @@
 								<input id="deactivateBtn" type="submit"  value="탈퇴하기" style="border:hidden; margin-top: 20px;font-size: 18px; height: 54px; width: 100%; background-color: #00CCFF; color: white;">
 							</div>
 						</div>
+						<sec:csrfInput/>
 					</form>
 				</div>
 			</div>

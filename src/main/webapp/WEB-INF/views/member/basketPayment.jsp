@@ -120,6 +120,7 @@
 		</div>
 	</div>
 	<form id="submitBtn" action="/shoppingmall/member/doBasketPayment" method="post">
+		<sec:csrfInput/>
 	</form>
 </div>
 

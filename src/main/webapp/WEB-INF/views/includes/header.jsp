@@ -11,6 +11,10 @@
 <meta name="keywords" content="Foodeiblog, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- csrf간련 데이터 저장 -->
+<meta name="csrfHeaderName" content="${_csrf.headerName}">
+<meta name="csrfTokenValue" content="${_csrf.token}">
+
 <title>쇼핑몰</title>
 
 <!-- Google Font -->
@@ -87,6 +91,18 @@ A:hover {
 	text-decoration: none;
 	color: #646464;
 }
+.title-font {
+	font-size: 48px;
+	margin-left: 5px;
+}
+
+@media ( max-width :740px) {
+	.title-font {
+		font-size: 25px;
+		margin-left: 5px;
+		font-weight: bold;
+	}
+}
 </style>
 </head>
 
@@ -162,8 +178,16 @@ A:hover {
 				</sec:authorize>
 						
 				<sec:authorize access="isAuthenticated()">
-					<span class="top-bar-menu-item"><a href="/shoppingmall/member/doLogout">로그아웃</a></span>
+					<form id="logoutForm" action="/shoppingmall/member/doLogout" method="post">
+						<sec:csrfInput/>
+					</form>
+					<span id="logoutBtn" class="top-bar-menu-item" style="cursor: pointer;">로그아웃</span>
 					<span class="top-bar-menu-item"><a href="/shoppingmall/member/myPage">내정보</a></span>
+					<script>
+						$("#logoutBtn").on("click", function() {
+							$("#logoutForm").submit();
+						});
+					</script>
 				</sec:authorize>
 			</div>
 		</article>
@@ -208,10 +232,10 @@ A:hover {
 					</div>
 					<div class="col-lg-2 col-md-1 col-6 order-md-3 order-2">
 						<div class="header__search">
-							<!-- <i class="fa fa-search search-switch"></i> -->
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
+	 

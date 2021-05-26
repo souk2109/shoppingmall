@@ -27,7 +27,7 @@
 		<div class="col-12"><i class="fa fa-shopping-bag fa-3x" aria-hidden="true"></i><font size="30px" style="margin-left: 5px">주문내역</font></div>
 	</div>
 	 
-	<div class="row col-md-8 col-sm-12" style="margin-bottom: 30px; border: solid 2px #ccd;padding: 0px">
+	<div class="row col-md-8 col-sm-12" style="margin-bottom: 100px; border: solid 2px #ccd;padding: 0px">
 		<div class="col-12" style="border-bottom: solid 2px #ccd; padding: 5px;margin-bottom: 20px">
 			<h4>최근 주문내역</h4>
 		</div>
@@ -103,22 +103,22 @@
 				</div>
 				<div class="col-12" align="left" style="margin-bottom: 10px; margin-top: 10px">
 					<span>결제 시간 : </span>
-					<span><fmt:formatDate value="${history.buyDate }" pattern="yyyy년 MM월 dd일 hh시 mm분"/></span>
+					<span><fmt:formatDate value="${history.buyDate }" pattern="yyyy년 MM월 dd일 a hh시 mm분"/></span>
 				</div>
 				<c:if test="${history.prdStatus eq 'shipping'}">
 					<div class="col-12" align="left" style="margin-bottom: 10px">
 						<span>배송 시간 : </span>
-						<span><fmt:formatDate value="${history.shippingTime }" pattern="yyyy년 MM월 dd일 hh시 mm분"/></span>
+						<span><fmt:formatDate value="${history.shippingTime }" pattern="yyyy년 MM월 dd일 a hh시 mm분"/></span>
 					</div>
 				</c:if>
 				<c:if test="${history.prdStatus eq 'arrive'}">
 					<div class="col-12" align="left" style="margin-bottom: 10px">
 						<span>배송 시간 : </span>
-						<span><fmt:formatDate value="${history.shippingTime }" pattern="yyyy년 MM월 dd일 hh시 mm분"/></span>
+						<span><fmt:formatDate value="${history.shippingTime }" pattern="yyyy년 MM월 dd일 a hh시 mm분"/></span>
 					</div>
 					<div class="col-12" align="left" style="margin-bottom: 10px">
 						<span>도착 시간 : </span>
-						<span><fmt:formatDate value="${history.arriveTime }" pattern="yyyy년 MM월 dd일 hh시 mm분"/></span>
+						<span><fmt:formatDate value="${history.arriveTime }" pattern="yyyy년 MM월 dd일 a hh시 mm분"/></span>
 					</div>
 				</c:if>
 				<c:if test="${history.prdStatus eq 'ready'}">
@@ -130,7 +130,7 @@
 				<c:if test="${history.prdStatus eq 'cancel'}">
 					<div class="col-12" align="left" style="margin-bottom: 10px">
 						<span>취소 시간 : </span>
-						<span><fmt:formatDate value="${history.cancelTime }" pattern="yyyy년 MM월 dd일 hh시 mm분"/></span>
+						<span><fmt:formatDate value="${history.cancelTime }" pattern="yyyy년 MM월 dd일 a hh시 mm분"/></span>
 					</div>
 				</c:if>
 				<c:if test="${history.prdStatus eq 'arrive'}">
@@ -142,7 +142,7 @@
 							</c:when>
 							<c:when test="${history.reviewStatus eq 1}">
 								<input class="btn review" type="button" style="width:100%; background: #FEBEBE;color: #fff;margin-top: 10px" 
-								value="리뷰 수정하기" data-orderNum="${history.orderNum  }" data-pno="${history.pno  }">
+								value="작성한 리뷰보기" data-orderNum="${history.orderNum  }" data-pno="${history.pno  }">
 							</c:when>
 						</c:choose>
 					</div>
@@ -152,6 +152,7 @@
 	</div>
 </div>
 <form id="formObj" method="post" action="/shoppingmall/member/cancelOrder">
+	<sec:csrfInput/>
 </form>
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
 <script>

@@ -73,14 +73,14 @@
 			</div>
 			<div class="col-12" align="left" style="margin-bottom: 10px">
 				<span>결제 시간 : </span> <span><fmt:formatDate
-						value="${trHistory.buyDate }" pattern="yyyy.MM.dd hh:mm" />
+						value="${trHistory.buyDate }" pattern="yyyy.MM.dd a hh:mm" />
 				</span>
 			</div>
 			<c:if test="${trHistory.prdStatus eq 'cancel'}">
 				<div class="col-12" align="left" style="margin-bottom: 10px">
 					<span>취소 시간 : </span> 
 					<span>
-						<fmt:formatDate	value="${trHistory.cancelTime }" pattern="yyyy.MM.dd hh:mm" />
+						<fmt:formatDate	value="${trHistory.cancelTime }" pattern="yyyy.MM.dd a hh:mm" />
 					</span>
 				</div>
 			</c:if>
@@ -106,6 +106,7 @@
 	</div>
 </div>
 <form id="formObj" action="/shoppingmall/seller/modifyDetail" method="post">
+	<sec:csrfInput/>
 </form>
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
 <script>

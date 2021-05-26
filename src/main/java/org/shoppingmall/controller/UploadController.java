@@ -41,43 +41,12 @@ public class UploadController {
 	@PostMapping(value = "/uploadImageAction", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxAction(MultipartFile [] attachFile) {
-		List<AttachFileDTO> list = new ArrayList<AttachFileDTO>();
 		String uploadFolder = "C:\\shoppingmall\\products";
 		String uploadFolderPath = getFolder();
-		// 저장할 폴더 생성하기
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
-		if(!uploadPath.exists()) {
-			uploadPath.mkdirs();
-		}
-		
-		for(MultipartFile multipartFile : attachFile) {
-			AttachFileDTO attachFileDTO = new AttachFileDTO();
-			String uploadFileName = multipartFile.getOriginalFilename();
-			UUID uuid = UUID.randomUUID();
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			attachFileDTO.setFileName(uploadFileName);
-			
-			uploadFileName = uuid.toString() + "_" + uploadFileName; 
-				
-			try {
-				File saveFile = new File(uploadPath, uploadFileName);
-				multipartFile.transferTo(saveFile);
-				attachFileDTO.setUuid(uuid.toString());
-				attachFileDTO.setUploadPath(uploadFolderPath);
-				if(checkImageType(saveFile)) {
-					attachFileDTO.setImage(true);
-					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 200, 200);
-					thumbnail.close();
-				}
-				list.add(attachFileDTO);
-			} catch (IllegalStateException | IOException e) {
-				log.error(e.getMessage());
-			}
-		}
+		List<AttachFileDTO> list = uploadMethod(uploadFolder,uploadFolderPath, attachFile);
 		return new ResponseEntity<List<AttachFileDTO>> (list, HttpStatus.OK);
 	}
-	
+
 	// 현재 시간을 경로명으로 반환 -> ex) 2020\\03\\01
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -85,6 +54,7 @@ public class UploadController {
 		String str = sdf.format(date);
 		return str.replace("-", File.separator);
 	}
+	
 	private boolean checkImageType(File file) {
 		try {
 			String contentType = Files.probeContentType(file.toPath());
@@ -143,42 +113,12 @@ public class UploadController {
 	@PostMapping(value = "/uploadReviewImageAction", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadReviewImageAction(MultipartFile [] attachFile) {
-		List<AttachFileDTO> list = new ArrayList<AttachFileDTO>();
 		String uploadFolder = "C:\\shoppingmall\\review";
 		String uploadFolderPath = getFolder();
-		// 저장할 폴더 생성하기
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
-		if(!uploadPath.exists()) {
-			uploadPath.mkdirs();
-		}
-		
-		for(MultipartFile multipartFile : attachFile) {
-			AttachFileDTO attachFileDTO = new AttachFileDTO();
-			String uploadFileName = multipartFile.getOriginalFilename();
-			UUID uuid = UUID.randomUUID();
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			attachFileDTO.setFileName(uploadFileName);
-			
-			uploadFileName = uuid.toString() + "_" + uploadFileName; 
-				
-			try {
-				File saveFile = new File(uploadPath, uploadFileName);
-				multipartFile.transferTo(saveFile);
-				attachFileDTO.setUuid(uuid.toString());
-				attachFileDTO.setUploadPath(uploadFolderPath);
-				if(checkImageType(saveFile)) {
-					attachFileDTO.setImage(true);
-					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 200, 200);
-					thumbnail.close();
-				}
-				list.add(attachFileDTO);
-			} catch (IllegalStateException | IOException e) {
-				log.error(e.getMessage());
-			}
-		}
+		List<AttachFileDTO> list = uploadMethod(uploadFolder,uploadFolderPath, attachFile);
 		return new ResponseEntity<List<AttachFileDTO>> (list, HttpStatus.OK);
 	}
+	
 	@GetMapping("/reviewDisplay")
 	@ResponseBody
 	public ResponseEntity<byte[]> getReviewFile(String fileName){
@@ -195,6 +135,42 @@ public class UploadController {
 		}
 		return result;
 	}
+	
+	// 업로드할 파일들을 저장할 폴더명, 경로, 파일들을 받아서 저장한다.
+		private List<AttachFileDTO> uploadMethod(String uploadFolder, String uploadFolderPath, MultipartFile[] attachFile) {
+			List<AttachFileDTO> list = new ArrayList<AttachFileDTO>();
+			// 저장할 폴더 생성하기
+			File uploadPath = new File(uploadFolder, uploadFolderPath);
+			if (!uploadPath.exists()) {
+				uploadPath.mkdirs();
+			}
+			for(MultipartFile multipartFile : attachFile) {
+				AttachFileDTO attachFileDTO = new AttachFileDTO();
+				String uploadFileName = multipartFile.getOriginalFilename();
+				UUID uuid = UUID.randomUUID();
+				uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+				attachFileDTO.setFileName(uploadFileName);
+				
+				uploadFileName = uuid.toString() + "_" + uploadFileName; 
+					
+				try {
+					File saveFile = new File(uploadPath, uploadFileName);
+					multipartFile.transferTo(saveFile);
+					attachFileDTO.setUuid(uuid.toString());
+					attachFileDTO.setUploadPath(uploadFolderPath);
+					if(checkImageType(saveFile)) {
+						attachFileDTO.setImage(true);
+						FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
+						Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 200, 200);
+						thumbnail.close();
+					}
+					list.add(attachFileDTO);
+				} catch (IllegalStateException | IOException e) {
+					log.error(e.getMessage());
+				}
+			}
+			return list;
+		}
 }
 
 
