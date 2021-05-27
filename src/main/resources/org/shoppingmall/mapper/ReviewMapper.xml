@@ -47,4 +47,8 @@
 		WHERE t1.pno = #{pno}
 		order by t1.grade asc, t1.regdate desc
 	</select>
+	
+	<select id="getReviewByOrderNum" resultType="org.shoppingmall.domain.ReviewVO">
+		select * from tbl_review where orderNum = #{orderNum}
+	</select>
 </mapper>

@@ -89,4 +89,9 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewMapper.getReviewWithLowGrade(pno);
 	}
 
+	@Override
+	public ReviewVO getReviewByOrderNum(int orderNum) {
+		return reviewMapper.getReviewByOrderNum(orderNum);
+	}
+
 }

@@ -239,6 +239,16 @@ $("#cancelBtn").on("click", function() {
 		});
 		uploadUL.append(str);
 	};
+	// 썸네일 사진 삭제하기
+	$(".uploadResult").on("click", "button", function() {
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		var targetLi = $(this).closest("li");
+		fileuploadService.deleteProductImage(targetFile, type, function(result) {
+			console.log("삭제 완료");
+			targetLi.remove();
+		});
+	});
 </script>
 <script>
 $("#registerBtn").on("click", function(e) {

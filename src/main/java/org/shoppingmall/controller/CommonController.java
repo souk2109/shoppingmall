@@ -1,9 +1,7 @@
 package org.shoppingmall.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,13 +11,10 @@ import org.shoppingmall.domain.Criteria;
 import org.shoppingmall.domain.PageDTO;
 import org.shoppingmall.domain.ProductAttachVO;
 import org.shoppingmall.domain.ProductInfoVO;
-import org.shoppingmall.domain.ReviewOutputDTO;
-import org.shoppingmall.domain.ReviewVO;
 import org.shoppingmall.domain.UserVO;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ProductInfoService;
 import org.shoppingmall.service.ProductQuestionServiceImpl;
-import org.shoppingmall.service.ReviewService;
 import org.shoppingmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,9 +41,6 @@ public class CommonController {
 	
 	@Autowired
 	private ProductQuestionServiceImpl productQuestionServiceImpl;
-	
-	@Autowired
-	private ReviewService reviewService;
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/login")

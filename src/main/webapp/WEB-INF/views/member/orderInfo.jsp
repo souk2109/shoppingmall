@@ -141,8 +141,13 @@
 								value="리뷰작성하기" data-orderNum="${history.orderNum  }" data-pno="${history.pno  }">
 							</c:when>
 							<c:when test="${history.reviewStatus eq 1}">
-								<input class="btn review" type="button" style="width:100%; background: #FEBEBE;color: #fff;margin-top: 10px" 
-								value="작성한 리뷰보기" data-orderNum="${history.orderNum  }" data-pno="${history.pno  }">
+								<div class="showReview" data-display="none" data-orderNum="${history.orderNum  }"  style="cursor: pointer;color: blue;">작성한 리뷰 보기</div>
+								<div class="reviewContainer" id="review${history.orderNum  }" data-orderNum="${history.orderNum  }" 
+									style="display:none;border: solid 1px #ccd;margin-top:10px; padding: 5px;border-radius: 5px;">
+									<div>작성한 리뷰</div>
+								</div>
+								<input class="btn" type="button" style="width:100%; background: #ccc;color: #fff;margin-top: 10px;cursor: default"
+								value="리뷰작성 완료" disabled="disabled">
 							</c:when>
 						</c:choose>
 					</div>
@@ -151,10 +156,26 @@
 		</c:forEach>
 	</div>
 </div>
+<div class="fade modal" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content" align="center" style="text-align: center;">
+			<div class="modal-header">
+				<span>첨부 이미지</span>
+				<span id="cancelBtn" style="float: right;"><i class="fa fa-times" aria-hidden="true"></i></span>
+			</div>
+			<div class="modal-body">
+				<div id="modal-image"></div>
+			</div>
+			<div class="modal-footer"></div>
+		</div>
+	</div>
+</div>
 <form id="formObj" method="post" action="/shoppingmall/member/cancelOrder">
 	<sec:csrfInput/>
 </form>
 <script type="text/javascript" src="/shoppingmall/resources/js/member.js"></script>
+<script type="text/javascript" src="/shoppingmall/resources/js/common.js"></script>
 <script>
 	$(".prdImg").each(function(i, obj) {
 		let pno = $(this).data("pno");
@@ -187,5 +208,70 @@
 		window.location.href="/shoppingmall/member/writeReview?pno="+pno+"&orderNum="+orderNum+"&clientId="+clientId;
 	});
 </script>
- 
+<script>
+	$(".reviewContainer").each(function(i, obj) {
+		let orderNum = $(this).data("ordernum");
+		let str = '';
+		let rno;
+		memberService.getReviewByOrderNum(orderNum, function(review) {
+			rno = parseInt(review.rno);
+			let full_star_num = parseInt(review.grade);
+			let empty_star_num = 5-full_star_num;
+			
+			for(var i=0;i<full_star_num; i++){
+				str += "<i class='fa fa-star' style='color: #FFA500;padding:0px;font-size: 1.2em;'></i>";
+			}
+			for(var i=0;i<empty_star_num; i++){
+				str += "<i class='fa fa-star-o' style='color: #FFA500;padding:0px;font-size: 1.2em;'></i>";
+			}
+			let time = commonService.displayTime(review.regDate);
+			str += '<div>' + review.review + '</div>';
+			str += time;
+			if(!isNaN(rno)){
+				memberService.getReviewImages(rno, function(list) {
+					if(list){
+						for(var i=0;i<list.length;i++){
+							let fileCallPath = encodeURIComponent(list[i].path+"/" + list[i].uuid +"_" + list[i].fileName);
+							str += "<div class='reviewFileName' data-fileName=" + fileCallPath + " style='display: table-cell;width: 100px;padding:5px;border:1px solid #ccc'>";
+							str += "<img src='/shoppingmall/reviewDisplay?fileName="+fileCallPath+"' style='height: 100px'>";
+							str += "</div>";
+						}
+					}
+				});
+			}
+			$(obj).append(str);
+		});
+		 
+	});
+	// 리뷰 이미지를 클릭할 때 모달창에 표시
+	function showReviewImage(fileCallPath) {
+		$("#modal-image")
+			.html("<img src='/shoppingmall/reviewDisplay?fileName="+fileCallPath+"'>")
+			.animate({width:'100%', height:'100%'}, 500);
+	}
+	$(document).on('click', ".reviewFileName", function() {
+		let fileName = $(this).data("filename");
+		showReviewImage(fileName.replace(new RegExp(/\\/g),"/"));
+		$(".modal").modal("show");
+	});
+	$("#cancelBtn").on("click", function() {
+		$(".modal").modal("hide");
+	});
+	
+	$(".showReview").on("click", function() {
+		let display = $(this).data('display');
+		let orderNum = $(this).data('ordernum');
+		let targetId = "review" + orderNum;
+		if(display === 'none'){
+			$(this).text('작성한 리뷰 숨기기');
+			$(this).data('display','show');
+			$("#"+targetId).css('display','block');
+		}
+		else if(display === 'show'){
+			$(this).text('작성한 리뷰 보기');
+			$(this).data('display','none');
+			$("#"+targetId).css('display','none');
+		}
+	})
+</script>
 <%@include file="../includes/footer.jsp"%>

@@ -22,10 +22,9 @@
 	}
 	.prd-info-container{
 		position: relative;
-    	padding: 0 0 10px;
-    	border-bottom: 1px solid #ccc;
+		padding: 0 0 10px;
+		border-bottom: 10px solid #ccc;
 	}
-	
 	.prd-info-name{
 		font-size: 18px;
     	font-weight: bold;
@@ -37,19 +36,20 @@
 	}
 	.prd-quantity-input{
 		vertical-align: top;
-	    text-align: center;
-	    border: 0;
-	    width: 40px;
-	    height: 40px;
-	    background: transparent;
-	    font-size: 16px;
-	    font-weight: bold;
+		text-align: center;
+		border: 0px;
+		width: 40px;
+		height: 40px;
+		background: transparent;
+		font-size: 16px;
+		 font-weight: bold;
 	    border-right: 1px solid #eee;
 	    box-sizing: border-box;
 	    color: #111;
 	    line-height: 25px;
 	    padding: 11px 0 9px 0;
 	}
+	
 	.prd-buy-info{
 	    display: block;
 	    float: left;
@@ -73,7 +73,6 @@
 	#sub-image ul li{
 		display:inline-block; 
 		padding: 10px 20px; 
-		background: #ccc; 
 		margin-right:10px;
 	}
 	.countBtn{

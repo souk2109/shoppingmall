@@ -19,4 +19,6 @@ public interface ReviewService {
 
 	List<ReviewOutputDTO> getReviewWithLowGrade(String pno);
 
+	ReviewVO getReviewByOrderNum(int orderNum);
+
 }
