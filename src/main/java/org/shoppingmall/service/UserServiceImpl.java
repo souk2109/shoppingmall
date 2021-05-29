@@ -88,4 +88,9 @@ public class UserServiceImpl implements UserService{
 			return "fail";
 		}
 	}
+
+	@Override
+	public String getId(String name, String email) {
+		return userMapper.getId(name, email);
+	}
 }

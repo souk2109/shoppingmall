@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j; 
 
@@ -60,10 +61,11 @@ public class CommonController {
 	}
 	
 	@PostMapping(value = "/doRegister")
-	public String doRegister(UserVO userVO) {
+	public String doRegister(UserVO userVO, RedirectAttributes rttr) {
 		int result = userService.registerUser(userVO, "ROLE_MEMBER");
 		if(result == 1) {
 			log.info("[회원가입 성공] id: "+userVO.getId());
+			rttr.addFlashAttribute("registerResult", "success");
 		}
 		return "redirect:/common/login";
 	}
@@ -78,10 +80,6 @@ public class CommonController {
 		model.addAttribute("products", productInfoService.getProductInfoListWithPaging(criteria));
 		model.addAttribute("pageMaker", pageDTO); 
 		model.addAttribute("total", total);
-	}
-	
-	@GetMapping("/products")
-	public void products() {
 	}
 	
 	@GetMapping("/getProduct")
@@ -112,5 +110,9 @@ public class CommonController {
 			}
 			model.addAttribute("basketList", basketList);
 		}
+	}
+	@GetMapping("/findId")
+	public void findId() {
+		
 	}
 }

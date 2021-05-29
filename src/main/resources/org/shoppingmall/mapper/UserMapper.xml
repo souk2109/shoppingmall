@@ -63,5 +63,10 @@
 	<delete id="deleteUser">
 		delete from tbl_user where id = #{id}
 	</delete>
-	 
+	
+	<select id="getId" resultType="String">
+		SELECT id
+		FROM tbl_user
+		WHERE name = #{name} and email = #{email} 
+	</select>
 </mapper>

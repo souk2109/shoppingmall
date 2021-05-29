@@ -5,7 +5,7 @@
 	pageEncoding="UTF-8"%>
 
 
-<div align="center" class="panel-title" style="margin-top: 30px">
+<div align="center" class="panel-title" style="margin-top: 30px;margin-bottom: 100px">
 	<font size="6px" face="Prompt">판매 신청자 상세 정보</font>
 	<table class="table" style="width: 60%; text-align: center; margin-top: 20px" >
 		<tr>

@@ -46,7 +46,7 @@
 							</div>
 						</div>
 						<div align="center" style="font-size: 14px; margin-top: 30px; margin-bottom: 30px" class="col-sm-12">
-							<span class="top-bar-menu-item"><a href="#">아이디 찾기</a></span>
+							<span class="top-bar-menu-item"><a href="/shoppingmall/common/findId">아이디 찾기</a></span>
             				<span class="top-bar-menu-item"><a href="#">비밀번호 찾기</a></span>
             				<span class="top-bar-menu-item"><a href="/shoppingmall/common/register">회원가입</a></span>
 						</div>
@@ -57,5 +57,10 @@
 		</div>
 	</div>
 </div>
-
+<script>
+	let registerResult = "${registerResult}";
+	if(registerResult){
+		alert('회원가입에 성공했습니다.');
+	}
+</script>
 <%@include file="../includes/footer.jsp" %>

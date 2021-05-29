@@ -23,7 +23,7 @@
 	.prd-info-container{
 		position: relative;
 		padding: 0 0 10px;
-		border-bottom: 10px solid #ccc;
+		border-bottom: 1px solid #ccc;
 	}
 	.prd-info-name{
 		font-size: 18px;

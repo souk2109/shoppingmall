@@ -215,8 +215,8 @@
 			alert('할인율을 입력해주세요(0%이면 0을 작성해주세요)');
 			return;
 		}else{
-			if(parseFloat(discount) < 100){
-				alert('할인율은 0~100까지의 수로 입력해주세요');
+			if(parseFloat(discount) >= 100){
+				alert('할인율은 100보다 작은 수로 입력해주세요');
 				return;
 			}
 		}

@@ -1,6 +1,7 @@
 package org.shoppingmall.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -100,5 +102,16 @@ public class CommonRestController {
 	public ResponseEntity<List<ReviewOutputDTO>> getReviewWithRegdateDesc(@PathVariable("pno") String pno) {
 		List<ReviewOutputDTO> list = reviewService.getReviewWithRegdateDesc(pno);
 		return new ResponseEntity<List<ReviewOutputDTO>>(list, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/findId", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> findId(String name, String email){
+		String id = userService.getId(name, email);
+		String result = "notFound";
+		if(id != null) {
+			result = id;
+			log.info(id);
+		}
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 }

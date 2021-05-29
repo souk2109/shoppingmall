@@ -43,8 +43,8 @@ public class UploadController {
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxAction(MultipartFile [] attachFile) {
 		String uploadFolder = "C:\\shoppingmall\\products";
 		String uploadFolderPath = getFolder();
-		List<AttachFileDTO> list = uploadMethod(uploadFolder,uploadFolderPath, attachFile);
-		return new ResponseEntity<List<AttachFileDTO>> (list, HttpStatus.OK);
+		List<AttachFileDTO> list = uploadMethod(uploadFolder, uploadFolderPath, attachFile);
+		return new ResponseEntity<List<AttachFileDTO>>(list, HttpStatus.OK);
 	}
 
 	// 현재 시간을 경로명으로 반환 -> ex) 2020\\03\\01
@@ -69,7 +69,6 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName){
 		File file = new File("C:\\shoppingmall\\products\\" + fileName);
-		
 		ResponseEntity<byte[]> result = null;
 		
 		HttpHeaders header = new HttpHeaders();
@@ -172,30 +171,3 @@ public class UploadController {
 			return list;
 		}
 }
-
-
-
-/*
- * @GetMapping(value = "/download", produces =
- * MediaType.APPLICATION_OCTET_STREAM_VALUE)
- * 
- * @ResponseBody public ResponseEntity<Resource>
- * downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName){
- * log.info("download file : " + fileName); Resource resource = new
- * FileSystemResource("C:\\upload\\" + fileName); if(!resource.exists()) {
- * return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND); }
- * log.info("resource 이름 : " + resource); String resourceName =
- * resource.getFilename(); String resourceOriginalName =
- * resourceName.substring(resourceName.lastIndexOf("_")+1); HttpHeaders headers
- * = new HttpHeaders(); try { String downloadName = null;
- * if(userAgent.contains("Trident")) { log.info("인터넷 익스플로어에서 접속"); downloadName
- * = URLEncoder.encode(resourceOriginalName,"UTF-8").replaceAll("\\+", " ");
- * }else if(userAgent.contains("Edge")){ log.info("Edge에서 접속"); downloadName =
- * URLEncoder.encode(resourceOriginalName,"UTF-8"); }else { log.info("크롬에서 접속");
- * downloadName = new
- * String(resourceOriginalName.getBytes("UTF-8"),"ISO-8859-1"); }
- * headers.add("Content-Disposition", "attachment; filename=" + downloadName); }
- * catch (UnsupportedEncodingException e) { e.printStackTrace(); } return new
- * ResponseEntity<Resource>(resource, headers,HttpStatus.OK); }
- */
-

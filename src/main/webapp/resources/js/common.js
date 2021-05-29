@@ -119,6 +119,23 @@ var commonService = (function() {
 			}
 		})
 	};
+	
+	function findId(name, email, callback) {
+		$.ajax({
+			url: '/shoppingmall/common/findId?name='+name+'&email='+email,
+			dataType: 'text',
+			type: 'POST',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
+			success: function(result) {
+				if(callback){
+					callback(result);
+				}
+			}
+		});
+	}
+	
 	function displayTime(timeValue) {	
 		let dateObj = new Date(timeValue);
 		let yy = dateObj.getFullYear();
@@ -138,6 +155,7 @@ var commonService = (function() {
 		mi = mi < 10 ? '0' + mi : mi;
 		return yy + '.' + mm + '.' + dd + division + hh+'시 '+ mi+'분 ';
 	}
+	
 	return {
 		getIdValidate : getIdValidate,
 		addBasket : addBasket,
@@ -147,6 +165,7 @@ var commonService = (function() {
 		getReviewWithHighGrade:getReviewWithHighGrade,
 		getReviewWithLowGrade:getReviewWithLowGrade,
 		getReviewWithRegdateDesc:getReviewWithRegdateDesc,
+		findId:findId,
 		displayTime:displayTime
 	};
 })();

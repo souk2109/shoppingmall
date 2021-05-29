@@ -18,7 +18,10 @@ var fileuploadService = (function() {
 				if(callback){
 					callback(result);
 				}
-			}
+			},
+			error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		       }
 		});
 	};
 	function getProductImages(pno, callback, error) {

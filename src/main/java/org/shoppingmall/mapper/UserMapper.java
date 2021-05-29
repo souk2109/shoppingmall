@@ -15,4 +15,5 @@ public interface UserMapper {
 	public void updatePwd(@Param("id") String id, @Param("pwd")String pwd);
 	public int deleteUser(String id); // id로 사용자를 삭제
 	public int updateBasicAdress(@Param("id") String id,@Param("postalDTO") PostalDTO postalDTO);
+	public String getId(@Param("name") String name, @Param("email") String email);
 }

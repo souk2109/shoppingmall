@@ -16,4 +16,6 @@ public interface UserService {
 	public String deactivateUser(String id, String pwd);
 
 	public String changeBasicAdress(String id, PostalDTO postalDTO);
+
+	public String getId(String name, String email);
 }

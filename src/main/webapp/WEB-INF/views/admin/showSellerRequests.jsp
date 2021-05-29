@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 
 
-<div align="center" class="panel-title" style="margin-top: 30px">
+<div align="center" class="panel-title" style="margin-top: 30px;margin-bottom: 100px">
 	<font size="6px" face="Prompt">판매자 신청 현황</font>
 	<table class="table" style="width: 60%; text-align: center; margin-top: 20px; font-size: 12px">
 		<thead>
