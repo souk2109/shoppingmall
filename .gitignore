@@ -113,3 +113,6 @@ buildNumber.properties
 # End of https://www.toptal.com/developers/gitignore/api/java,java-web,eclipse,maven
 /.classpath
 /.project
+
+# ignore properties file
+config.properties
