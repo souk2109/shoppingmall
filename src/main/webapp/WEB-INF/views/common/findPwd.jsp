@@ -7,7 +7,7 @@
 		<div class="col-md-6" style="margin: 0 auto;">
 			<div class="panel-default">
 				<div align="center">
-					<font class="panel-title" size="20px" face="Prompt">아이디 찾기</font>
+					<font class="panel-title" size="20px" face="Prompt">비밀번호 찾기</font>
 				</div>
 				<div class="panel-body" style="margin-top: 20px;">
 					<div class="form-group" align="left">

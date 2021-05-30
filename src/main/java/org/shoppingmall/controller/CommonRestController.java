@@ -110,7 +110,6 @@ public class CommonRestController {
 		String result = "notFound";
 		if(id != null) {
 			result = id;
-			log.info(id);
 		}
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
