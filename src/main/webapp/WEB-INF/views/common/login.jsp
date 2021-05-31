@@ -14,7 +14,7 @@
 				<div class="" align="center">
 					<font class="panel-title" size="20px" face="Prompt">LOGIN</font>
 				</div>
-				<div class="panel-body" style="margin-top: 20px;">
+				<div class="panel-body" style="margin-top: 20px;margin-bottom: 100px">
 					<form method="post" action="/shoppingmall/common/doLogin">
 						<div class="form-group" align="left">
 							
@@ -47,7 +47,7 @@
 						</div>
 						<div align="center" style="font-size: 14px; margin-top: 30px; margin-bottom: 30px" class="col-sm-12">
 							<span class="top-bar-menu-item"><a href="/shoppingmall/common/findId">아이디 찾기</a></span>
-            				<span class="top-bar-menu-item"><a href="#">비밀번호 찾기</a></span>
+            				<span class="top-bar-menu-item"><a href="/shoppingmall/common/findPwd">비밀번호 찾기</a></span>
             				<span class="top-bar-menu-item"><a href="/shoppingmall/common/register">회원가입</a></span>
 						</div>
 						<sec:csrfInput/>

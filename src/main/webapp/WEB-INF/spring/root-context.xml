@@ -19,19 +19,17 @@
 	
 	<context:annotation-config></context:annotation-config>
 	
-	<!-- aws db계정 
-		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://3.130.177.11:3306/shopdb" />
-		<property name="username" value="mysqluser" />
-		<property name="password" value="user1234" />
-	</bean> -->
- 
+ 	<!-- db, email관련 properties -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WEB-INF/config/config.properties"></property>
+		<property name="fileEncoding" value="UTF-8"></property>
+    </bean>
+    
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://localhost:3306/shopdb"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="1234"></property>
+		<property name="driverClassName" value="${db.driver}"></property>
+		<property name="jdbcUrl" value="${db.url}"></property>
+		<property name="username" value="${db.username}"></property>
+		<property name="password" value="${db.password}"></property>
 	</bean>
  
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"

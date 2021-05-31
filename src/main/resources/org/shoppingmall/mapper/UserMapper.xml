@@ -69,4 +69,10 @@
 		FROM tbl_user
 		WHERE name = #{name} and email = #{email} 
 	</select>
+	
+	<select id="getUserByIdAndEmail" resultType="org.shoppingmall.domain.UserVO">
+		SELECT *
+		FROM tbl_user
+		WHERE id = #{id} and email = #{email} 
+	</select>
 </mapper>

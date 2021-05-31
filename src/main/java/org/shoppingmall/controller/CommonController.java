@@ -115,6 +115,7 @@ public class CommonController {
 	public void findId() {
 		
 	}
+	
 	@GetMapping("/findPwd")
 	public void findPwd() {
 		

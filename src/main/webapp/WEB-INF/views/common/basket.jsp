@@ -52,7 +52,7 @@
 	<div class="row" style="margin-bottom: 30px">
 		<div class="col-12"><i class="fa fa-shopping-cart fa-3x"></i><font size="30px" style="margin-left: 5px;">장바구니</font></div>
 	</div>
-	<div class="row" style="margin-bottom: 30px">
+	<div class="row" style="margin-bottom: 100px">
 		<div class="col-xs-8 col-sm-8">
 			<div class="col-sm-12" style="border-left: 6px solid #ccd;margin-bottom: 10px">상품 정보</div>
 			<div>
@@ -154,7 +154,6 @@
 			<div class="col-12">
 				<div id="orderBtn" class="btn btn-primary">주문하기</div>
 			</div>
-		<!-- ${basketList[0].productAttachVO } -->
 		</div>
 	</div>
 </div>

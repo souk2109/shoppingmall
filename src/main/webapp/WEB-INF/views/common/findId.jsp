@@ -30,6 +30,7 @@
 					</div>
 					
 					<div align="center" style="font-size: 14px; margin-top: 30px; margin-bottom: 30px" class="col-sm-12">
+						<span class="top-bar-menu-item"><a href="/shoppingmall/common/findPwd">비밀번호 찾기</a></span>
 						<span class="top-bar-menu-item"><a href="/shoppingmall/common/login">로그인</a></span>
             			<span class="top-bar-menu-item"><a href="/shoppingmall/common/register">회원가입</a></span>
 					</div>
@@ -57,11 +58,11 @@
 	$("#findIdBtn").on("click", function() {
 		let name = $("#nameInput").val().trim();
 		let email = $("#emailInput").val().trim();
-		if(!nameInput){
+		if(!name){
 			alert('이름을 입력해주세요');
 			return;
 		}
-		if(!emailInput){
+		if(!email){
 			alert('이메일을 입력해주세요');
 			return;
 		}

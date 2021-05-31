@@ -10,7 +10,7 @@
 					<font class="panel-title" size="20px" face="Prompt">회원가입</font>
 				</div>
 				
-				<div class="panel-body" style="margin-top: 20px;">
+				<div class="panel-body" style="margin-top: 20px;margin-bottom: 100px">
 					<form id="registerForm" action="/shoppingmall/common/doRegister" method="post">
 						<div class="form-group" align="left">
 							<div class="col-sm-12">＊아이디</div>

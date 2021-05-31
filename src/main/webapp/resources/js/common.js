@@ -135,7 +135,22 @@ var commonService = (function() {
 			}
 		});
 	}
-	
+	function findUser(id, email, callback) {
+		$.ajax({
+			url: '/shoppingmall/common/findUser?id='+id+'&email='+email,
+			dataType: 'text',
+			type: 'POST',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
+			success: function(result) {
+				if(callback){
+					callback(result);
+				}
+			}
+		});
+	}
+	 
 	function displayTime(timeValue) {	
 		let dateObj = new Date(timeValue);
 		let yy = dateObj.getFullYear();
@@ -166,6 +181,7 @@ var commonService = (function() {
 		getReviewWithLowGrade:getReviewWithLowGrade,
 		getReviewWithRegdateDesc:getReviewWithRegdateDesc,
 		findId:findId,
+		findUser:findUser,
 		displayTime:displayTime
 	};
 })();

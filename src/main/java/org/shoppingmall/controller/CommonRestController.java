@@ -13,6 +13,7 @@ import org.shoppingmall.domain.ReviewAttachVO;
 import org.shoppingmall.domain.ReviewOutputDTO;
 import org.shoppingmall.domain.ReviewVO;
 import org.shoppingmall.domain.SellerRequestVO;
+import org.shoppingmall.domain.UserVO;
 import org.shoppingmall.service.ProductAttachService;
 import org.shoppingmall.service.ReviewAttachService;
 import org.shoppingmall.service.ReviewService;
@@ -112,5 +113,20 @@ public class CommonRestController {
 			result = id;
 		}
 		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/findUser", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> findUser(String id, String email){
+		String result = "notFound";
+		// 가입한 회원이면 Found를 반환
+		if(userService.isUser(id, email)) {
+			result = "Found";
+			// 랜덤한 비밀번호를 만들어서 변경시킨 후 
+			// 메일로 비밀번호 발송
+			userService.sendEmail(id, email);
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
 	}
 }

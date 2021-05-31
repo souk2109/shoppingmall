@@ -22,7 +22,4 @@
 	</beans:bean>
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
 	<context:component-scan base-package="org.shoppingmall.controller" />
-	
-	
-	
 </beans:beans>

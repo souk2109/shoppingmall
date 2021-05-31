@@ -18,4 +18,12 @@ public interface UserService {
 	public String changeBasicAdress(String id, PostalDTO postalDTO);
 
 	public String getId(String name, String email);
+
+	public boolean isUser(String id, String email);
+	
+	// 랜덤한 새 비밀번호 만들기
+	public String makeRandomPwd();
+	
+	//이메일발송
+	public void sendEmail(String id, String email);
 }
