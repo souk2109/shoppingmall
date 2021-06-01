@@ -449,7 +449,7 @@
 	function showReviewStar() {
 		let totalReviewGrade = parseInt("<c:out value='${product.totalReviewGrade }'/>");
 		let reviewNum =	parseInt("<c:out value='${product.reviewNum }'/>");
-		let reviewAvgGrade = totalReviewGrade/reviewNum;
+		let reviewAvgGrade = Math.round((totalReviewGrade/reviewNum)*2)/2;
 		if(isNaN(reviewAvgGrade)){
 			reviewAvgGrade = 0;
 		}
@@ -511,7 +511,7 @@
 			str += "</div>";
 			str += "<div class='col-12'>";
 			let time = commonService.displayTime(list[i].regDate);
-			str += "<span>" + time + "</span>";
+			str += "<span>" + time + "작성</span>";
 			str += "</div>";
 			str += "<div class='col-12'>"; 
 			str += "<div style='display: table;margin-bottom: 10px'>";

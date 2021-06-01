@@ -86,10 +86,10 @@
 			</c:if>
 			<c:choose>
 				<c:when test="${trHistory.prdStatus eq 'ready'}">
-					<button id="shippingBtn" style="width:70%; background: #346aff;color: #fff;font-size: 13px">배송 중</button>
+					<button id="shippingBtn" style="width:70%; background: #346aff;color: #fff;font-size: 13px">'배송 중'으로 변경</button>
 				</c:when>
 				<c:when test="${trHistory.prdStatus eq 'shipping'}">
-					<button id="arriveBtn" style="width:70%; background: #346aff;color: #fff;font-size: 13px">배송 완료</button>
+					<button id="arriveBtn" style="width:70%; background: #346aff;color: #fff;font-size: 13px">'배송 완료'로 변경</button>
 				</c:when>
 				<c:when test="${trHistory.prdStatus eq 'arrive'}">
 					<button style="width:70%; background: #ccc;color:#000000;font-size: 13px" disabled="disabled">배송 완료</button>

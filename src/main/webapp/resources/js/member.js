@@ -1,5 +1,4 @@
 var memberService = (function() {
-	
 	// 최근 하나의 판매자 신청 정보만 가져옴
 	function getRecentSellerRequest(id, callback, error) {
 		$.get("/shoppingmall/member/getRecentSellerRequest/"+id+".json", function(SellerRequestVO) {

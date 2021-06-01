@@ -5,6 +5,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <sec:authentication property="principal" var="loginUser"/>
+<link rel="stylesheet" href="https://forkaweso.me/Fork-Awesome/assets/fork-awesome/css/fork-awesome.css">
 <script>
 	//올림 함수
 	function makeFloorPrice(num) {
@@ -217,7 +218,6 @@
 			rno = parseInt(review.rno);
 			let full_star_num = parseInt(review.grade);
 			let empty_star_num = 5-full_star_num;
-			
 			for(var i=0;i<full_star_num; i++){
 				str += "<i class='fa fa-star' style='color: #FFA500;padding:0px;font-size: 1.2em;'></i>";
 			}
