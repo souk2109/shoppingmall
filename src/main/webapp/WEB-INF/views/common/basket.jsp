@@ -130,7 +130,7 @@
 						</script>
 						<tr id="${basket.pno }">
 							<td>${basket.prdName }
-								<span id="count${basket.pno}"><script>document.write("("+count+")");</script></span>
+								<span id="count${basket.pno}">(<script>document.write(count);</script>)</span>
 							</td>
 							<td align="right">
 								<div style="display: inline;" id="totalPrice${basket.pno}">
@@ -208,7 +208,7 @@
 		 
 		console.log(pno);
 		$(this).closest("tr").find(".totalPrice").html(makeComma(ctotalPrice));
-		$("#count"+pno).text(increasedNum);
+		$("#count"+pno).text("("+increasedNum+")");
 		$("#totalPrice"+pno).text(makeComma(ctotalPrice));
 		getTotalPrice();
 		// 수량 쿠키에서 변경
@@ -231,7 +231,7 @@
 		console.log(decreasedNum);
 		$(this).closest("tr").find(".totalPrice").html(makeComma(ctotalPrice));
 		
-		$("#count"+pno).text(decreasedNum);
+		$("#count"+pno).text("("+decreasedNum+")");
 		$("#totalPrice"+pno).text(makeComma(ctotalPrice));
 		getTotalPrice();
 		commonService.updateBasket(pno, decreasedNum);
@@ -253,7 +253,7 @@
 		let ctotalPrice = $(this).val() * makeFloorPrice(cprice * (1-cdiscount/100));
 		$(this).closest("tr").find(".totalPrice").html(makeComma(ctotalPrice));
 		
-		$("#count"+pno).text($(this).val());
+		$("#count"+pno).text("("+$(this).val()+")");
 		$("#totalPrice"+pno).text(makeComma(ctotalPrice));
 		getTotalPrice();
 		commonService.updateBasket(pno, $(this).val());
@@ -269,7 +269,7 @@
 			$(this).val("1");
 			let ctotalPrice = $(this).val()*makeFloorPrice(cprice * (1-cdiscount/100));
 			$(this).closest("tr").find(".totalPrice").html(makeComma(ctotalPrice));
-			$("#count"+pno).text("1");
+			$("#count"+pno).text("(1)");
 			$("#totalPrice"+pno).text(makeComma(ctotalPrice));
 			getTotalPrice();
 		}
