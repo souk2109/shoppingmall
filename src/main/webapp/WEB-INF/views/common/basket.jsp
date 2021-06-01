@@ -151,8 +151,8 @@
 				</div>
 				<span>원</span>
 			</div>
-			<div class="col-12">
-				<div id="orderBtn" class="btn btn-primary">주문하기</div>
+			<div class="col-12" style="margin-top: 20px">
+				<input id="orderBtn" class="btn" value="주문하기" style="color: #ffffff; background: #007BFF">
 			</div>
 		</div>
 	</div>

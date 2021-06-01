@@ -71,11 +71,31 @@ var fileuploadService = (function() {
 			}
 		});
 	};
+	// 사업자 이미지 첨부
+	function uploadBuisnessImage(formData, callback, error) {
+		$.ajax({
+			url: '/shoppingmall/uploadBuisnessImageAction',
+			processData: false,
+			contentType: false,
+			data: formData,
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
+			type: 'POST',
+			dataType : 'json',
+			success: function(result) {
+				if(callback){
+					callback(result);
+				}
+			}
+		});
+	};
 	return {
 		uploadProductImage : uploadProductImage,
 		deleteProductImage : deleteProductImage,
 		getProductImages : getProductImages,
-		uploadReviewImage : uploadReviewImage
+		uploadReviewImage : uploadReviewImage,
+		uploadBuisnessImage : uploadBuisnessImage
 	};
 })();
  

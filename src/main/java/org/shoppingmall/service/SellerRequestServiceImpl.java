@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.shoppingmall.domain.AuthVO;
 import org.shoppingmall.domain.CardVO;
+import org.shoppingmall.domain.SellerAttachVO;
 import org.shoppingmall.domain.SellerRequestVO;
 import org.shoppingmall.domain.SellerVO;
 import org.shoppingmall.mapper.AuthMapper;
 import org.shoppingmall.mapper.CardMapper;
+import org.shoppingmall.mapper.SellerAttachMapper;
 import org.shoppingmall.mapper.SellerMapper;
 import org.shoppingmall.mapper.SellerRequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,17 @@ public class SellerRequestServiceImpl implements SellerRequestService{
 	private CardMapper cardMapper;
 	@Autowired
 	private SellerMapper sellerMapper;
+	@Autowired
+	private SellerAttachMapper sellerAttachMapper;
+	
+	@Transactional
 	@Override
 	public String insertSellerRequest(SellerRequestVO sellerRequestVO) {
-		int result = sellerRequestMapper.insertSellerRequest(sellerRequestVO);
+		sellerRequestMapper.insertSellerRequest(sellerRequestVO);
+		int num = sellerRequestVO.getNum();
+		SellerAttachVO sellerAttachVO = sellerRequestVO.getSellerAttachVO();
+		sellerAttachVO.setNum(num);
+		int result = sellerAttachMapper.insertSellerAttachVO(sellerAttachVO);
 		return result == 1 ? "result" : "fail";
 	}
 

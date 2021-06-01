@@ -6,15 +6,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer__text">
-                        <p>내 소개 작성</p>
-                        <div class="footer__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                        </div>
+                        <h4>프로젝트 정보</h4>
+                        <h5>spring : </h5>
+                        <span>sql :</span>
                     </div>
                     <div class="footer__copyright">
                         <p>
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         </p>
                     </div>
                 </div>

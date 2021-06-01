@@ -70,7 +70,7 @@
 <div style="width: 80%; margin: 0px auto;margin-bottom: 30px">
 	<form id="searchform" method="get" action="/shoppingmall/common/main" style="margin-bottom: 20px; align-content: center;">
 		<select name="category" style="width: 25%;height: 30px">
-			<option value="CF" ${criteria.category eq 'BLFC' ?'selected':'' }>모두</option>
+			<option value="BLFC" ${criteria.category eq 'BLFC' ?'selected':'' }>모두</option>
 			<option value="B" ${criteria.category eq 'B' ?'selected':''}>뷰티</option>
 			<option value="L" ${criteria.category eq 'L' ?'selected':''}>생활용품</option>
 			<option value="F" ${criteria.category eq 'F' ?'selected':''}>식품</option>

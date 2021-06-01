@@ -20,4 +20,5 @@ public class SellerRequestVO {
 	private Date regdate;
 	private Date updatedate;
 	private String email;
+	private SellerAttachVO sellerAttachVO; 
 }

@@ -27,9 +27,22 @@ var adminService = (function() {
 		mi = mi < 10 ? '0' + mi : mi;
 		return yy + '년 ' + mm + '월 ' + dd + '일 ' + hh+'시 '+ mi+'분 ';
 	}
+	
+	function getBusinessImage(num, callback) {
+		$.get("/shoppingmall/admin/getBusinessImage/" + num + ".json", function(image) {
+			if(callback){
+				callback(image);
+			}
+		}).fail(function(xhr, status, err) {
+			if(error){
+				err();
+			}
+		})
+	};
+	
 	return {
 		getAllSellerRequests : getAllSellerRequests,
-		
+		getBusinessImage : getBusinessImage,
 		displayTime:displayTime
 	};
 })();

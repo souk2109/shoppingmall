@@ -66,7 +66,7 @@
 		// 모달에 검색된 아이디 추가 후 보여주기
 		commonService.findUser(id, email, function(result) {
 			if(result === 'Found'){
-				$("#message").text('이메일로 새로운 비밀번호를 발송하였습니다.');
+				$("#message").append('<span>이메일로 새로운 비밀번호를 발송하였습니다.</span><br><span>해당 비밀번호로 로그인 후 비밀번호를 변경해주세요.</span>');
 			}else{
 				$("#message").text('일치하는 회원이 없습니다.');
 			}

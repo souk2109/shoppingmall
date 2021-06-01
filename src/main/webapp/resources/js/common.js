@@ -150,7 +150,6 @@ var commonService = (function() {
 			}
 		});
 	}
-	 
 	function displayTime(timeValue) {	
 		let dateObj = new Date(timeValue);
 		let yy = dateObj.getFullYear();

@@ -5,6 +5,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600&display=swap" rel="stylesheet">
 <sec:authentication property="principal" var="loginUser"/>
+<style>
+	.uploadResult ul{
+		border: 1px solid;
+		height:200px;
+		display: flex;
+		flex-flow: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.uploadResult ul li{
+		list-style: none;
+		padding: 10px;
+	}
+	.uploadResult ul li image{
+		width: 20px;
+	}
+</style>
 <div class="container" align="center">
 	<div align="left" class="row">
 		<div class="col-12 title-font" style="margin-bottom: 30px">
@@ -15,7 +32,7 @@
 		<div class="col-md-6" style="margin: 0 auto;">
 			<div class="panel-default">
 				<div class="panel-body" style="margin-top: 20px;">
-					<form id="registerForm" action="/shoppingmall/member/doSellerApply" method="post">
+					<form id="registerForm" action="/shoppingmall/member/doSellerApply" method="post" enctype="multipart/form-data">
 						<div class="form-group" align="left">
 							<div class="col-sm-12">＊이름</div>
 							<div class="col-sm-12">
@@ -38,10 +55,16 @@
 						<div class="form-group" align="left">
 							<div class="col-sm-12">＊사업자 등록증 첨부</div>
 							<div class="col-sm-12">
-								<input id="busiPicture" name="busiPicture" type="file" class="form-control" autocomplete="off">
+								<input id="attachFile" name="attachFile" type="file" class="form-control">
 							</div>
 						</div>
-						
+						<div class="form-group">
+							<div class="col-sm-12">
+								<div id="uploadResult" class="uploadResult" align="center">
+									<ul></ul>
+								</div>
+							</div>
+						</div>
 						<div class="form-group" align="left">
 							<div class="col-sm-12">＊카드 번호</div>
 							<div class="col-sm-12">
@@ -91,6 +114,7 @@
 							</div>
 						</div>
 						<sec:csrfInput/>
+						<div id="addInput"></div>
 					</form>
 				</div>
 			</div>
@@ -141,7 +165,7 @@
 			memberService.getRecentSellerRequest(id, function(SellerRequest) {
 				if(!SellerRequest){ //  마지막으로 요청한 정보가 없는 경우 (신규 신청)
 					alert('정상적으로 요청 되었습니다.');
-					registerForm.submit();
+					$("#registerForm").submit();
 					return;
 				}else{ // 이미 처리중, 거절, 승인 중  한 가지의 상태를 가진 경우
 					let status = SellerRequest.status;
@@ -151,7 +175,7 @@
 					}
 					else if(status === '거절'){
 						alert('정상적으로 요청 되었습니다.');
-						registerForm.submit();
+						$("#registerForm").submit();
 						return;
 					}else if(status === '승인'){
 						alert('이미 승인된 상태입니다.');
@@ -167,5 +191,90 @@
 	       event.returnValue=false;
 	    }
 	}
+</script>
+<!-- 첨부 이미지 관련 코드 -->
+<script type="text/javascript" src="/shoppingmall/resources/js/fileupload.js"></script>
+<script>
+//사진 파일 등록하기
+$("input[type='file']").change(function(e) {
+	var formData = new FormData();
+	var inputFile = $("input[name='attachFile']");
+	var files = inputFile[0].files;
+	console.log('name : '+files[0].name);
+	
+	if(!checkExtension(files[0].name, files[0].size)){
+		if ($.browser.msie) {
+			// 브라우저가 ie인 경우 초기화
+			$("#attachFile").replaceWith($("#attachFile").clone(true) );
+		} else {
+			// 다른 브라우저인 경우 input[type=file] init.
+			$("#attachFile").val("");
+		}
+		return false;
+	}
+	formData.append("attachFile", files[0]);
+	fileuploadService.uploadBuisnessImage(formData, function(result) {
+		console.log(result);
+		showUploadedFile(result);
+	});
+});
+const regex = new RegExp("(.*?)\.(jpg|gif|png|jpeg|bmp)$");
+const maxSize = 5242880; // 5MB
+function checkExtension(fileName, fileSize) {
+	if(fileSize >= maxSize){
+		alert('파일 사이즈가 5MB를 초과합니다.');
+		return false;
+	}
+	if(!regex.test(fileName)){
+		alert('해당 종류의 파일은 업로드가 불가능합니다.');
+		return false;
+	}
+	return true;
+}
+
+//썸네일 보여주기
+var uploadResult =  $(".uploadResult");
+function showUploadedFile(fileList) {
+	if(!fileList || fileList.length == 0){
+		return;
+	}
+	let uploadUL = $(".uploadResult ul");
+	uploadUL.html('');
+	let str = '';
+	$(fileList).each(function(i, obj) {
+		var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid +"_" +obj.fileName);
+		str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' data-main='0'>";
+		str += "<div>";
+		str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-circle'>";
+		str += "<i class='fa fa-times'></i>";
+		str += "</button><br>";
+		str += "<img class='imgLi' src='/shoppingmall/buisnessDisplay?fileName="+fileCallPath+"' style='width:130px;height:130px'>";
+		str += "</div>";
+		str += "</li>";
+		
+		$("#addInput").html('');
+		let inputStr = '';
+		let id = $("#id").val();
+		inputStr += "<input type='hidden' name='sellerAttachVO.id' value='"+ id +"'>";
+		inputStr += "<input type='hidden' name='sellerAttachVO.fileName' value='"+obj.fileName+"'>";
+		inputStr += "<input type='hidden' name='sellerAttachVO.uuid' value='"+obj.uuid+"'>";
+		inputStr += "<input type='hidden' name='sellerAttachVO.path' value='"+obj.uploadPath+"'>";
+		inputStr += "<input type='hidden' name='sellerAttachVO.fileType' value='"+obj.image+"'>";
+		$("#addInput").append(inputStr);
+	});
+	uploadUL.append(str);
+};
+
+//썸네일 사진 삭제하기
+$(".uploadResult").on("click", "button", function() {
+	var targetFile = $(this).data("file");
+	var type = $(this).data("type");
+	var targetLi = $(this).closest("li");
+	fileuploadService.deleteProductImage(targetFile, type, function(result) {
+		console.log("삭제 완료");
+		targetLi.remove();
+		$("#addInput").html('');
+	});
+});
 </script>
 <%@include file="../includes/footer.jsp" %>
