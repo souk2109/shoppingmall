@@ -18,7 +18,7 @@
                     				<h6>mybatis 3.4.6</h6>
                     				<h6>bootstrap 4.4.1</h6>
                     				<h6>Jquery</h6>
-			                     	<h6>HTML5</h6>
+			                     	<h6>Jsp</h6>
 			                     	<h6>CSS</h6>
                     			</div>
                     		</div>

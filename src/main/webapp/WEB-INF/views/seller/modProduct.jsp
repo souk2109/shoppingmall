@@ -24,7 +24,7 @@
 </style>
 <div class="container" align="center">
 	<div class="row">
-		<div class="col-md-6" style="margin: 0 auto;">
+		<div class="col-md-6" style="margin: 0 auto;margin-bottom: 100px">
 			<div class="panel-default">
 				<div align="center">
 					<font class="panel-title" size="20px" face="Prompt">상품 정보 수정</font>

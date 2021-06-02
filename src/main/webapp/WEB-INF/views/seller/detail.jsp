@@ -86,16 +86,16 @@
 			</c:if>
 			<c:choose>
 				<c:when test="${trHistory.prdStatus eq 'ready'}">
-					<button id="shippingBtn" style="width:70%; background: #346aff;color: #fff;font-size: 13px">'배송 중'으로 변경</button>
+					<input class="btn col-12" id="shippingBtn" value="'배송 중'으로 변경" style="width:70%; background: #346aff;color: #fff;font-size: 13px">
 				</c:when>
 				<c:when test="${trHistory.prdStatus eq 'shipping'}">
-					<button id="arriveBtn" style="width:70%; background: #346aff;color: #fff;font-size: 13px">'배송 완료'로 변경</button>
+					<input class="btn col-12" id="arriveBtn" value="'배송 완료'로 변경" style="width:70%; background: #346aff;color: #fff;font-size: 13px">
 				</c:when>
 				<c:when test="${trHistory.prdStatus eq 'arrive'}">
-					<button style="width:70%; background: #ccc;color:#000000;font-size: 13px" disabled="disabled">배송 완료</button>
+					<input class="btn col-12" value="배송 완료" style="width:70%; background: #ccc;color: #000000;font-size: 13px" disabled="disabled">
 				</c:when>
 				<c:when test="${trHistory.prdStatus eq 'cancel'}">
-					<button style="width:70%; background: #ccc;color:#000000;font-size: 13px" disabled="disabled">취소된 상품</button>
+					<input class="btn col-12" value="취소된 상품" style="width:70%; background: #ccc;color: #000000;font-size: 13px" disabled="disabled">
 				</c:when>
 			</c:choose>
 			<div style="margin: 20px">

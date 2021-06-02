@@ -41,7 +41,14 @@
 						<th>판매자</th><th>상호명</th>
 					</tr>
 					<tr>
-						<td>${productInfoVO.category }</td>
+						<td>
+							<c:choose>
+								<c:when test="${productInfoVO.category eq 'food'}">식품</c:when>
+								<c:when test="${productInfoVO.category eq 'beauty'}">뷰티</c:when>
+								<c:when test="${productInfoVO.category eq 'clothes'}">패션의류/잡화</c:when>
+								<c:when test="${productInfoVO.category eq 'life'}">생활용품</c:when>
+							</c:choose>
+						</td>
 						<td>${productInfoVO.prdName }</td>
 						<td>${count }</td>
 						<td>
@@ -115,7 +122,7 @@
 				</div>
 			</div>
 			<div style="margin-bottom: 10px;margin-top: 40px;">
-				<div id="paymentBtn" class="btn btn-primary col-12">결제하기</div>
+				<div id="paymentBtn" class="btn btn-primary col-6">결제하기</div>
 			</div>
 		</div>
 	</div>

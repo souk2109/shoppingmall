@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<div align="center" class="panel-title" style="margin-top: 30px">
+<div align="center" class="panel-title" style="margin-top: 30px;margin-bottom: 100px">
 	<font size="6px" face="Prompt">판매 리스트</font>
 	<table class="table" style="width: 60%; text-align: center; margin-top: 20px; font-size: 12px;table-layout: fixed;">
 		<thead>

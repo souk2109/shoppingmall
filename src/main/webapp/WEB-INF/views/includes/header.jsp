@@ -148,21 +148,6 @@ A:hover {
 		</nav>
 		<div id="mobile-menu-wrap"></div>
 		<div class="humberger__menu__about">
-			<div class="humberger__menu__title sidebar__item__title">
-				<h6>About me</h6>
-			</div>
-			<img src="/shoppingmall/resources/img/humberger/humberger-about.jpg"
-				alt="">
-
-
-			<div
-				class="humberger__menu__about__social sidebar__item__follow__links">
-				<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-					class="fa fa-twitter"></i></a> <a href="#"><i
-					class="fa fa-youtube-play"></i></a> <a href="#"><i
-					class="fa fa-instagram"></i></a> <a href="#"><i
-					class="fa fa-envelope-o"></i></a>
-			</div>
 		</div>
 
 	</div>
@@ -199,7 +184,7 @@ A:hover {
 				<div class="col-lg-6 col-md-6">
 					<div class="header__logo">
 						<a href="/shoppingmall/common/main"><img
-							src="/shoppingmall/resources/img/logo.png" alt=""></a>
+							src="/shoppingmall/resources/img/coupong.png" alt=""></a>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-3"></div>

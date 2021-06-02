@@ -41,7 +41,14 @@
 					</tr>
 					<c:forEach items="${basketList }" var="basket">
 						<tr class="baskets-tr" data-pno="${basket.pno }" data-discount="${basket.discount }" data-count="${basket.count }" data-price="${basket.price }">
-							<td>${basket.category }</td>
+							<td> 
+								<c:choose>
+									<c:when test="${basket.category eq 'food'}">식품</c:when>
+									<c:when test="${basket.category eq 'beauty'}">뷰티</c:when>
+									<c:when test="${basket.category eq 'clothes'}">패션의류/잡화</c:when>
+									<c:when test="${basket.category eq 'life'}">생활용품</c:when>
+								</c:choose>
+							</td>
 							<td>${basket.prdName }</td>
 							<td>${basket.count }</td>
 							<td class="pno"></td>
@@ -115,7 +122,7 @@
 			</div>
 			
 			<div style="margin-bottom: 10px;margin-top: 40px;">
-				<div id="paymentBtn" class="btn btn-primary col-12">결제하기</div>
+				<div id="paymentBtn" class="btn btn-primary col-6">결제하기</div>
 			</div>
 		</div>
 	</div>

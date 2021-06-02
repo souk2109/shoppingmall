@@ -80,7 +80,7 @@
 			autocomplete="off" style="height: 30px;width: 40%" placeholder="상품명">
 		<input type="submit" value="검색" style="width: 25%">
 		<input type="hidden" name="pageNum" value="1">
-		<input type="hidden" name="amount" value="12">
+		<input type="hidden" name="amount" value="9">
 	</form>
 </div>
 
